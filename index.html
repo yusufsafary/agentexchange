@@ -5,8 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AgentMarket.exchange — AI Agent Launchpad on Solana</title>
 <meta name="description" content="The premier AI agent launchpad and marketplace on Solana. Launch, discover, and trade AI agents. $OPENAGENT token launching soon.">
-<meta name="og:title" content="AgentMarket.exchange">
-<meta name="og:description" content="The premier AI agent launchpad on Solana. Launch $OPENAGENT now.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -53,19 +51,40 @@
     height: 64px; gap: 16px;
   }
   .logo-wrap {
-    display: flex; align-items: center; gap: 12px;
+    display: flex; align-items: center; gap: 10px;
     text-decoration: none;
   }
-  .logo-img {
-    height: 36px; width: 36px;
-    border-radius: 8px;
-    object-fit: cover;
+
+  /* ── LOGO SVG ── */
+  .logo-svg-wrap {
+    width: 38px; height: 38px;
+    background: #0a0a1e;
+    border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    overflow: hidden;
   }
+  .logo-svg-wrap svg {
+    width: 26px; height: 26px;
+  }
+
   .logo-text {
     font-size: 15px; font-weight: 700;
     color: var(--text-primary); letter-spacing: -0.3px;
   }
   .logo-text span { color: var(--sol-purple); }
+
+  .beta-tag {
+    display: inline-flex; align-items: center;
+    padding: 2px 7px; border-radius: 5px;
+    background: rgba(153,69,255,0.1);
+    border: 1px solid rgba(153,69,255,0.25);
+    font-size: 10px; font-weight: 700;
+    color: var(--sol-purple); letter-spacing: 0.8px;
+    text-transform: uppercase; margin-left: 4px;
+    vertical-align: middle;
+  }
+
   .nav-links {
     display: flex; align-items: center; gap: 4px;
     list-style: none;
@@ -266,6 +285,17 @@
   }
   .token-meta-item strong { display: block; font-size: 16px; font-weight: 700; color: var(--text-primary); }
   .token-meta-item span { color: var(--text-muted); }
+
+  /* Streamflow highlight item */
+  .token-meta-item.streamflow-item {
+    border-color: rgba(20,241,149,0.35);
+    background: rgba(20,241,149,0.04);
+  }
+  .token-meta-item.streamflow-item strong {
+    color: #059669;
+    display: flex; align-items: center; gap: 5px;
+  }
+
   .token-cta { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
   .btn-launch {
     padding: 16px 32px; border-radius: 14px; border: none;
@@ -454,7 +484,13 @@
   .footer-logo {
     display: flex; align-items: center; gap: 10px; margin-bottom: 12px;
   }
-  .footer-logo-img { height: 30px; width: 30px; border-radius: 7px; object-fit: cover; }
+  .footer-logo-svg {
+    width: 30px; height: 30px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
   .footer-logo-text { font-size: 15px; font-weight: 700; color: #fff; }
   .footer-brand-desc { font-size: 13px; line-height: 1.7; }
   .footer-links-col h4 { font-size: 12px; font-weight: 700; color: #fff; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 16px; }
@@ -567,8 +603,19 @@
 <nav>
   <div class="nav-inner">
     <a class="logo-wrap" href="#">
-      <img class="logo-img" src="data:image/jpeg;base64,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" alt="AgentMarket.exchange Logo">
+      <!-- SVG Logo matching the uploaded brand image -->
+      <div class="logo-svg-wrap">
+        <svg viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Left branch: two arrows pointing right-up -->
+          <path d="M3 18 L8 13 L3 8" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M7 18 L12 13 L7 8" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- Right branch: two arrows pointing left-down (mirrored) -->
+          <path d="M23 8 L18 13 L23 18" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M19 8 L14 13 L19 18" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
       <span class="logo-text">agentmarket<span>.exchange</span></span>
+      <span class="beta-tag">BETA</span>
     </a>
 
     <ul class="nav-links">
@@ -652,10 +699,6 @@
         <div class="token-desc">The native governance and utility token of AgentMarket.exchange. Stake to earn platform fees, vote on listings, and get early access to new agent launches. Fair launch — no presale, no VC allocation.</div>
         <div class="token-meta">
           <div class="token-meta-item">
-            <strong>1B</strong>
-            <span>Total Supply</span>
-          </div>
-          <div class="token-meta-item">
             <strong>0%</strong>
             <span>Team Allocation</span>
           </div>
@@ -666,6 +709,13 @@
           <div class="token-meta-item">
             <strong>Solana</strong>
             <span>Network</span>
+          </div>
+          <div class="token-meta-item streamflow-item">
+            <strong>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="flex-shrink:0"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              Streamflow Lock
+            </strong>
+            <span>Locked Day 2 on Streamflow</span>
           </div>
         </div>
       </div>
@@ -993,8 +1043,16 @@
     <div class="footer-top">
       <div class="footer-brand">
         <div class="footer-logo">
-          <img class="footer-logo-img" src="data:image/jpeg;base64,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vvIPfHb96TmotonSWhrfabfq7UOt2JBu7DdwahuOoZcbCt24B2kkAYxzzQS/UF4smj7O7c7tcI0CGz3rWd3oB2JHaT2Ado9aqq0+I3h7eriY0TVttacI7H3EraHuCwKrqXre7ePF01HqrUb8u93CSXBCYcU6ysOEhAQEJVgJGAogJPEEDjVG3nRL9v1Hco8PUd5srqXFNlMNbbbrgUcbVlpLYCucEJHPnQXL4neK9gt+hpem9K6gjypExm31wI6g9shZ3L3K24TkgcD35I6V5vh43qS6yrjpW4XSXdX5OHYkiWXFPuoHADC8hTR+kklGS1wUOCqpXr7eZe1Lc5C4Ey13G0QI7rSvJkR1NJcyh1HEqUsJScjIGD7K0/wCj9S3mT5yIPJXmvOW7iEtcD8JKjgfbQXP4X6Jj3W0Wr9J7FaomFI8hs7W3VqHo4sJOVI7hkJHIdQrRNYagvalDLQ8pKdoWvGFrxy3EHl37+HZV4eEeiLvoTTkuJfVslmbLU8hhKw4poYA+oQSASSTjPLlVv0ClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUH//2Q==" alt="Logo">
+          <div class="footer-logo-svg">
+            <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" width="18" height="18">
+              <path d="M2 14 L6 10 L2 6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M6 14 L10 10 L6 6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M18 6 L14 10 L18 14" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M14 6 L10 10 L14 14" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
           <span class="footer-logo-text">agentmarket.exchange</span>
+          <span class="beta-tag" style="background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.2);color:rgba(255,255,255,0.7);">BETA</span>
         </div>
         <p class="footer-brand-desc">The premier AI agent launchpad and marketplace built on Solana. Fast, fair, and permissionless.</p>
       </div>
@@ -1029,7 +1087,7 @@
     <div class="footer-bottom">
       <div class="footer-bottom-left">
         © 2025 AgentMarket.exchange — agentmarket.exchange — All rights reserved.
-        <div style="margin-top:4px;font-size:12px;opacity:0.5;">Built on <span style="color:var(--sol-green)">Solana</span></div>
+        <div style="margin-top:4px;font-size:12px;opacity:0.5;">Built on <span style="color:var(--sol-green)">Solana</span> · <span style="opacity:0.7;">v0.1 Beta</span></div>
       </div>
       <div class="footer-social">
         <a href="https://x.com/agentmarket_ex" target="_blank" rel="noopener" class="social-btn" title="Follow on X">𝕏</a>
