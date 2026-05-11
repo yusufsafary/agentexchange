@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AgentMarket.exchange — AI Agent Launchpad on Solana</title>
+<meta name="description" content="The premier AI agent launchpad and marketplace on Solana. Launch, discover, and trade AI agents. $OPENAGENT token launching soon.">
+<meta name="og:title" content="AgentMarket.exchange">
+<meta name="og:description" content="The premier AI agent launchpad on Solana. Launch $OPENAGENT now.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --white: #ffffff;
+    --off-white: #f8f8fc;
+    --light-gray: #f1f1f6;
+    --border: #e4e4ef;
+    --text-primary: #0a0a14;
+    --text-secondary: #5a5a7a;
+    --text-muted: #9090b0;
+    --sol-purple: #9945FF;
+    --sol-green: #14F195;
+    --sol-blue: #0ea5e9;
+    --accent: #1a0a3c;
+    --tag-bg: #f0ebff;
+    --tag-color: #6020c0;
+    --card-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+    --card-shadow-hover: 0 4px 24px rgba(153,69,255,0.12), 0 1px 3px rgba(0,0,0,0.06);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--white);
+    color: var(--text-primary);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+  }
+  .nav-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px; gap: 16px;
+  }
+  .logo-wrap {
+    display: flex; align-items: center; gap: 12px;
+    text-decoration: none;
+  }
+  .logo-img {
+    height: 36px; width: 36px;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+  .logo-text {
+    font-size: 15px; font-weight: 700;
+    color: var(--text-primary); letter-spacing: -0.3px;
+  }
+  .logo-text span { color: var(--sol-purple); }
+  .nav-links {
+    display: flex; align-items: center; gap: 4px;
+    list-style: none;
+  }
+  .nav-links a {
+    display: block; padding: 6px 12px;
+    font-size: 14px; font-weight: 500;
+    color: var(--text-secondary);
+    text-decoration: none; border-radius: 8px;
+    transition: all 0.15s;
+  }
+  .nav-links a:hover { color: var(--text-primary); background: var(--light-gray); }
+  .nav-right { display: flex; align-items: center; gap: 8px; }
+  .btn-outline {
+    padding: 8px 16px; border-radius: 10px;
+    border: 1.5px solid var(--border);
+    font-size: 13px; font-weight: 600;
+    color: var(--text-primary); background: none;
+    cursor: pointer; text-decoration: none;
+    transition: all 0.15s; display: inline-flex; align-items: center; gap: 6px;
+  }
+  .btn-outline:hover { border-color: var(--sol-purple); color: var(--sol-purple); }
+  .btn-primary {
+    padding: 8px 18px; border-radius: 10px;
+    border: none;
+    font-size: 13px; font-weight: 600;
+    color: #fff;
+    background: linear-gradient(135deg, var(--sol-purple), #7a32d4);
+    cursor: pointer; text-decoration: none;
+    transition: all 0.15s; display: inline-flex; align-items: center; gap: 6px;
+    box-shadow: 0 2px 8px rgba(153,69,255,0.3);
+  }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(153,69,255,0.4); }
+  .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
+  .hamburger span {
+    display: block; width: 22px; height: 2px;
+    background: var(--text-primary); margin: 5px 0;
+    border-radius: 2px; transition: all 0.3s;
+  }
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hamburger { display: block; }
+    .nav-desktop-btns { display: none; }
+  }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 80px 24px 64px;
+    text-align: center;
+    background: linear-gradient(180deg, #faf8ff 0%, #fff 100%);
+    border-bottom: 1px solid var(--border);
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
+    width: 600px; height: 400px;
+    background: radial-gradient(ellipse, rgba(153,69,255,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 12px; border-radius: 100px;
+    border: 1.5px solid rgba(153,69,255,0.2);
+    background: rgba(153,69,255,0.05);
+    font-size: 12px; font-weight: 600;
+    color: var(--sol-purple); margin-bottom: 24px;
+    letter-spacing: 0.3px;
+  }
+  .hero-badge-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--sol-green);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(0.8); }
+  }
+  .hero h1 {
+    font-size: clamp(32px, 6vw, 64px);
+    font-weight: 700; letter-spacing: -1.5px;
+    line-height: 1.1; margin-bottom: 20px;
+    color: var(--text-primary);
+  }
+  .hero h1 em {
+    font-style: normal;
+    background: linear-gradient(135deg, var(--sol-purple) 0%, #c084fc 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-sub {
+    font-size: clamp(15px, 2.5vw, 18px);
+    color: var(--text-secondary); max-width: 520px;
+    margin: 0 auto 32px; line-height: 1.7;
+  }
+  .hero-ctas {
+    display: flex; gap: 12px; justify-content: center;
+    flex-wrap: wrap; margin-bottom: 48px;
+  }
+  .hero-cta-primary {
+    padding: 14px 28px; border-radius: 12px; border: none;
+    font-size: 15px; font-weight: 700;
+    color: #fff;
+    background: linear-gradient(135deg, var(--sol-purple), #7a32d4);
+    cursor: pointer; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    box-shadow: 0 4px 20px rgba(153,69,255,0.35);
+    transition: all 0.2s;
+  }
+  .hero-cta-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(153,69,255,0.45); }
+  .hero-cta-secondary {
+    padding: 14px 28px; border-radius: 12px;
+    border: 1.5px solid var(--border);
+    font-size: 15px; font-weight: 600;
+    color: var(--text-primary); background: #fff;
+    cursor: pointer; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: all 0.2s;
+  }
+  .hero-cta-secondary:hover { border-color: var(--sol-purple); color: var(--sol-purple); }
+  .hero-stats {
+    display: flex; gap: 40px; justify-content: center;
+    flex-wrap: wrap;
+  }
+  .hero-stat { text-align: center; }
+  .hero-stat-num {
+    font-size: 24px; font-weight: 700; color: var(--text-primary);
+    letter-spacing: -0.5px;
+  }
+  .hero-stat-label { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+
+  /* ── BANNER STRIP ── */
+  .banner-strip {
+    background: linear-gradient(135deg, var(--sol-purple), #7a32d4);
+    padding: 14px 24px; text-align: center;
+    color: #fff; font-size: 14px; font-weight: 500;
+  }
+  .banner-strip a { color: var(--sol-green); font-weight: 700; text-decoration: none; }
+  .banner-strip a:hover { text-decoration: underline; }
+
+  /* ── SECTION COMMON ── */
+  section { padding: 64px 24px; }
+  .section-inner { max-width: 1200px; margin: 0 auto; }
+  .section-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--sol-purple);
+    margin-bottom: 8px;
+  }
+  .section-title {
+    font-size: clamp(22px, 4vw, 36px); font-weight: 700;
+    letter-spacing: -0.8px; margin-bottom: 12px;
+  }
+  .section-sub {
+    font-size: 15px; color: var(--text-secondary);
+    max-width: 520px; line-height: 1.7;
+  }
+
+  /* ── TOKEN LAUNCH BANNER ── */
+  .token-section {
+    background: var(--off-white); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  }
+  .token-card {
+    background: #fff; border-radius: 20px;
+    border: 1.5px solid var(--border);
+    padding: 40px; display: flex;
+    align-items: center; justify-content: space-between;
+    gap: 32px; flex-wrap: wrap;
+    box-shadow: var(--card-shadow);
+    position: relative; overflow: hidden;
+  }
+  .token-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--sol-purple), var(--sol-green));
+  }
+  .token-info { flex: 1; min-width: 240px; }
+  .token-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 10px; border-radius: 100px;
+    background: #fff3e0; border: 1px solid #ffc107;
+    font-size: 11px; font-weight: 700; color: #e65100;
+    letter-spacing: 0.5px; text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .token-name {
+    font-size: 32px; font-weight: 800; letter-spacing: -1px;
+    color: var(--text-primary); margin-bottom: 8px;
+  }
+  .token-name span { color: var(--sol-purple); }
+  .token-desc { font-size: 15px; color: var(--text-secondary); line-height: 1.6; }
+  .token-meta {
+    display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap;
+  }
+  .token-meta-item {
+    background: var(--off-white); border: 1px solid var(--border);
+    border-radius: 8px; padding: 10px 16px;
+    font-size: 13px;
+  }
+  .token-meta-item strong { display: block; font-size: 16px; font-weight: 700; color: var(--text-primary); }
+  .token-meta-item span { color: var(--text-muted); }
+  .token-cta { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
+  .btn-launch {
+    padding: 16px 32px; border-radius: 14px; border: none;
+    font-size: 16px; font-weight: 700;
+    color: #fff;
+    background: linear-gradient(135deg, var(--sol-purple), #7a32d4);
+    cursor: pointer; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    box-shadow: 0 4px 20px rgba(153,69,255,0.35);
+    transition: all 0.2s; white-space: nowrap;
+  }
+  .btn-launch:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(153,69,255,0.45); }
+  .powered-by {
+    font-size: 12px; color: var(--text-muted);
+    display: flex; align-items: center; gap: 4px;
+  }
+  .sol-dot {
+    width: 16px; height: 16px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--sol-purple), var(--sol-green));
+    display: inline-block;
+  }
+
+  /* ── FILTERS ── */
+  .filters-bar {
+    display: flex; gap: 8px; flex-wrap: wrap;
+    align-items: center; margin-bottom: 24px;
+  }
+  .filter-btn {
+    padding: 7px 14px; border-radius: 100px;
+    border: 1.5px solid var(--border);
+    font-size: 13px; font-weight: 500;
+    color: var(--text-secondary); background: #fff;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .filter-btn:hover, .filter-btn.active {
+    border-color: var(--sol-purple);
+    color: var(--sol-purple);
+    background: rgba(153,69,255,0.04);
+  }
+  .filters-right { margin-left: auto; }
+  .search-box {
+    display: flex; align-items: center; gap: 8px;
+    border: 1.5px solid var(--border); border-radius: 10px;
+    padding: 8px 14px; background: #fff;
+  }
+  .search-box input {
+    border: none; outline: none; font-size: 13px;
+    font-family: inherit; color: var(--text-primary);
+    width: 180px; background: transparent;
+  }
+  .search-box input::placeholder { color: var(--text-muted); }
+
+  /* ── AGENT GRID ── */
+  .agents-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .agent-card {
+    background: #fff; border-radius: 16px;
+    border: 1.5px solid var(--border);
+    padding: 20px; cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: var(--card-shadow);
+    position: relative;
+  }
+  .agent-card:hover {
+    border-color: rgba(153,69,255,0.3);
+    box-shadow: var(--card-shadow-hover);
+    transform: translateY(-2px);
+  }
+  .agent-card-header {
+    display: flex; align-items: flex-start; gap: 12px;
+    margin-bottom: 12px;
+  }
+  .agent-avatar {
+    width: 44px; height: 44px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; flex-shrink: 0;
+    border: 1.5px solid var(--border);
+  }
+  .agent-info { flex: 1; min-width: 0; }
+  .agent-name {
+    font-size: 15px; font-weight: 700; color: var(--text-primary);
+    letter-spacing: -0.2px; margin-bottom: 2px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .agent-ticker {
+    font-size: 12px; font-weight: 600; color: var(--sol-purple);
+    font-family: 'DM Mono', monospace;
+  }
+  .agent-badge {
+    padding: 3px 8px; border-radius: 100px;
+    font-size: 11px; font-weight: 600;
+    margin-left: auto;
+  }
+  .badge-live { background: #e8fdf2; color: #059669; }
+  .badge-soon { background: #fff3e0; color: #d97706; }
+  .badge-new { background: #ede9fe; color: #7c3aed; }
+  .agent-desc {
+    font-size: 13px; color: var(--text-secondary);
+    line-height: 1.55; margin-bottom: 14px;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .agent-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+  .tag {
+    padding: 3px 8px; border-radius: 6px;
+    font-size: 11px; font-weight: 600;
+    background: var(--tag-bg); color: var(--tag-color);
+  }
+  .agent-stats {
+    display: flex; gap: 0; border-top: 1px solid var(--border);
+    margin: 0 -20px -20px; padding: 12px 20px;
+    background: var(--off-white); border-radius: 0 0 14px 14px;
+  }
+  .agent-stat { flex: 1; text-align: center; }
+  .agent-stat:not(:last-child) { border-right: 1px solid var(--border); }
+  .agent-stat-val {
+    font-size: 13px; font-weight: 700; color: var(--text-primary);
+    font-family: 'DM Mono', monospace;
+  }
+  .agent-stat-val.green { color: #059669; }
+  .agent-stat-key { font-size: 10px; color: var(--text-muted); margin-top: 1px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  /* ── HOW IT WORKS ── */
+  .how-section { background: var(--off-white); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .steps-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px; margin-top: 40px;
+  }
+  .step-card {
+    background: #fff; border-radius: 16px;
+    border: 1.5px solid var(--border);
+    padding: 28px 24px;
+    box-shadow: var(--card-shadow);
+  }
+  .step-num {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: linear-gradient(135deg, var(--sol-purple), #7a32d4);
+    color: #fff; font-size: 14px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 16px;
+  }
+  .step-title { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+  .step-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+
+  /* ── FEATURES ── */
+  .features-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px; margin-top: 40px;
+  }
+  .feature-card {
+    background: #fff; border-radius: 16px;
+    border: 1.5px solid var(--border); padding: 28px;
+    box-shadow: var(--card-shadow); transition: all 0.2s;
+  }
+  .feature-card:hover { border-color: rgba(153,69,255,0.25); box-shadow: var(--card-shadow-hover); }
+  .feature-icon {
+    font-size: 28px; margin-bottom: 16px;
+    display: block;
+  }
+  .feature-title { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+  .feature-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.65; }
+
+  /* ── DISCLAIMER ── */
+  .disclaimer-section { background: var(--light-gray); border-top: 1px solid var(--border); }
+  .disclaimer-box {
+    background: #fff; border-radius: 12px;
+    border: 1.5px solid var(--border); padding: 20px 24px;
+    font-size: 13px; color: var(--text-muted); line-height: 1.7;
+  }
+  .disclaimer-box strong { color: var(--text-secondary); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--text-primary); color: rgba(255,255,255,0.7);
+    padding: 48px 24px 32px;
+  }
+  .footer-inner { max-width: 1200px; margin: 0 auto; }
+  .footer-top {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 32px; flex-wrap: wrap; margin-bottom: 40px;
+  }
+  .footer-brand { max-width: 280px; }
+  .footer-logo {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 12px;
+  }
+  .footer-logo-img { height: 30px; width: 30px; border-radius: 7px; object-fit: cover; }
+  .footer-logo-text { font-size: 15px; font-weight: 700; color: #fff; }
+  .footer-brand-desc { font-size: 13px; line-height: 1.7; }
+  .footer-links-col h4 { font-size: 12px; font-weight: 700; color: #fff; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 16px; }
+  .footer-links-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-links-col a { font-size: 14px; color: rgba(255,255,255,0.6); text-decoration: none; transition: color 0.15s; }
+  .footer-links-col a:hover { color: #fff; }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 24px; display: flex;
+    justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 12px;
+  }
+  .footer-bottom-left { font-size: 13px; }
+  .footer-social { display: flex; gap: 12px; }
+  .social-btn {
+    width: 36px; height: 36px; border-radius: 8px;
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1);
+    display: flex; align-items: center; justify-content: center;
+    text-decoration: none; color: rgba(255,255,255,0.7);
+    font-size: 14px; font-weight: 700; transition: all 0.15s;
+  }
+  .social-btn:hover { background: rgba(255,255,255,0.15); color: #fff; }
+
+  /* ── WALLET CONNECT ── */
+  .connect-wrap { position: relative; }
+  .wallet-dropdown {
+    display: none; position: absolute; right: 0; top: calc(100% + 8px);
+    background: #fff; border-radius: 14px; border: 1.5px solid var(--border);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12); padding: 8px; min-width: 220px;
+    z-index: 999;
+  }
+  .wallet-dropdown.open { display: block; }
+  .wallet-option {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 12px; border-radius: 10px; cursor: pointer;
+    transition: background 0.1s; font-size: 14px; font-weight: 500;
+  }
+  .wallet-option:hover { background: var(--off-white); }
+  .wallet-option-icon { font-size: 18px; }
+
+  /* ── LIVE TICKER ── */
+  .live-ticker {
+    background: var(--text-primary); padding: 10px 0;
+    overflow: hidden; border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .ticker-track {
+    display: flex; gap: 0; animation: tickerSlide 30s linear infinite;
+    width: max-content;
+  }
+  @keyframes tickerSlide {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .ticker-item {
+    padding: 0 32px; white-space: nowrap;
+    font-size: 12px; font-family: 'DM Mono', monospace;
+    color: rgba(255,255,255,0.6);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .ticker-item span.up { color: var(--sol-green); }
+  .ticker-item span.name { color: rgba(255,255,255,0.9); font-weight: 600; }
+  .ticker-divider { color: rgba(255,255,255,0.2); }
+
+  /* ── MOBILE ── */
+  @media (max-width: 640px) {
+    section { padding: 48px 16px; }
+    .hero { padding: 56px 16px 48px; }
+    .token-card { flex-direction: column; }
+    .footer-top { flex-direction: column; }
+    .agents-grid { grid-template-columns: 1fr; }
+    .steps-grid { grid-template-columns: 1fr; }
+    .filters-bar { flex-direction: column; align-items: stretch; }
+    .filters-right { margin-left: 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- LIVE TICKER -->
+<div class="live-ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <div class="ticker-item"><span class="name">$OPENAGENT</span> <span>—</span> <span class="up">LAUNCHING SOON</span></div>
+    <div class="ticker-item ticker-divider">·</div>
+    <div class="ticker-item"><span class="name">$TRADEX</span> <span>$0.0042</span> <span class="up">+18.4%</span></div>
+    <div class="ticker-item ticker-divider">·</div>
+    <div class="ticker-item"><span class="name">$SCOUT</span> <span>$0.0087</span> <span class="up">+6.2%</span></div>
+    <div class="ticker-item ticker-divider">·</div>
+    <div class="ticker-item"><span class="name">$NORA</span> <span>$0.0031</span> <span class="up">+22.1%</span></div>
+    <div class="ticker-item ticker-divider">·</div>
+    <div class="ticker-item"><span class="name">$ATLAS</span> <span>$0.0119</span> <span class="up">+4.7%</span></div>
+    <div class="ticker-item ticker-divider">·</div>
+    <div class="ticker-item"><span class="name">$FLUX</span> <span>$0.0055</span> <span class="up">+9.3%</span></div>
+    <div class="ticker-item ticker-divider">·</div>
+    <!-- duplicate for seamless loop -->
+    <div class="ticker-item"><span class="name">$OPENAGENT</span> <span>—</span> <span class="up">LAUNCHING SOON</span></div>
+    <div class="ticker-item ticker-divider">·</div>
+    <div class="ticker-item"><span class="name">$TRADEX</span> <span>$0.0042</span> <span class="up">+18.4%</span></div>
+    <div class="ticker-item ticker-divider">·</div>
+    <div class="ticker-item"><span class="name">$SCOUT</span> <span>$0.0087</span> <span class="up">+6.2%</span></div>
+    <div class="ticker-item ticker-divider">·</div>
+    <div class="ticker-item"><span class="name">$NORA</span> <span>$0.0031</span> <span class="up">+22.1%</span></div>
+    <div class="ticker-item ticker-divider">·</div>
+    <div class="ticker-item"><span class="name">$ATLAS</span> <span>$0.0119</span> <span class="up">+4.7%</span></div>
+    <div class="ticker-item ticker-divider">·</div>
+    <div class="ticker-item"><span class="name">$FLUX</span> <span>$0.0055</span> <span class="up">+9.3%</span></div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a class="logo-wrap" href="#">
+      <img class="logo-img" src="data:image/jpeg;base64,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" alt="AgentMarket.exchange Logo">
+      <span class="logo-text">agentmarket<span>.exchange</span></span>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="#agents">Explore</a></li>
+      <li><a href="#launch">Launch</a></li>
+      <li><a href="#how">How It Works</a></li>
+      <li><a href="https://x.com/agentmarket_ex" target="_blank" rel="noopener">𝕏 Follow</a></li>
+    </ul>
+
+    <div class="nav-right">
+      <div class="nav-desktop-btns" style="display:flex;gap:8px;align-items:center;">
+        <a href="https://x.com/agentmarket_ex" target="_blank" rel="noopener" class="btn-outline">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.259 5.63L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/></svg>
+          @agentmarket_ex
+        </a>
+        <div class="connect-wrap">
+          <button class="btn-primary" id="connectBtn" onclick="toggleWallet()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3H8a2 2 0 0 0-2 2v2h12V5a2 2 0 0 0-2-2z"/><circle cx="16" cy="14" r="1.5" fill="currentColor"/></svg>
+            Connect Wallet
+          </button>
+          <div class="wallet-dropdown" id="walletDropdown">
+            <div class="wallet-option" onclick="connectWallet('Phantom')"><span class="wallet-option-icon">👻</span>Phantom</div>
+            <div class="wallet-option" onclick="connectWallet('Solflare')"><span class="wallet-option-icon">🔥</span>Solflare</div>
+            <div class="wallet-option" onclick="connectWallet('Backpack')"><span class="wallet-option-icon">🎒</span>Backpack</div>
+            <div class="wallet-option" onclick="connectWallet('Glow')"><span class="wallet-option-icon">✨</span>Glow</div>
+          </div>
+        </div>
+      </div>
+      <button class="hamburger" aria-label="Menu" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">
+    <div class="hero-badge-dot"></div>
+    Live on Solana — Mainnet Beta
+  </div>
+  <h1>The AI Agent<br>Launchpad &amp; Market<br>on <em>Solana</em></h1>
+  <p class="hero-sub">Discover, launch, and trade tokenized AI agents. Fair launches, bonding curves, community-driven — all on the fastest blockchain.</p>
+  <div class="hero-ctas">
+    <a href="#agents" class="hero-cta-primary">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      Explore Agents
+    </a>
+    <a href="#launch" class="hero-cta-secondary">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12l7-7 7 7"/></svg>
+      Launch Your Agent
+    </a>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-num">$2.4M</div>
+      <div class="hero-stat-label">Total Volume</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">142</div>
+      <div class="hero-stat-label">Agents Live</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">8,400+</div>
+      <div class="hero-stat-label">Traders</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">~$0.001</div>
+      <div class="hero-stat-label">Avg Tx Fee</div>
+    </div>
+  </div>
+</section>
+
+<!-- $OPENAGENT TOKEN BANNER -->
+<section class="token-section" id="launch">
+  <div class="section-inner">
+    <div class="token-card">
+      <div class="token-info">
+        <div class="token-badge">🚀 Token Launch</div>
+        <div class="token-name"><span>$OPENAGENT</span> — Official Platform Token</div>
+        <div class="token-desc">The native governance and utility token of AgentMarket.exchange. Stake to earn platform fees, vote on listings, and get early access to new agent launches. Fair launch — no presale, no VC allocation.</div>
+        <div class="token-meta">
+          <div class="token-meta-item">
+            <strong>1B</strong>
+            <span>Total Supply</span>
+          </div>
+          <div class="token-meta-item">
+            <strong>0%</strong>
+            <span>Team Allocation</span>
+          </div>
+          <div class="token-meta-item">
+            <strong>Fair</strong>
+            <span>Launch Model</span>
+          </div>
+          <div class="token-meta-item">
+            <strong>Solana</strong>
+            <span>Network</span>
+          </div>
+        </div>
+      </div>
+      <div class="token-cta">
+        <a href="https://kickstart.easya.io/" target="_blank" rel="noopener" class="btn-launch">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          Buy $OPENAGENT
+        </a>
+        <div class="powered-by">
+          <span class="sol-dot"></span>
+          Powered by Solana · Fair Launch via EasyA Kickstart
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AGENTS MARKETPLACE -->
+<section id="agents">
+  <div class="section-inner">
+    <div class="section-label">Marketplace</div>
+    <h2 class="section-title">Live AI Agents</h2>
+    <p class="section-sub">Permissionless. Anyone can launch. Trade instantly with Solana-speed finality.</p>
+
+    <div style="margin-top:32px;">
+      <div class="filters-bar">
+        <button class="filter-btn active" onclick="filterAgents(this,'all')">All</button>
+        <button class="filter-btn" onclick="filterAgents(this,'trending')">🔥 Trending</button>
+        <button class="filter-btn" onclick="filterAgents(this,'new')">✨ New</button>
+        <button class="filter-btn" onclick="filterAgents(this,'defi')">DeFi</button>
+        <button class="filter-btn" onclick="filterAgents(this,'trading')">Trading</button>
+        <button class="filter-btn" onclick="filterAgents(this,'data')">Data</button>
+        <button class="filter-btn" onclick="filterAgents(this,'social')">Social</button>
+        <div class="filters-right">
+          <div class="search-box">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9090b0" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <input type="text" placeholder="Search agents..." oninput="searchAgents(this.value)">
+          </div>
+        </div>
+      </div>
+
+      <div class="agents-grid" id="agentsGrid">
+
+        <!-- Agent 1 -->
+        <div class="agent-card" data-category="trading trending">
+          <div class="agent-card-header">
+            <div class="agent-avatar" style="background:#f0f7ff;">⚡</div>
+            <div class="agent-info">
+              <div class="agent-name">TradeX Alpha</div>
+              <div class="agent-ticker">$TRADEX</div>
+            </div>
+            <span class="agent-badge badge-live">● Live</span>
+          </div>
+          <div class="agent-desc">Autonomous on-chain trading agent. Executes MEV-protected swaps across Solana DEXs using real-time signal analysis and dynamic slippage management.</div>
+          <div class="agent-tags">
+            <span class="tag">Trading</span>
+            <span class="tag">MEV-Protected</span>
+            <span class="tag">Auto-Rebalance</span>
+          </div>
+          <div class="agent-stats">
+            <div class="agent-stat">
+              <div class="agent-stat-val">$42.8K</div>
+              <div class="agent-stat-key">Market Cap</div>
+            </div>
+            <div class="agent-stat">
+              <div class="agent-stat-val green">+18.4%</div>
+              <div class="agent-stat-key">24h Change</div>
+            </div>
+            <div class="agent-stat">
+              <div class="agent-stat-val">$12.1K</div>
+              <div class="agent-stat-key">24h Volume</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Agent 2 -->
+        <div class="agent-card" data-category="data new">
+          <div class="agent-card-header">
+            <div class="agent-avatar" style="background:#f0fff7;">🔭</div>
+            <div class="agent-info">
+              <div class="agent-name">Scout AI</div>
+              <div class="agent-ticker">$SCOUT</div>
+            </div>
+            <span class="agent-badge badge-new">✦ New</span>
+          </div>
+          <div class="agent-desc">On-chain intelligence agent that monitors wallet movements, flags whale activity, and surfaces alpha signals from Solana blockchain data in real-time.</div>
+          <div class="agent-tags">
+            <span class="tag">Data</span>
+            <span class="tag">Whale Tracking</span>
+            <span class="tag">Alpha Signals</span>
+          </div>
+          <div class="agent-stats">
+            <div class="agent-stat">
+              <div class="agent-stat-val">$87.2K</div>
+              <div class="agent-stat-key">Market Cap</div>
+            </div>
+            <div class="agent-stat">
+              <div class="agent-stat-val green">+6.2%</div>
+              <div class="agent-stat-key">24h Change</div>
+            </div>
+            <div class="agent-stat">
+              <div class="agent-stat-val">$31.4K</div>
+              <div class="agent-stat-key">24h Volume</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Agent 3 -->
+        <div class="agent-card" data-category="social trending">
+          <div class="agent-card-header">
+            <div class="agent-avatar" style="background:#fff7f0;">🌟</div>
+            <div class="agent-info">
+              <div class="agent-name">Nora Social</div>
+              <div class="agent-ticker">$NORA</div>
+            </div>
+            <span class="agent-badge badge-live">● Live</span>
+          </div>
+          <div class="agent-desc">AI-powered community manager and social agent. Automates engagement, identifies trending narratives in crypto X/Twitter, and generates sentiment reports.</div>
+          <div class="agent-tags">
+            <span class="tag">Social</span>
+            <span class="tag">Sentiment</span>
+            <span class="tag">X / Twitter</span>
+          </div>
+          <div class="agent-stats">
+            <div class="agent-stat">
+              <div class="agent-stat-val">$31.5K</div>
+              <div class="agent-stat-key">Market Cap</div>
+            </div>
+            <div class="agent-stat">
+              <div class="agent-stat-val green">+22.1%</div>
+              <div class="agent-stat-key">24h Change</div>
+            </div>
+            <div class="agent-stat">
+              <div class="agent-stat-val">$8.9K</div>
+              <div class="agent-stat-key">24h Volume</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Agent 4 -->
+        <div class="agent-card" data-category="defi trending">
+          <div class="agent-card-header">
+            <div class="agent-avatar" style="background:#f5f0ff;">🗺️</div>
+            <div class="agent-info">
+              <div class="agent-name">Atlas DeFi</div>
+              <div class="agent-ticker">$ATLAS</div>
+            </div>
+            <span class="agent-badge badge-live">● Live</span>
+          </div>
+          <div class="agent-desc">Yield optimization agent that autonomously allocates liquidity across Solana DeFi protocols — Raydium, Orca, Marginfi — to maximize risk-adjusted returns.</div>
+          <div class="agent-tags">
+            <span class="tag">DeFi</span>
+            <span class="tag">Yield</span>
+            <span class="tag">Auto-Compound</span>
+          </div>
+          <div class="agent-stats">
+            <div class="agent-stat">
+              <div class="agent-stat-val">$119K</div>
+              <div class="agent-stat-key">Market Cap</div>
+            </div>
+            <div class="agent-stat">
+              <div class="agent-stat-val green">+4.7%</div>
+              <div class="agent-stat-key">24h Change</div>
+            </div>
+            <div class="agent-stat">
+              <div class="agent-stat-val">$44.2K</div>
+              <div class="agent-stat-key">24h Volume</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Agent 5 -->
+        <div class="agent-card" data-category="data new">
+          <div class="agent-card-header">
+            <div class="agent-avatar" style="background:#f0f9ff;">💧</div>
+            <div class="agent-info">
+              <div class="agent-name">Flux Oracle</div>
+              <div class="agent-ticker">$FLUX</div>
+            </div>
+            <span class="agent-badge badge-new">✦ New</span>
+          </div>
+          <div class="agent-desc">Decentralized oracle agent that aggregates off-chain data sources and pushes verified price feeds on-chain. Integrates with Pyth and Switchboard networks.</div>
+          <div class="agent-tags">
+            <span class="tag">Oracle</span>
+            <span class="tag">Price Feed</span>
+            <span class="tag">Data</span>
+          </div>
+          <div class="agent-stats">
+            <div class="agent-stat">
+              <div class="agent-stat-val">$55.3K</div>
+              <div class="agent-stat-key">Market Cap</div>
+            </div>
+            <div class="agent-stat">
+              <div class="agent-stat-val green">+9.3%</div>
+              <div class="agent-stat-key">24h Change</div>
+            </div>
+            <div class="agent-stat">
+              <div class="agent-stat-val">$18.7K</div>
+              <div class="agent-stat-key">24h Volume</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Agent 6 -->
+        <div class="agent-card" data-category="defi">
+          <div class="agent-card-header">
+            <div class="agent-avatar" style="background:#fff0f5;">🛡️</div>
+            <div class="agent-info">
+              <div class="agent-name">Sentinel Guard</div>
+              <div class="agent-ticker">$SNTNL</div>
+            </div>
+            <span class="agent-badge badge-soon">◐ Soon</span>
+          </div>
+          <div class="agent-desc">Smart contract security agent. Continuously monitors on-chain activity for anomalies, rug pull patterns, and exploit signatures — alerting holders in real-time.</div>
+          <div class="agent-tags">
+            <span class="tag">Security</span>
+            <span class="tag">Monitoring</span>
+            <span class="tag">Alerts</span>
+          </div>
+          <div class="agent-stats">
+            <div class="agent-stat">
+              <div class="agent-stat-val">—</div>
+              <div class="agent-stat-key">Market Cap</div>
+            </div>
+            <div class="agent-stat">
+              <div class="agent-stat-val">—</div>
+              <div class="agent-stat-key">24h Change</div>
+            </div>
+            <div class="agent-stat">
+              <div class="agent-stat-val">—</div>
+              <div class="agent-stat-key">Launching Soon</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section" id="how">
+  <div class="section-inner">
+    <div class="section-label">Process</div>
+    <h2 class="section-title">How It Works</h2>
+    <p class="section-sub">From idea to live market in minutes. Fair, transparent, and permissionless on Solana.</p>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-title">Connect Your Wallet</div>
+        <div class="step-desc">Link any Solana wallet — Phantom, Solflare, Backpack. No sign-up, no KYC. Your keys, your agents.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-title">Describe Your Agent</div>
+        <div class="step-desc">Name your AI agent, define its capabilities, set the token ticker, and configure the bonding curve parameters.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-title">Fair Launch</div>
+        <div class="step-desc">Your agent token launches with a transparent bonding curve. No presale. No insider allocation. Community-driven price discovery from block zero.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-title">Trade &amp; Grow</div>
+        <div class="step-desc">Holders trade instantly with Solana-speed finality. Agent usage drives token demand. Reach market cap threshold to graduate to full DEX listing.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section>
+  <div class="section-inner">
+    <div class="section-label">Why AgentMarket</div>
+    <h2 class="section-title">Built for the Agent Economy</h2>
+    <p class="section-sub">Every feature designed for AI-native token launches on Solana's high-performance infrastructure.</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <span class="feature-icon">⚡</span>
+        <div class="feature-title">Solana Speed</div>
+        <div class="feature-desc">Sub-second finality, near-zero fees (~$0.001 per tx), and 65,000 TPS capacity means your agent trades at the speed of AI.</div>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">📈</span>
+        <div class="feature-title">Bonding Curve Launches</div>
+        <div class="feature-desc">Every agent launches on a fair bonding curve. Price increases with demand. Transparent, predictable, and manipulation-resistant.</div>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🔓</span>
+        <div class="feature-title">Permissionless</div>
+        <div class="feature-desc">Anyone can launch an AI agent token. We don't gatekeep. Do your own research — we surface the data, you make the calls.</div>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🏛️</span>
+        <div class="feature-title">$OPENAGENT Governance</div>
+        <div class="feature-desc">Stake $OPENAGENT to vote on platform upgrades, whitelist new agent categories, and earn a share of platform trading fees.</div>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🤝</span>
+        <div class="feature-title">DEX Graduation</div>
+        <div class="feature-desc">Agents that hit their market cap milestone automatically graduate to full Raydium / Orca liquidity pools with locked LP.</div>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">📊</span>
+        <div class="feature-title">Real-Time Analytics</div>
+        <div class="feature-desc">Live price feeds, holder distribution, volume charts, and agent performance metrics — all in one place, on-chain verified.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DISCLAIMER -->
+<section class="disclaimer-section">
+  <div class="section-inner">
+    <div class="disclaimer-box">
+      <strong>⚠️ Risk Disclosure:</strong> AgentMarket.exchange is a permissionless AI agent launchpad on Solana. You are not investing in companies, equity, ownership rights, revenue, or financial instruments. There is no expectation of profit or return from any launch on this platform. Anyone can launch — we do not vet every agent or team. These launches are highly speculative; many will fail and may become worthless. Never invest more than you can afford to lose. Always do your own due diligence. <a href="#" style="color:var(--sol-purple)">View Terms</a> · <a href="#" style="color:var(--sol-purple)">Privacy Policy</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <img class="footer-logo-img" src="data:image/jpeg;base64,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vvIPfHb96TmotonSWhrfabfq7UOt2JBu7DdwahuOoZcbCt24B2kkAYxzzQS/UF4smj7O7c7tcI0CGz3rWd3oB2JHaT2Ado9aqq0+I3h7eriY0TVttacI7H3EraHuCwKrqXre7ePF01HqrUb8u93CSXBCYcU6ysOEhAQEJVgJGAogJPEEDjVG3nRL9v1Hco8PUd5srqXFNlMNbbbrgUcbVlpLYCucEJHPnQXL4neK9gt+hpem9K6gjypExm31wI6g9shZ3L3K24TkgcD35I6V5vh43qS6yrjpW4XSXdX5OHYkiWXFPuoHADC8hTR+kklGS1wUOCqpXr7eZe1Lc5C4Ey13G0QI7rSvJkR1NJcyh1HEqUsJScjIGD7K0/wCj9S3mT5yIPJXmvOW7iEtcD8JKjgfbQXP4X6Jj3W0Wr9J7FaomFI8hs7W3VqHo4sJOVI7hkJHIdQrRNYagvalDLQ8pKdoWvGFrxy3EHl37+HZV4eEeiLvoTTkuJfVslmbLU8hhKw4poYA+oQSASSTjPLlVv0ClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUClKUH//2Q==" alt="Logo">
+          <span class="footer-logo-text">agentmarket.exchange</span>
+        </div>
+        <p class="footer-brand-desc">The premier AI agent launchpad and marketplace built on Solana. Fast, fair, and permissionless.</p>
+      </div>
+      <div class="footer-links-col">
+        <h4>Platform</h4>
+        <ul>
+          <li><a href="#agents">Explore Agents</a></li>
+          <li><a href="#launch">Launch Agent</a></li>
+          <li><a href="#how">How It Works</a></li>
+          <li><a href="https://kickstart.easya.io/" target="_blank">$OPENAGENT Sale</a></li>
+        </ul>
+      </div>
+      <div class="footer-links-col">
+        <h4>Community</h4>
+        <ul>
+          <li><a href="https://x.com/agentmarket_ex" target="_blank">𝕏 Twitter / X</a></li>
+          <li><a href="#">Discord</a></li>
+          <li><a href="#">Telegram</a></li>
+          <li><a href="#">GitHub</a></li>
+        </ul>
+      </div>
+      <div class="footer-links-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Risk Disclosure</a></li>
+          <li><a href="#">Fee Schedule</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-bottom-left">
+        © 2025 AgentMarket.exchange — agentmarket.exchange — All rights reserved.
+        <div style="margin-top:4px;font-size:12px;opacity:0.5;">Built on <span style="color:var(--sol-green)">Solana</span></div>
+      </div>
+      <div class="footer-social">
+        <a href="https://x.com/agentmarket_ex" target="_blank" rel="noopener" class="social-btn" title="Follow on X">𝕏</a>
+        <a href="#" class="social-btn" title="Discord">💬</a>
+        <a href="#" class="social-btn" title="Telegram">✈</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Wallet connect
+  function toggleWallet() {
+    const d = document.getElementById('walletDropdown');
+    d.classList.toggle('open');
+  }
+  function connectWallet(name) {
+    document.getElementById('walletDropdown').classList.remove('open');
+    const btn = document.getElementById('connectBtn');
+    btn.innerHTML = '✓ ' + name + ' Connected';
+    btn.style.background = 'linear-gradient(135deg,#059669,#047857)';
+  }
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.connect-wrap')) {
+      document.getElementById('walletDropdown').classList.remove('open');
+    }
+  });
+
+  // Mobile menu
+  function toggleMenu() {
+    const links = document.querySelector('.nav-links');
+    const isOpen = links.style.display === 'flex';
+    links.style.display = isOpen ? 'none' : 'flex';
+    if (!isOpen) {
+      links.style.position = 'absolute';
+      links.style.top = '64px';
+      links.style.left = '0'; links.style.right = '0';
+      links.style.background = '#fff';
+      links.style.borderBottom = '1px solid #e4e4ef';
+      links.style.padding = '12px 24px 16px';
+      links.style.flexDirection = 'column';
+      links.style.zIndex = '99';
+    }
+  }
+
+  // Filter agents
+  function filterAgents(btn, cat) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const cards = document.querySelectorAll('.agent-card');
+    cards.forEach(card => {
+      if (cat === 'all') {
+        card.style.display = '';
+      } else {
+        const cats = card.dataset.category || '';
+        card.style.display = cats.includes(cat) ? '' : 'none';
+      }
+    });
+  }
+
+  // Search
+  function searchAgents(q) {
+    const cards = document.querySelectorAll('.agent-card');
+    const lq = q.toLowerCase();
+    cards.forEach(card => {
+      const text = card.innerText.toLowerCase();
+      card.style.display = text.includes(lq) ? '' : 'none';
+    });
+  }
+</script>
+</body>
+</html>
