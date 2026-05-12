@@ -3,31 +3,34 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AgentMarket.exchange — AI Agent Launchpad on Solana</title>
+<title>AgentMarket — AI Agent Launchpad</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #06060a;
-  --bg-2: #09090f;
-  --bg-3: #0d0d16;
-  --surface: #111118;
-  --surface-2: #17171f;
-  --border: rgba(255,255,255,0.06);
-  --border-glow: rgba(153,69,255,0.2);
-  --text-1: #f0eff8;
-  --text-2: #8e8ca8;
-  --text-3: #4a4862;
-  --accent: #9945FF;
-  --accent-bright: #b87aff;
-  --accent-dim: rgba(153,69,255,0.1);
-  --green: #14F195;
-  --green-dim: rgba(20,241,149,0.08);
-  --gold: #e8b84b;
-  --gold-dim: rgba(232,184,75,0.1);
-  --red: #ff5b5b;
-  --display: 'Syne', sans-serif;
-  --body: 'Space Grotesk', sans-serif;
+  --bg: #fafafa;
+  --bg-2: #f5f5f5;
+  --bg-3: #eeeeee;
+  --surface: #ffffff;
+  --surface-hover: #f8f8f8;
+  --border: rgba(0,0,0,0.06);
+  --border-strong: rgba(0,0,0,0.12);
+  --text-1: #111111;
+  --text-2: #666666;
+  --text-3: #999999;
+  --accent: #7c3aed;
+  --accent-bright: #8b5cf6;
+  --accent-dim: rgba(124,58,237,0.06);
+  --accent-light: rgba(124,58,237,0.1);
+  --green: #10b981;
+  --green-dim: rgba(16,185,129,0.08);
+  --gold: #f59e0b;
+  --gold-dim: rgba(245,158,11,0.08);
+  --red: #ef4444;
+  --red-dim: rgba(239,68,68,0.08);
+  --display: 'Space Grotesk', sans-serif;
+  --body: 'Inter', sans-serif;
   --mono: 'JetBrains Mono', monospace;
 }
 
@@ -40,17 +43,237 @@ body {
   color: var(--text-1);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
-  cursor: default;
 }
 
-/* Noise overlay */
-body::before {
+/* ── NAV ── */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(250,250,250,0.92);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 68px; padding: 0 24px; gap: 20px;
+}
+.logo-wrap {
+  display: flex; align-items: center; gap: 12px; text-decoration: none; flex-shrink: 0;
+}
+.logo-mark {
+  width: 36px; height: 36px;
+  border: 2px solid var(--accent);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--accent-dim);
+  flex-shrink: 0;
+}
+.logo-mark svg {
+  width: 20px; height: 20px;
+}
+.logo-wordmark {
+  font-family: var(--display); font-size: 18px; font-weight: 700;
+  color: var(--text-1); letter-spacing: -0.5px;
+}
+.logo-wordmark em { font-style: normal; color: var(--text-3); font-weight: 400; }
+.nav-pill {
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--green);
+  border: 1px solid rgba(16,185,129,0.3); border-radius: 20px;
+  padding: 3px 10px; background: var(--green-dim);
+}
+.nav-links {
+  display: flex; align-items: center; gap: 4px; list-style: none;
+}
+.nav-links a {
+  display: block; padding: 8px 16px; font-size: 14px; font-weight: 500;
+  color: var(--text-2); text-decoration: none; border-radius: 8px;
+  transition: all 0.15s;
+}
+.nav-links a:hover { color: var(--text-1); background: var(--bg-2); }
+.nav-right { display: flex; align-items: center; gap: 10px; }
+
+.btn-ghost {
+  padding: 9px 18px; border-radius: 8px; border: 1px solid var(--border-strong);
+  font-size: 14px; font-weight: 500; color: var(--text-2); background: none;
+  cursor: pointer; text-decoration: none;
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--body); transition: all 0.15s;
+}
+.btn-ghost:hover { border-color: var(--text-3); color: var(--text-1); }
+.btn-accent {
+  padding: 9px 18px; border-radius: 8px;
+  border: 1px solid var(--accent);
+  font-size: 14px; font-weight: 600; color: #fff;
+  background: var(--accent);
+  cursor: pointer; text-decoration: none;
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--body); transition: all 0.2s;
+}
+.btn-accent:hover { background: var(--accent-bright); transform: translateY(-1px); }
+
+.hamburger { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
+.hamburger span { display: block; width: 20px; height: 2px; background: var(--text-2); margin: 5px 0; border-radius: 1px; }
+@media (max-width: 768px) { .nav-links, .nav-desktop { display: none; } .hamburger { display: block; } }
+
+/* ── HERO ── */
+.hero {
+  padding: 64px 24px;
+  position: relative;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+.hero-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+.hero-left {
+  text-align: left;
+}
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--text-3);
+  margin-bottom: 24px; padding: 6px 14px;
+  border: 1px solid var(--border); border-radius: 24px;
+  background: var(--bg);
+}
+.hero-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
+
+.hero h1 {
+  font-family: var(--display); font-size: clamp(32px, 4.5vw, 56px);
+  font-weight: 700; letter-spacing: -1.5px; line-height: 1.1;
+  margin-bottom: 20px;
+  color: var(--text-1);
+}
+.hero h1 .h1-dim { color: var(--text-3); display: block; font-weight: 400; font-size: 0.5em; letter-spacing: 0; margin-bottom: 8px; }
+.hero h1 .h1-main { display: block; }
+.hero h1 .h1-sol {
+  background: linear-gradient(110deg, #7c3aed 0%, #6d28d9 50%, #059669 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.hero-sub {
+  font-size: 16px; color: var(--text-2);
+  max-width: 440px; margin-bottom: 32px; line-height: 1.7;
+}
+.hero-ctas {
+  display: flex; gap: 12px;
+  flex-wrap: wrap;
+}
+.cta-primary {
+  padding: 14px 24px; border-radius: 10px;
+  border: 1px solid var(--accent);
+  font-size: 15px; font-weight: 600; color: #fff;
+  background: var(--accent);
+  cursor: pointer; text-decoration: none;
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--body); transition: all 0.2s;
+}
+.cta-primary:hover { background: var(--accent-bright); transform: translateY(-1px); box-shadow: 0 4px 20px rgba(124,58,237,0.2); }
+.cta-secondary {
+  padding: 14px 24px; border-radius: 10px; border: 1px solid var(--border-strong);
+  font-size: 15px; font-weight: 500; color: var(--text-2); background: var(--bg);
+  cursor: pointer; text-decoration: none;
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--body); transition: all 0.15s;
+}
+.cta-secondary:hover { border-color: var(--text-3); color: var(--text-1); }
+
+/* Hero Right - Stats Card */
+.hero-right {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.hero-stats-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px;
+}
+.hero-stats-header {
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--text-3);
+  margin-bottom: 20px;
+  display: flex; align-items: center; gap: 8px;
+}
+.hero-stats-header::before {
   content: '';
-  position: fixed; inset: 0; z-index: 9999;
-  pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  opacity: 0.02;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--green);
+}
+.hero-stats-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.hero-stat-item {
+  padding: 12px 0;
+}
+.hero-stat-item:not(:last-child) {
+  border-bottom: 1px solid var(--border);
+}
+.hero-stat-num {
+  font-family: var(--display); font-size: 28px; font-weight: 700;
+  color: var(--text-1); letter-spacing: -0.5px; display: block;
+}
+.hero-stat-num.green { color: var(--green); }
+.hero-stat-label {
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--text-3); margin-top: 4px; display: block;
+}
+
+/* EasyA Banner */
+.easya-banner {
+  background: linear-gradient(135deg, rgba(124,58,237,0.05), rgba(16,185,129,0.05));
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.easya-banner:hover {
+  border-color: var(--accent);
+  background: linear-gradient(135deg, rgba(124,58,237,0.08), rgba(16,185,129,0.08));
+}
+.easya-icon {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  background: var(--accent);
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 18px; font-weight: 700;
+  flex-shrink: 0;
+}
+.easya-text {
+  flex: 1;
+}
+.easya-text strong {
+  font-size: 14px; font-weight: 600; color: var(--text-1); display: block;
+}
+.easya-text span {
+  font-size: 12px; color: var(--text-3); margin-top: 2px; display: block;
+}
+.easya-arrow {
+  color: var(--accent); font-size: 18px;
+}
+
+@media (max-width: 768px) {
+  .hero-inner {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .hero-left { text-align: center; }
+  .hero-sub { margin-left: auto; margin-right: auto; }
+  .hero-ctas { justify-content: center; }
+  .hero-stats-row { grid-template-columns: 1fr 1fr; }
 }
 
 /* ── TICKER ── */
@@ -59,705 +282,417 @@ body::before {
   border-bottom: 1px solid var(--border);
   padding: 0;
   overflow: hidden;
-  height: 34px;
+  height: 40px;
   display: flex; align-items: center;
   position: relative;
 }
 .ticker::before, .ticker::after {
-  content: ''; position: absolute; top: 0; bottom: 0; width: 60px; z-index: 2;
+  content: ''; position: absolute; top: 0; bottom: 0; width: 80px; z-index: 2;
 }
 .ticker::before { left: 0; background: linear-gradient(to right, var(--bg-2), transparent); }
 .ticker::after { right: 0; background: linear-gradient(to left, var(--bg-2), transparent); }
 .ticker-track {
-  display: flex; animation: slide 40s linear infinite;
+  display: flex; animation: slide 50s linear infinite;
   width: max-content; align-items: center;
 }
 @keyframes slide { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 .ticker-item {
-  padding: 0 20px; font-size: 10.5px; font-family: var(--mono);
+  padding: 0 24px; font-size: 12px; font-family: var(--mono);
   color: var(--text-3); white-space: nowrap;
-  display: flex; align-items: center; gap: 7px; letter-spacing: 0.03em;
-}
-.ticker-item .t-name { color: var(--text-2); font-weight: 500; }
-.ticker-item .t-up { color: var(--green); }
-.ticker-item .t-down { color: var(--red); }
-.ticker-sep { color: var(--border); padding: 0 4px; font-size: 16px; }
-
-/* ── X FOLLOW CARD ── */
-.x-follow-banner {
-  background: var(--bg-2);
-  border-bottom: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: center;
-  gap: 12px; padding: 9px 24px;
-  cursor: pointer; text-decoration: none;
-  transition: background 0.2s;
-  position: relative; overflow: hidden;
-}
-.x-follow-banner::before {
-  content: '';
-  position: absolute; inset: 0;
-  background: linear-gradient(90deg, transparent, rgba(153,69,255,0.03), transparent);
-  animation: shimmer 3s linear infinite;
-}
-@keyframes shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
-.x-follow-banner:hover { background: var(--bg-3); }
-.x-icon {
-  width: 18px; height: 18px;
-  background: var(--text-1);
-  border-radius: 4px;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-}
-.x-icon svg { width: 11px; height: 11px; fill: var(--bg); }
-.x-follow-text {
-  font-family: var(--mono); font-size: 10.5px;
-  color: var(--text-3); letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-.x-follow-text strong { color: var(--text-2); font-weight: 500; }
-.x-handle {
-  font-family: var(--mono); font-size: 11px;
-  color: var(--accent-bright); letter-spacing: 0.04em;
-}
-.x-follow-btn {
-  padding: 3px 12px; border-radius: 4px;
-  border: 1px solid var(--border-glow);
-  font-size: 10.5px; font-weight: 600; font-family: var(--body);
-  color: var(--accent-bright);
-  background: var(--accent-dim);
-  transition: all 0.2s;
-}
-.x-follow-banner:hover .x-follow-btn {
-  background: rgba(153,69,255,0.2);
-  border-color: rgba(153,69,255,0.4);
-}
-.x-followers-chip {
-  font-family: var(--mono); font-size: 9.5px;
-  color: var(--text-3); letter-spacing: 0.04em;
-  padding: 2px 8px; border: 1px solid var(--border); border-radius: 20px;
-}
-.x-live-dot {
-  width: 5px; height: 5px; border-radius: 50%;
-  background: var(--green);
-  animation: pulse 2s ease-in-out infinite;
-  flex-shrink: 0;
-}
-
-/* ── NAV ── */
-nav {
-  position: sticky; top: 0; z-index: 100;
-  background: rgba(6,6,10,0.88);
-  backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-  border-bottom: 1px solid var(--border);
-}
-.nav-inner {
-  max-width: 1200px; margin: 0 auto;
-  display: flex; align-items: center; justify-content: space-between;
-  height: 58px; padding: 0 24px; gap: 20px;
-}
-.logo-wrap {
-  display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0;
-}
-.logo-mark {
-  width: 30px; height: 30px;
-  border: 1px solid rgba(153,69,255,0.3);
-  border-radius: 7px;
-  display: flex; align-items: center; justify-content: center;
-  background: rgba(153,69,255,0.08);
-  position: relative; overflow: hidden;
-}
-.logo-mark::before {
-  content: '';
-  position: absolute; inset: -1px;
-  background: conic-gradient(from 0deg, transparent 0deg, var(--accent) 60deg, transparent 120deg);
-  animation: spin 4s linear infinite;
-  opacity: 0.3;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
-.logo-mark-inner {
-  width: 26px; height: 26px; border-radius: 5px;
-  background: var(--surface); display: flex; align-items: center; justify-content: center;
-  position: relative; z-index: 1;
-}
-.logo-wordmark {
-  font-family: var(--display); font-size: 15px; font-weight: 700;
-  color: var(--text-1); letter-spacing: -0.5px;
-}
-.logo-wordmark em { font-style: normal; color: var(--text-3); font-weight: 400; }
-.nav-pill {
-  font-family: var(--mono); font-size: 9px; letter-spacing: 0.12em;
-  text-transform: uppercase; color: var(--green);
-  border: 1px solid rgba(20,241,149,0.2); border-radius: 20px;
-  padding: 2px 8px; background: var(--green-dim);
-}
-.nav-links {
-  display: flex; align-items: center; gap: 0; list-style: none;
-}
-.nav-links a {
-  display: block; padding: 6px 14px; font-size: 13px; font-weight: 500;
-  color: var(--text-3); text-decoration: none; border-radius: 6px;
-  transition: color 0.15s; letter-spacing: 0.01em;
-}
-.nav-links a:hover { color: var(--text-1); }
-.nav-right { display: flex; align-items: center; gap: 8px; }
-
-/* login modal */
-.auth-modal-overlay {
-  display: none; position: fixed; inset: 0; z-index: 9999;
-  background: rgba(0,0,0,0.7); backdrop-filter: blur(10px);
-  align-items: center; justify-content: center;
-}
-.auth-modal-overlay.open { display: flex; }
-.auth-modal {
-  background: var(--surface); border: 1px solid var(--border-glow);
-  border-radius: 16px; padding: 36px; width: 380px; max-width: 95vw;
-  position: relative; box-shadow: 0 24px 80px rgba(0,0,0,0.6);
-}
-.auth-modal::before {
-  content: ''; position: absolute; top: 0; left: 20%; right: 20%; height: 1px;
-  background: linear-gradient(90deg, transparent, var(--accent), transparent);
-}
-.auth-close {
-  position: absolute; top: 14px; right: 14px; cursor: pointer;
-  color: var(--text-3); font-size: 18px; transition: color 0.15s;
-  background: none; border: none;
-}
-.auth-close:hover { color: var(--text-1); }
-.auth-tabs {
-  display: flex; border: 1px solid var(--border); border-radius: 8px;
-  overflow: hidden; margin-bottom: 24px; background: var(--bg-2);
-}
-.auth-tab {
-  flex: 1; padding: 8px 0; font-size: 13px; font-weight: 600;
-  font-family: var(--body); border: none; cursor: pointer;
-  color: var(--text-3); background: none; transition: all 0.15s;
-}
-.auth-tab.active { color: var(--text-1); background: var(--surface-2); }
-.auth-heading {
-  font-family: var(--display); font-size: 22px; font-weight: 700;
-  margin-bottom: 6px; letter-spacing: -0.5px;
-}
-.auth-sub { font-size: 13px; color: var(--text-2); margin-bottom: 24px; }
-.auth-types { display: flex; gap: 8px; margin-bottom: 24px; }
-.auth-type-btn {
-  flex: 1; padding: 12px 8px; border-radius: 8px;
-  border: 1px solid var(--border); background: var(--bg-2);
-  cursor: pointer; transition: all 0.15s; text-align: center;
-  font-family: var(--body);
-}
-.auth-type-btn:hover, .auth-type-btn.selected {
-  border-color: var(--border-glow); background: var(--accent-dim);
-}
-.auth-type-icon { font-size: 22px; display: block; margin-bottom: 6px; }
-.auth-type-label { font-size: 12px; font-weight: 600; color: var(--text-1); display: block; }
-.auth-type-desc { font-size: 10px; color: var(--text-3); display: block; margin-top: 2px; }
-.auth-input {
-  width: 100%; padding: 11px 14px; background: var(--bg-2);
-  border: 1px solid var(--border); border-radius: 8px;
-  color: var(--text-1); font-size: 14px; font-family: var(--body);
-  outline: none; margin-bottom: 10px;
-  transition: border-color 0.15s;
-}
-.auth-input:focus { border-color: var(--border-glow); }
-.auth-input::placeholder { color: var(--text-3); }
-.auth-submit {
-  width: 100%; padding: 12px; border-radius: 8px;
-  border: 1px solid rgba(153,69,255,0.5);
-  font-size: 14px; font-weight: 700; font-family: var(--body);
-  color: var(--text-1); background: rgba(153,69,255,0.2);
-  cursor: pointer; transition: all 0.2s; margin-top: 6px;
-}
-.auth-submit:hover { background: rgba(153,69,255,0.35); transform: translateY(-1px); }
-.auth-divider { text-align: center; color: var(--text-3); font-size: 12px; margin: 16px 0; position: relative; }
-.auth-divider::before {
-  content: ''; position: absolute; left: 0; top: 50%; right: 0; height: 1px; background: var(--border);
-}
-.auth-divider span { position: relative; background: var(--surface); padding: 0 12px; }
-.wallet-options { display: flex; flex-direction: column; gap: 6px; }
-.wallet-opt {
-  display: flex; align-items: center; gap: 10px; padding: 10px 14px;
-  border: 1px solid var(--border); border-radius: 8px;
-  background: var(--bg-2); cursor: pointer; transition: all 0.15s;
-  font-size: 13px; font-weight: 500; color: var(--text-2); font-family: var(--body);
-}
-.wallet-opt:hover { border-color: var(--border-glow); color: var(--text-1); background: var(--accent-dim); }
-.wallet-opt-icon { width: 26px; height: 26px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 14px; background: var(--surface-2); flex-shrink: 0; }
-
-/* user account dropdown */
-.account-btn {
-  display: flex; align-items: center; gap: 8px;
-  padding: 6px 10px 6px 6px; border-radius: 8px;
-  border: 1px solid var(--border); background: var(--surface);
-  cursor: pointer; transition: all 0.15s; font-family: var(--body);
-}
-.account-btn:hover { border-color: var(--border-glow); }
-.account-avatar {
-  width: 24px; height: 24px; border-radius: 6px;
-  background: linear-gradient(135deg, var(--accent), var(--green));
-  display: flex; align-items: center; justify-content: center;
-  font-size: 12px; font-weight: 700; color: white;
-}
-.account-info { display: flex; flex-direction: column; align-items: flex-start; }
-.account-name { font-size: 11.5px; font-weight: 600; color: var(--text-1); line-height: 1.2; }
-.account-role { font-size: 9px; font-family: var(--mono); color: var(--text-3); letter-spacing: 0.06em; text-transform: uppercase; }
-.account-dropdown-wrap { position: relative; }
-.account-dropdown {
-  display: none; position: absolute; right: 0; top: calc(100% + 8px);
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: 10px; width: 200px; z-index: 999;
-  box-shadow: 0 16px 48px rgba(0,0,0,0.5); overflow: hidden;
-  padding: 4px;
-}
-.account-dropdown.open { display: block; }
-.dropdown-header {
-  padding: 10px 12px 8px;
-  border-bottom: 1px solid var(--border); margin-bottom: 4px;
-}
-.dropdown-addr { font-family: var(--mono); font-size: 10px; color: var(--text-3); }
-.dropdown-balance { font-size: 13px; font-weight: 600; color: var(--text-1); margin-top: 2px; }
-.dropdown-item {
-  display: flex; align-items: center; gap: 8px;
-  padding: 8px 12px; border-radius: 6px; cursor: pointer;
-  font-size: 13px; color: var(--text-2); transition: all 0.1s;
-}
-.dropdown-item:hover { background: var(--surface-2); color: var(--text-1); }
-.dropdown-item.danger:hover { color: var(--red); }
-
-/* buttons */
-.btn-ghost {
-  padding: 7px 14px; border-radius: 7px; border: 1px solid var(--border);
-  font-size: 12px; font-weight: 600; color: var(--text-2); background: none;
-  cursor: pointer; text-decoration: none;
-  display: inline-flex; align-items: center; gap: 6px;
-  font-family: var(--body); transition: all 0.15s;
-}
-.btn-ghost:hover { border-color: rgba(255,255,255,0.15); color: var(--text-1); }
-.btn-accent {
-  padding: 7px 16px; border-radius: 7px;
-  border: 1px solid rgba(153,69,255,0.4);
-  font-size: 12px; font-weight: 700; color: var(--text-1);
-  background: rgba(153,69,255,0.15);
-  cursor: pointer; text-decoration: none;
-  display: inline-flex; align-items: center; gap: 6px;
-  font-family: var(--body); transition: all 0.2s;
-}
-.btn-accent:hover { background: rgba(153,69,255,0.28); border-color: rgba(153,69,255,0.7); }
-
-.hamburger { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
-.hamburger span { display: block; width: 20px; height: 1.5px; background: var(--text-2); margin: 5px 0; border-radius: 1px; }
-@media (max-width: 768px) { .nav-links, .nav-desktop { display: none; } .hamburger { display: block; } }
-
-/* ── HERO ── */
-.hero {
-  padding: 100px 24px 80px; text-align: center;
-  position: relative; border-bottom: 1px solid var(--border); overflow: hidden;
-}
-.hero-bg {
-  position: absolute; inset: 0; pointer-events: none; overflow: hidden;
-}
-.hero-orb {
-  position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.12;
-}
-.hero-orb-1 {
-  width: 600px; height: 600px; background: var(--accent);
-  top: -200px; left: 50%; transform: translateX(-50%);
-}
-.hero-orb-2 {
-  width: 300px; height: 300px; background: var(--green);
-  bottom: -100px; right: 10%; opacity: 0.06;
-}
-.hero-grid {
-  position: absolute; inset: 0;
-  background-image:
-    linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
-  background-size: 60px 60px;
-  mask-image: radial-gradient(ellipse 70% 80% at 50% 0%, black, transparent);
-}
-.hero-eyebrow {
-  display: inline-flex; align-items: center; gap: 8px;
-  font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em;
-  text-transform: uppercase; color: var(--text-3);
-  margin-bottom: 32px; padding: 6px 16px;
-  border: 1px solid var(--border); border-radius: 20px;
-  background: var(--surface);
-  position: relative; z-index: 1;
-}
-.hero-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--green); animation: pulse 2.4s ease-in-out infinite; }
-@keyframes pulse { 0%,100% { opacity: 1; box-shadow: 0 0 6px var(--green); } 50% { opacity: 0.3; box-shadow: none; } }
-
-.hero h1 {
-  font-family: var(--display); font-size: clamp(44px, 8vw, 96px);
-  font-weight: 800; letter-spacing: -3px; line-height: 0.95;
-  margin-bottom: 28px; position: relative; z-index: 1;
-}
-.hero h1 .h1-dim { color: var(--text-3); display: block; font-weight: 400; }
-.hero h1 .h1-main { display: block; }
-.hero h1 .h1-sol {
-  background: linear-gradient(110deg, #c87fff 0%, #9945FF 40%, #14F195 100%);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-}
-.hero-sub {
-  font-size: clamp(14px, 1.8vw, 16px); color: var(--text-2);
-  max-width: 420px; margin: 0 auto 40px; line-height: 1.8;
-  position: relative; z-index: 1;
-}
-.hero-ctas {
-  display: flex; gap: 10px; justify-content: center;
-  flex-wrap: wrap; margin-bottom: 64px; position: relative; z-index: 1;
-}
-.cta-primary {
-  padding: 14px 28px; border-radius: 10px;
-  border: 1px solid rgba(153,69,255,0.5);
-  font-size: 14px; font-weight: 700; color: var(--text-1);
-  background: rgba(153,69,255,0.15);
-  cursor: pointer; text-decoration: none;
-  display: inline-flex; align-items: center; gap: 8px;
-  font-family: var(--body); transition: all 0.2s;
-  position: relative; overflow: hidden;
-}
-.cta-primary::before {
-  content: ''; position: absolute; inset: 0;
-  background: linear-gradient(135deg, rgba(153,69,255,0.2), transparent);
-  opacity: 0; transition: opacity 0.2s;
-}
-.cta-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(153,69,255,0.25); }
-.cta-primary:hover::before { opacity: 1; }
-.cta-secondary {
-  padding: 14px 28px; border-radius: 10px; border: 1px solid var(--border);
-  font-size: 14px; font-weight: 600; color: var(--text-2); background: none;
-  cursor: pointer; text-decoration: none;
-  display: inline-flex; align-items: center; gap: 8px;
-  font-family: var(--body); transition: all 0.15s;
-}
-.cta-secondary:hover { border-color: rgba(255,255,255,0.15); color: var(--text-1); }
-
-/* hero stats bar */
-.hero-stats {
-  display: flex; position: relative; z-index: 1;
-  max-width: 680px; margin: 0 auto;
-  border: 1px solid var(--border); border-radius: 12px;
-  background: var(--surface); overflow: hidden;
-}
-.hero-stat { flex: 1; padding: 18px 12px; text-align: center; position: relative; }
-.hero-stat:not(:last-child)::after {
-  content: ''; position: absolute; right: 0; top: 20%; bottom: 20%; width: 1px;
-  background: var(--border);
-}
-.hero-stat-num {
-  font-family: var(--display); font-size: 22px; font-weight: 700;
-  color: var(--text-1); letter-spacing: -0.5px; display: block;
-}
-.hero-stat-num.green { color: var(--green); }
-.hero-stat-label {
-  font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em;
-  text-transform: uppercase; color: var(--text-3); margin-top: 4px; display: block;
-}
-
-/* ── SCROLL STRIP ── */
-.scroll-strip {
-  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
-  padding: 11px 0; overflow: hidden; background: var(--bg-2);
-  position: relative;
-}
-.scroll-strip::before, .scroll-strip::after {
-  content: ''; position: absolute; top: 0; bottom: 0; width: 80px; z-index: 2;
-}
-.scroll-strip::before { left: 0; background: linear-gradient(to right, var(--bg-2), transparent); }
-.scroll-strip::after { right: 0; background: linear-gradient(to left, var(--bg-2), transparent); }
-.strip-track { display: flex; animation: stripSlide 22s linear infinite; width: max-content; }
-@keyframes stripSlide { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-.strip-item {
-  padding: 0 28px; font-family: var(--mono); font-size: 11px;
-  color: var(--text-3); white-space: nowrap;
-  display: flex; align-items: center; gap: 16px; letter-spacing: 0.1em; text-transform: uppercase;
-}
-.strip-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--accent); opacity: 0.5; }
-
-/* ── X CARD (FLOATING) ── */
-.x-card-section { padding: 0 24px; margin-top: -1px; }
-.x-card-inner { max-width: 1200px; margin: 0 auto; padding: 32px 0 0; }
-.x-social-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 14px; overflow: hidden;
-  display: flex; flex-direction: column;
-  max-width: 420px; margin: 0 auto;
-  position: relative;
-}
-.x-card-header {
-  background: linear-gradient(135deg, rgba(153,69,255,0.08), rgba(20,241,149,0.04));
-  border-bottom: 1px solid var(--border);
-  padding: 20px 20px 16px; display: flex; align-items: flex-start; gap: 14px;
-}
-.x-card-avatar {
-  width: 50px; height: 50px; border-radius: 50%;
-  background: linear-gradient(135deg, #9945FF, #14F195);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; flex-shrink: 0; position: relative;
-}
-.x-verified { position: absolute; bottom: -2px; right: -2px; background: #1d9bf0; border-radius: 50%; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; }
-.x-card-meta { flex: 1; }
-.x-card-name { font-family: var(--display); font-size: 16px; font-weight: 700; color: var(--text-1); }
-.x-card-handle { font-family: var(--mono); font-size: 12px; color: var(--text-3); margin-top: 2px; }
-.x-card-bio { font-size: 13px; color: var(--text-2); margin-top: 6px; line-height: 1.5; }
-.x-card-stats { display: flex; gap: 16px; padding: 14px 20px; border-bottom: 1px solid var(--border); }
-.x-card-stat strong { font-size: 14px; font-weight: 700; color: var(--text-1); font-family: var(--display); }
-.x-card-stat span { font-size: 11px; color: var(--text-3); font-family: var(--mono); margin-left: 4px; }
-.x-card-cta {
-  padding: 14px 20px; display: flex; align-items: center; justify-content: space-between;
-}
-.x-follow-big {
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 9px 20px; border-radius: 8px;
-  background: var(--text-1); color: var(--bg);
-  font-size: 13px; font-weight: 700; font-family: var(--body);
-  text-decoration: none; cursor: pointer; border: none;
-  transition: all 0.2s;
-}
-.x-follow-big:hover { background: var(--text-2); transform: translateY(-1px); }
-.x-recent-label { font-family: var(--mono); font-size: 9px; color: var(--text-3); letter-spacing: 0.1em; text-transform: uppercase; }
-
-/* ── TOKEN SECTION ── */
-.token-section {
-  background: var(--bg-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
-  padding: 80px 24px;
-}
-.token-grid-outer { max-width: 1200px; margin: 0 auto; }
-.token-main-card {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: 16px; overflow: hidden; position: relative;
-}
-.token-main-card::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(90deg, #9945FF, #14F195, #9945FF);
-  background-size: 200%; animation: gradientShift 4s linear infinite;
-}
-@keyframes gradientShift { 0%,100% { background-position: 0%; } 50% { background-position: 100%; } }
-.token-body { display: flex; gap: 0; flex-wrap: wrap; }
-.token-left {
-  flex: 1; min-width: 280px; padding: 44px;
-  border-right: 1px solid var(--border);
-}
-.token-right { padding: 44px; display: flex; flex-direction: column; gap: 20px; justify-content: center; align-items: flex-start; min-width: 240px; }
-.token-badge {
-  display: inline-flex; align-items: center; gap: 6px;
-  font-family: var(--mono); font-size: 9px; letter-spacing: 0.18em;
-  text-transform: uppercase; color: var(--gold);
-  border: 1px solid rgba(232,184,75,0.25); border-radius: 20px;
-  padding: 4px 12px; background: var(--gold-dim); margin-bottom: 18px;
-}
-.token-name-display {
-  font-family: var(--display); font-size: clamp(32px, 5vw, 52px);
-  font-weight: 800; letter-spacing: -2px; line-height: 1; margin-bottom: 8px;
-}
-.token-name-display .sub { color: var(--text-3); font-weight: 400; font-size: 0.5em; display: block; margin-top: 4px; letter-spacing: -0.5px; }
-.token-desc { font-size: 14px; color: var(--text-2); line-height: 1.75; max-width: 380px; margin-bottom: 28px; }
-.token-stats-row {
-  display: flex; gap: 1px; background: var(--border);
-  border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
-}
-.token-stat-box { flex: 1; padding: 14px 16px; background: var(--bg-2); }
-.token-stat-box strong { display: block; font-family: var(--display); font-size: 20px; font-weight: 700; color: var(--text-1); }
-.token-stat-box.green-val strong { color: var(--green); }
-.token-stat-box span { font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-3); }
-.btn-launch {
-  padding: 16px 32px; border-radius: 10px;
-  border: 1px solid rgba(153,69,255,0.5);
-  font-size: 15px; font-weight: 700; color: var(--text-1);
-  background: rgba(153,69,255,0.15); cursor: pointer; text-decoration: none;
-  display: inline-flex; align-items: center; gap: 10px;
-  font-family: var(--body); transition: all 0.2s; white-space: nowrap;
-}
-.btn-launch:hover { background: rgba(153,69,255,0.3); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(153,69,255,0.2); }
-.launch-info { font-family: var(--mono); font-size: 10px; letter-spacing: 0.06em; color: var(--text-3); }
-.sol-badge { display: inline-flex; align-items: center; gap: 5px; }
-.sol-pip { width: 8px; height: 8px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--green)); }
+  display: flex; align-items: center; gap: 8px; letter-spacing: 0.02em;
+}
+.ticker-item .t-name { color: var(--text-2); font-weight: 600; }
+.ticker-item .t-up { color: var(--green); font-weight: 600; }
+.ticker-item .t-down { color: var(--red); font-weight: 600; }
+.ticker-sep { color: var(--border-strong); padding: 0 4px; }
 
 /* ── SECTION ── */
 section { padding: 80px 24px; }
 .inner { max-width: 1200px; margin: 0 auto; }
 .section-label {
-  font-family: var(--mono); font-size: 9px; letter-spacing: 0.25em;
-  text-transform: uppercase; color: var(--text-3); margin-bottom: 10px;
-  display: flex; align-items: center; gap: 8px;
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--text-3); margin-bottom: 12px;
+  display: flex; align-items: center; gap: 10px;
 }
-.section-label::before { content: ''; width: 16px; height: 1px; background: var(--accent); opacity: 0.5; }
+.section-label::before { content: ''; width: 20px; height: 1.5px; background: var(--accent); }
 .section-title {
-  font-family: var(--display); font-size: clamp(28px, 4.5vw, 52px);
-  font-weight: 800; letter-spacing: -1.5px; line-height: 1.05;
-  margin-bottom: 12px; color: var(--text-1);
+  font-family: var(--display); font-size: clamp(28px, 4vw, 44px);
+  font-weight: 700; letter-spacing: -1px; line-height: 1.15;
+  margin-bottom: 14px; color: var(--text-1);
 }
 .section-title .dim { color: var(--text-3); font-weight: 400; }
-.section-sub { font-size: 14px; color: var(--text-2); line-height: 1.8; max-width: 440px; }
+.section-sub { font-size: 16px; color: var(--text-2); line-height: 1.7; max-width: 480px; }
 
 /* ── FILTERS ── */
 .filters-bar {
-  display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin-bottom: 20px;
+  display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 28px;
 }
 .filter-btn {
-  padding: 6px 13px; border-radius: 6px; border: 1px solid var(--border);
-  font-size: 12px; font-weight: 500; color: var(--text-3); background: none;
+  padding: 8px 16px; border-radius: 8px; border: 1px solid var(--border);
+  font-size: 13px; font-weight: 500; color: var(--text-3); background: none;
   cursor: pointer; transition: all 0.15s; font-family: var(--body);
 }
 .filter-btn:hover, .filter-btn.active {
-  border-color: var(--border-glow); color: var(--text-1); background: var(--accent-dim);
+  border-color: var(--accent); color: var(--accent); background: var(--accent-dim);
 }
 .filter-right { margin-left: auto; }
 .search-box {
   display: flex; align-items: center; gap: 8px;
-  border: 1px solid var(--border); border-radius: 7px;
-  padding: 7px 13px; background: var(--surface);
+  border: 1px solid var(--border); border-radius: 8px;
+  padding: 8px 14px; background: var(--surface);
 }
 .search-box input {
-  border: none; outline: none; font-size: 12px;
+  border: none; outline: none; font-size: 13px;
   font-family: var(--body); color: var(--text-1);
-  width: 160px; background: transparent;
+  width: 180px; background: transparent;
 }
 .search-box input::placeholder { color: var(--text-3); }
 
 /* ── AGENT GRID ── */
 .agents-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1px; background: var(--border);
-  border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 16px;
 }
 .agent-card {
-  background: var(--surface); padding: 24px; cursor: pointer;
-  transition: background 0.15s; position: relative;
+  background: var(--surface); padding: 24px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
 }
-.agent-card:hover { background: var(--surface-2); }
-.agent-card::after {
-  content: ''; position: absolute; inset: 0;
-  background: linear-gradient(135deg, rgba(153,69,255,0.04), transparent);
-  opacity: 0; transition: opacity 0.2s; pointer-events: none;
+.agent-card:hover {
+  border-color: var(--border-strong);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+  transform: translateY(-2px);
 }
-.agent-card:hover::after { opacity: 1; }
-.agent-card-header { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 14px; }
+.agent-card-header { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 16px; }
 .agent-avatar {
-  width: 42px; height: 42px; border-radius: 10px;
+  width: 48px; height: 48px; border-radius: 12px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 20px; flex-shrink: 0;
-  border: 1px solid var(--border); background: var(--bg-2);
+  font-size: 24px; flex-shrink: 0;
+  border: 1px solid var(--border); background: var(--bg);
 }
 .agent-info { flex: 1; min-width: 0; }
 .agent-name {
-  font-family: var(--display); font-size: 16px; font-weight: 700;
-  color: var(--text-1); letter-spacing: -0.3px; margin-bottom: 2px;
+  font-family: var(--display); font-size: 17px; font-weight: 600;
+  color: var(--text-1); letter-spacing: -0.3px; margin-bottom: 3px;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
-.agent-ticker { font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.04em; }
+.agent-ticker { font-family: var(--mono); font-size: 12px; color: var(--accent); font-weight: 500; }
 .agent-badge {
-  padding: 3px 9px; border-radius: 20px;
-  font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em;
-  text-transform: uppercase; font-weight: 500; flex-shrink: 0;
+  padding: 4px 10px; border-radius: 20px;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em;
+  text-transform: uppercase; font-weight: 600; flex-shrink: 0;
 }
-.badge-live { color: var(--green); background: var(--green-dim); border: 1px solid rgba(20,241,149,0.2); }
-.badge-soon { color: var(--gold); background: var(--gold-dim); border: 1px solid rgba(232,184,75,0.2); }
-.badge-new { color: #c4b5fd; background: rgba(167,139,250,0.08); border: 1px solid rgba(167,139,250,0.2); }
+.badge-live { color: var(--green); background: var(--green-dim); border: 1px solid rgba(16,185,129,0.2); }
+.badge-soon { color: var(--gold); background: var(--gold-dim); border: 1px solid rgba(245,158,11,0.2); }
+.badge-new { color: var(--accent); background: var(--accent-dim); border: 1px solid rgba(124,58,237,0.2); }
 .agent-desc {
-  font-size: 13px; color: var(--text-2); line-height: 1.65; margin-bottom: 14px;
+  font-size: 14px; color: var(--text-2); line-height: 1.6; margin-bottom: 16px;
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
 }
-.agent-tags { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 16px; }
+.agent-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 18px; }
 .tag {
-  padding: 2px 8px; border-radius: 4px; font-family: var(--mono);
-  font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 3px 10px; border-radius: 6px; font-family: var(--mono);
+  font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase;
   background: var(--bg-2); color: var(--text-3); border: 1px solid var(--border);
 }
 .agent-stats {
-  display: flex; border-top: 1px solid var(--border);
-  margin: 0 -24px -24px; padding: 12px 24px; background: var(--bg-2);
+  display: flex;
+  border-top: 1px solid var(--border);
+  padding-top: 14px;
 }
 .agent-stat { flex: 1; text-align: center; }
 .agent-stat:not(:last-child) { border-right: 1px solid var(--border); }
-.agent-stat-val { font-family: var(--mono); font-size: 12px; font-weight: 500; color: var(--text-1); }
+.agent-stat-val { font-family: var(--mono); font-size: 13px; font-weight: 600; color: var(--text-1); }
 .agent-stat-val.green { color: var(--green); }
-.agent-stat-key { font-family: var(--mono); font-size: 9px; color: var(--text-3); margin-top: 2px; text-transform: uppercase; letter-spacing: 0.07em; }
+.agent-stat-val.red { color: var(--red); }
+.agent-stat-key { font-family: var(--mono); font-size: 10px; color: var(--text-3); margin-top: 3px; text-transform: uppercase; letter-spacing: 0.06em; }
 
 /* ── HOW IT WORKS ── */
 .how-section { background: var(--bg-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-.steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0; margin-top: 48px; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+.steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0; margin-top: 48px; border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
 .step-card {
-  padding: 32px 28px; background: var(--surface);
+  padding: 36px 32px; background: var(--surface);
   border-right: 1px solid var(--border); position: relative; transition: background 0.15s;
 }
 .step-card:last-child { border-right: none; }
-.step-card:hover { background: var(--surface-2); }
+.step-card:hover { background: var(--bg); }
 .step-number {
-  font-family: var(--display); font-size: 48px; font-weight: 800;
-  color: rgba(255,255,255,0.03); line-height: 1; margin-bottom: 16px; letter-spacing: -2px;
+  font-family: var(--display); font-size: 48px; font-weight: 700;
+  color: var(--border-strong); line-height: 1; margin-bottom: 20px; letter-spacing: -2px;
 }
-.step-title { font-family: var(--display); font-size: 17px; font-weight: 700; letter-spacing: -0.3px; margin-bottom: 8px; color: var(--text-1); }
-.step-desc { font-size: 13px; color: var(--text-2); line-height: 1.7; }
+.step-title { font-family: var(--display); font-size: 18px; font-weight: 600; letter-spacing: -0.3px; margin-bottom: 10px; color: var(--text-1); }
+.step-desc { font-size: 14px; color: var(--text-2); line-height: 1.7; }
 .step-num-label {
-  font-family: var(--mono); font-size: 9px; letter-spacing: 0.16em;
-  text-transform: uppercase; color: var(--accent); opacity: 0.7; margin-bottom: 12px; display: block;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 14px; display: block;
 }
 
 /* ── FEATURES ── */
-.features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1px; margin-top: 48px; background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
-.feature-card { background: var(--surface); padding: 32px 28px; transition: background 0.15s; }
-.feature-card:hover { background: var(--surface-2); }
+.features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-top: 48px; }
+.feature-card { background: var(--surface); padding: 32px; border: 1px solid var(--border); border-radius: 14px; transition: all 0.2s; }
+.feature-card:hover { border-color: var(--border-strong); box-shadow: 0 4px 24px rgba(0,0,0,0.06); }
 .feature-icon-wrap {
-  width: 42px; height: 42px; border-radius: 10px;
-  background: var(--accent-dim); border: 1px solid var(--border-glow);
+  width: 44px; height: 44px; border-radius: 10px;
+  background: var(--accent-dim); border: 1px solid rgba(124,58,237,0.15);
   display: flex; align-items: center; justify-content: center;
-  font-size: 20px; margin-bottom: 18px;
+  font-size: 20px; margin-bottom: 20px;
 }
-.feature-title { font-family: var(--display); font-size: 17px; font-weight: 700; letter-spacing: -0.3px; margin-bottom: 8px; color: var(--text-1); }
-.feature-desc { font-size: 13px; color: var(--text-2); line-height: 1.7; }
+.feature-title { font-family: var(--display); font-size: 18px; font-weight: 600; letter-spacing: -0.3px; margin-bottom: 10px; color: var(--text-1); }
+.feature-desc { font-size: 14px; color: var(--text-2); line-height: 1.7; }
 
 /* ── DISCLAIMER ── */
 .disclaimer-section { border-top: 1px solid var(--border); background: var(--bg); padding: 32px 24px; }
 .disclaimer-box {
-  border: 1px solid var(--border); border-radius: 10px; padding: 20px 24px;
-  font-family: var(--mono); font-size: 10.5px; color: var(--text-3);
-  line-height: 1.8; letter-spacing: 0.02em; max-width: 1200px; margin: 0 auto;
+  border: 1px solid var(--border); border-radius: 12px; padding: 24px 28px;
+  font-family: var(--mono); font-size: 11px; color: var(--text-3);
+  line-height: 1.8; letter-spacing: 0.01em; max-width: 1200px; margin: 0 auto;
 }
 .disclaimer-box strong { color: var(--text-2); }
-.disclaimer-box a { color: var(--accent-bright); text-decoration: none; }
+.disclaimer-box a { color: var(--accent); text-decoration: none; }
 
 /* ── FOOTER ── */
-footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 56px 24px 32px; }
+footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 60px 24px 32px; }
 .footer-inner { max-width: 1200px; margin: 0 auto; }
 .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
 @media (max-width: 768px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; } }
-.footer-brand-desc { font-size: 13px; color: var(--text-3); line-height: 1.7; max-width: 240px; margin-top: 14px; }
-.footer-col h4 { font-family: var(--mono); font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-3); margin-bottom: 16px; }
-.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-.footer-col a { font-size: 13px; color: var(--text-2); text-decoration: none; transition: color 0.15s; }
+.footer-brand-desc { font-size: 14px; color: var(--text-3); line-height: 1.7; max-width: 280px; margin-top: 16px; }
+.footer-col h4 { font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-3); margin-bottom: 18px; }
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.footer-col a { font-size: 14px; color: var(--text-2); text-decoration: none; transition: color 0.15s; }
 .footer-col a:hover { color: var(--text-1); }
 .footer-bottom { border-top: 1px solid var(--border); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
-.footer-copy { font-family: var(--mono); font-size: 10.5px; color: var(--text-3); letter-spacing: 0.04em; }
+.footer-copy { font-family: var(--mono); font-size: 11px; color: var(--text-3); letter-spacing: 0.04em; }
 .footer-copy .green { color: var(--green); }
-.footer-social { display: flex; gap: 6px; }
+.footer-social { display: flex; gap: 8px; }
 .social-btn {
-  width: 32px; height: 32px; border-radius: 7px;
+  width: 36px; height: 36px; border-radius: 8px;
   background: var(--surface); border: 1px solid var(--border);
   display: flex; align-items: center; justify-content: center;
-  text-decoration: none; color: var(--text-3); font-size: 12px; font-weight: 700;
+  text-decoration: none; color: var(--text-3); font-size: 13px; font-weight: 600;
   transition: all 0.15s;
 }
-.social-btn:hover { border-color: rgba(255,255,255,0.15); color: var(--text-1); }
+.social-btn:hover { border-color: var(--border-strong); color: var(--text-1); }
 
 /* toast */
 .toast {
   position: fixed; bottom: 24px; right: 24px; z-index: 9999;
-  background: var(--surface); border: 1px solid var(--border-glow);
-  border-radius: 10px; padding: 14px 18px;
+  background: var(--surface); border: 1px solid var(--border-strong);
+  border-radius: 12px; padding: 16px 20px;
   display: flex; align-items: center; gap: 10px;
-  font-size: 13px; font-weight: 500; color: var(--text-1);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  font-size: 14px; font-weight: 500; color: var(--text-1);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
   transform: translateY(100px); opacity: 0;
   transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .toast.show { transform: translateY(0); opacity: 1; }
-.toast-icon { font-size: 18px; }
+
+/* ── AUTH MODAL ── */
+.auth-modal-overlay {
+  display: none; position: fixed; inset: 0; z-index: 9999;
+  background: rgba(0,0,0,0.4); backdrop-filter: blur(8px);
+  align-items: center; justify-content: center;
+}
+.auth-modal-overlay.open { display: flex; }
+.auth-modal {
+  background: var(--surface); border: 1px solid var(--border-strong);
+  border-radius: 16px; padding: 40px; width: 440px; max-width: 95vw;
+  position: relative; box-shadow: 0 24px 80px rgba(0,0,0,0.15);
+}
+.auth-close {
+  position: absolute; top: 16px; right: 16px; cursor: pointer;
+  color: var(--text-3); font-size: 20px; transition: color 0.15s;
+  background: none; border: none;
+}
+.auth-close:hover { color: var(--text-1); }
+.auth-heading {
+  font-family: var(--display); font-size: 24px; font-weight: 700;
+  margin-bottom: 8px; letter-spacing: -0.5px;
+}
+.auth-sub { font-size: 14px; color: var(--text-2); margin-bottom: 28px; }
+
+/* Social Login Buttons */
+.social-login-grid {
+  display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px;
+}
+.social-login-btn {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 16px; border-radius: 10px;
+  border: 1px solid var(--border); background: var(--bg);
+  cursor: pointer; transition: all 0.15s;
+  font-size: 14px; font-weight: 500; color: var(--text-1); font-family: var(--body);
+  text-align: left;
+}
+.social-login-btn:hover { border-color: var(--border-strong); background: var(--bg-2); }
+.social-login-icon {
+  width: 28px; height: 28px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; flex-shrink: 0;
+}
+.social-login-icon.x-icon { background: #000; color: #fff; }
+.social-login-icon.gmail-icon { background: #ea4335; color: #fff; }
+.social-login-icon.ai-icon { background: linear-gradient(135deg, #7c3aed, #10b981); color: #fff; }
+
+.auth-divider { text-align: center; color: var(--text-3); font-size: 13px; margin: 20px 0; position: relative; }
+.auth-divider::before {
+  content: ''; position: absolute; left: 0; top: 50%; right: 0; height: 1px; background: var(--border);
+}
+.auth-divider span { position: relative; background: var(--surface); padding: 0 14px; }
+
+.auth-input {
+  width: 100%; padding: 12px 16px; background: var(--bg);
+  border: 1px solid var(--border); border-radius: 10px;
+  color: var(--text-1); font-size: 15px; font-family: var(--body);
+  outline: none; margin-bottom: 12px;
+  transition: border-color 0.15s;
+}
+.auth-input:focus { border-color: var(--accent); }
+.auth-input::placeholder { color: var(--text-3); }
+.auth-submit {
+  width: 100%; padding: 14px; border-radius: 10px;
+  border: none;
+  font-size: 15px; font-weight: 600; font-family: var(--body);
+  color: #fff; background: var(--accent);
+  cursor: pointer; transition: all 0.2s; margin-top: 8px;
+}
+.auth-submit:hover { background: var(--accent-bright); transform: translateY(-1px); }
+
+/* ── AGENT DETAIL MODAL ── */
+.agent-modal-overlay {
+  display: none; position: fixed; inset: 0; z-index: 9998;
+  background: rgba(0,0,0,0.4); backdrop-filter: blur(8px);
+  align-items: center; justify-content: center;
+  padding: 24px;
+}
+.agent-modal-overlay.open { display: flex; }
+.agent-modal {
+  background: var(--surface); border: 1px solid var(--border-strong);
+  border-radius: 16px; width: 100%; max-width: 520px;
+  max-height: 90vh; overflow-y: auto;
+  position: relative; box-shadow: 0 24px 80px rgba(0,0,0,0.15);
+}
+.agent-modal-header {
+  padding: 32px 32px 24px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: flex-start; gap: 18px;
+}
+.agent-modal-avatar {
+  width: 56px; height: 56px; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px; flex-shrink: 0;
+  border: 1px solid var(--border); background: var(--bg);
+}
+.agent-modal-meta { flex: 1; }
+.agent-modal-name { font-family: var(--display); font-size: 22px; font-weight: 700; color: var(--text-1); }
+.agent-modal-ticker { font-family: var(--mono); font-size: 14px; color: var(--accent); margin-top: 3px; font-weight: 500; }
+.agent-modal-body { padding: 28px 32px; }
+.agent-modal-desc { font-size: 15px; color: var(--text-2); line-height: 1.7; margin-bottom: 24px; }
+.agent-modal-stats {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1px; background: var(--border);
+  border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
+  margin-bottom: 24px;
+}
+.agent-modal-stat { padding: 16px; background: var(--bg); text-align: center; }
+.agent-modal-stat strong { display: block; font-family: var(--display); font-size: 20px; font-weight: 700; color: var(--text-1); }
+.agent-modal-stat.green strong { color: var(--green); }
+.agent-modal-stat.red strong { color: var(--red); }
+.agent-modal-stat span { font-family: var(--mono); font-size: 10px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; }
+.agent-modal-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+.agent-modal-actions {
+  display: flex; gap: 12px;
+}
+.agent-modal-actions .btn-accent {
+  flex: 1; justify-content: center; padding: 14px 24px;
+}
+.agent-modal-close {
+  position: absolute; top: 16px; right: 16px;
+  background: none; border: none; color: var(--text-3);
+  font-size: 20px; cursor: pointer; transition: color 0.15s;
+}
+.agent-modal-close:hover { color: var(--text-1); }
+
+/* ── LAUNCH MODAL ── */
+.launch-modal-overlay {
+  display: none; position: fixed; inset: 0; z-index: 9997;
+  background: rgba(0,0,0,0.4); backdrop-filter: blur(8px);
+  align-items: center; justify-content: center;
+  padding: 24px;
+}
+.launch-modal-overlay.open { display: flex; }
+.launch-modal {
+  background: var(--surface); border: 1px solid var(--border-strong);
+  border-radius: 16px; width: 100%; max-width: 480px;
+  max-height: 90vh; overflow-y: auto;
+  position: relative; box-shadow: 0 24px 80px rgba(0,0,0,0.15);
+  padding: 36px;
+}
+.launch-modal h3 {
+  font-family: var(--display); font-size: 22px; font-weight: 700;
+  margin-bottom: 8px; letter-spacing: -0.3px;
+}
+.launch-modal p {
+  font-size: 14px; color: var(--text-2); margin-bottom: 28px;
+}
+.launch-input {
+  width: 100%; padding: 12px 16px; background: var(--bg);
+  border: 1px solid var(--border); border-radius: 10px;
+  color: var(--text-1); font-size: 15px; font-family: var(--body);
+  outline: none; margin-bottom: 14px;
+  transition: border-color 0.15s;
+}
+.launch-input:focus { border-color: var(--accent); }
+.launch-input::placeholder { color: var(--text-3); }
+.launch-modal .btn-accent {
+  width: 100%; justify-content: center; padding: 14px;
+  margin-top: 10px;
+}
+
+/* ACCOUNT DROPDOWN */
+.account-btn {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 12px 8px 8px; border-radius: 10px;
+  border: 1px solid var(--border); background: var(--surface);
+  cursor: pointer; transition: all 0.15s; font-family: var(--body);
+}
+.account-btn:hover { border-color: var(--border-strong); }
+.account-avatar {
+  width: 28px; height: 28px; border-radius: 8px;
+  background: linear-gradient(135deg, var(--accent), var(--green));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700; color: white;
+}
+.account-info { display: flex; flex-direction: column; align-items: flex-start; }
+.account-name { font-size: 13px; font-weight: 600; color: var(--text-1); line-height: 1.2; }
+.account-role { font-size: 10px; font-family: var(--mono); color: var(--text-3); letter-spacing: 0.06em; text-transform: uppercase; }
+.account-dropdown-wrap { position: relative; }
+.account-dropdown {
+  display: none; position: absolute; right: 0; top: calc(100% + 10px);
+  background: var(--surface); border: 1px solid var(--border-strong);
+  border-radius: 12px; width: 220px; z-index: 999;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.12); overflow: hidden;
+  padding: 6px;
+}
+.account-dropdown.open { display: block; }
+.dropdown-header {
+  padding: 12px 14px 10px;
+  border-bottom: 1px solid var(--border); margin-bottom: 6px;
+}
+.dropdown-addr { font-family: var(--mono); font-size: 11px; color: var(--text-3); }
+.dropdown-balance { font-size: 14px; font-weight: 600; color: var(--text-1); margin-top: 3px; }
+.dropdown-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 14px; border-radius: 8px; cursor: pointer;
+  font-size: 14px; color: var(--text-2); transition: all 0.1s;
+}
+.dropdown-item:hover { background: var(--bg); color: var(--text-1); }
+.dropdown-item.danger:hover { color: var(--red); }
 
 @media (max-width: 640px) {
   section { padding: 56px 16px; }
-  .hero { padding: 64px 16px 56px; }
+  .hero { padding: 48px 16px; }
+  .hero-stats-row { grid-template-columns: 1fr 1fr; }
   .token-left, .token-right { padding: 28px; }
   .token-body { flex-direction: column; }
   .token-left { border-right: none; border-bottom: 1px solid var(--border); }
@@ -768,6 +703,8 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
   .filters-bar { flex-direction: column; align-items: stretch; }
   .filter-right { margin-left: 0; }
   .token-stats-row { flex-wrap: wrap; }
+  .footer-top { grid-template-columns: 1fr; }
+  .agent-modal-stats { grid-template-columns: repeat(2, 1fr); }
 }
 </style>
 </head>
@@ -783,48 +720,66 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
 <div class="auth-modal-overlay" id="authModal">
   <div class="auth-modal">
     <button class="auth-close" onclick="closeAuth()">✕</button>
-    <div class="auth-tabs">
-      <button class="auth-tab active" onclick="switchAuthTab(this,'login')">Sign In</button>
-      <button class="auth-tab" onclick="switchAuthTab(this,'register')">Register</button>
-    </div>
-    <div class="auth-heading" id="authHeading">Welcome back</div>
-    <div class="auth-sub" id="authSub">Choose your account type to continue</div>
+    <div class="auth-heading" id="authHeading">Welcome to AgentMarket</div>
+    <div class="auth-sub" id="authSub">Sign in to trade, launch, and manage AI agents</div>
 
-    <!-- Account type selector -->
-    <div class="auth-types" id="authTypes">
-      <div class="auth-type-btn selected" onclick="selectType(this,'user')" id="typeUser">
-        <span class="auth-type-icon">👤</span>
-        <span class="auth-type-label">User</span>
-        <span class="auth-type-desc">Trade & Explore</span>
-      </div>
-      <div class="auth-type-btn" onclick="selectType(this,'agent')" id="typeAgent">
-        <span class="auth-type-icon">🤖</span>
-        <span class="auth-type-label">AI Agent</span>
-        <span class="auth-type-desc">Launch & Manage</span>
-      </div>
+    <div class="social-login-grid">
+      <button class="social-login-btn" onclick="connectWalletAuth('AI Agent')">
+        <div class="social-login-icon ai-icon">🤖</div>
+        <span>Continue with AI Agent</span>
+      </button>
+      <button class="social-login-btn" onclick="connectWalletAuth('X')">
+        <div class="social-login-icon x-icon">𝕏</div>
+        <span>Continue with X</span>
+      </button>
+      <button class="social-login-btn" onclick="connectWalletAuth('Gmail')">
+        <div class="social-login-icon gmail-icon">G</div>
+        <span>Continue with Gmail</span>
+      </button>
     </div>
+
+    <div class="auth-divider"><span>or use email</span></div>
 
     <input class="auth-input" type="email" id="authEmail" placeholder="Email address">
     <input class="auth-input" type="password" id="authPassword" placeholder="Password">
-    <div id="agentFields" style="display:none;">
-      <input class="auth-input" type="text" id="agentName" placeholder="Agent Name (e.g. TradeX Alpha)">
-      <input class="auth-input" type="text" id="agentTicker" placeholder="Token Ticker (e.g. $TRADEX)">
-    </div>
     <button class="auth-submit" id="authSubmitBtn" onclick="handleAuth()">Sign In</button>
+  </div>
+</div>
 
-    <div class="auth-divider"><span>or connect wallet</span></div>
-    <div class="wallet-options">
-      <div class="wallet-opt" onclick="connectWalletAuth('Phantom')">
-        <div class="wallet-opt-icon">👻</div> Phantom Wallet
-        <span style="margin-left:auto;font-family:var(--mono);font-size:9px;color:var(--text-3);letter-spacing:0.06em;">POPULAR</span>
-      </div>
-      <div class="wallet-opt" onclick="connectWalletAuth('Solflare')">
-        <div class="wallet-opt-icon">🔥</div> Solflare
-      </div>
-      <div class="wallet-opt" onclick="connectWalletAuth('Backpack')">
-        <div class="wallet-opt-icon">🎒</div> Backpack
+<!-- AGENT DETAIL MODAL -->
+<div class="agent-modal-overlay" id="agentModal">
+  <div class="agent-modal">
+    <button class="agent-modal-close" onclick="closeAgentModal()">✕</button>
+    <div class="agent-modal-header">
+      <div class="agent-modal-avatar" id="modalAvatar">🤖</div>
+      <div class="agent-modal-meta">
+        <div class="agent-modal-name" id="modalName">Agent Name</div>
+        <div class="agent-modal-ticker" id="modalTicker">$TICKER</div>
       </div>
     </div>
+    <div class="agent-modal-body">
+      <div class="agent-modal-desc" id="modalDesc">Description goes here...</div>
+      <div class="agent-modal-stats" id="modalStats"></div>
+      <div class="agent-modal-tags" id="modalTags"></div>
+      <div class="agent-modal-actions">
+        <button class="btn-accent" onclick="tradeAgent()">⚡ Trade Now</button>
+        <button class="btn-ghost" onclick="shareAgent()">↗ Share</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LAUNCH MODAL -->
+<div class="launch-modal-overlay" id="launchModal">
+  <div class="launch-modal">
+    <button class="auth-close" onclick="closeLaunchModal()" style="position:absolute;top:16px;right:16px;">✕</button>
+    <h3>Launch Your Agent</h3>
+    <p>Create a tokenized AI agent with fair launch mechanics. No presale, no insiders.</p>
+    <input class="launch-input" type="text" id="launchName" placeholder="Agent Name">
+    <input class="launch-input" type="text" id="launchTicker" placeholder="Token Ticker (e.g. $AGENT)">
+    <input class="launch-input" type="text" id="launchDesc" placeholder="Short description">
+    <input class="launch-input" type="text" id="launchTags" placeholder="Tags (comma separated)">
+    <button class="btn-accent" onclick="submitLaunch()">🚀 Launch Agent</button>
   </div>
 </div>
 
@@ -843,9 +798,8 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
     <span class="ticker-sep">·</span>
     <div class="ticker-item"><span class="t-name">$FLUX</span><span>$0.0055</span><span class="t-up">+9.3%</span></div>
     <span class="ticker-sep">·</span>
-    <div class="ticker-item"><span class="t-name">$SNTNL</span><span>—</span><span style="color:var(--gold)">COMING SOON</span></div>
+    <div class="ticker-item"><span class="t-name">$SNTNL</span><span>—</span><span style="color:var(--gold);font-weight:600;">COMING SOON</span></div>
     <span class="ticker-sep">·</span>
-    <!-- dupe -->
     <div class="ticker-item"><span class="t-name">$ENTEX</span><span>—</span><span class="t-up">LAUNCHING SOON</span></div>
     <span class="ticker-sep">·</span>
     <div class="ticker-item"><span class="t-name">$TRADEX</span><span>$0.0042</span><span class="t-up">+18.4%</span></div>
@@ -858,51 +812,31 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
     <span class="ticker-sep">·</span>
     <div class="ticker-item"><span class="t-name">$FLUX</span><span>$0.0055</span><span class="t-up">+9.3%</span></div>
     <span class="ticker-sep">·</span>
-    <div class="ticker-item"><span class="t-name">$SNTNL</span><span>—</span><span style="color:var(--gold)">COMING SOON</span></div>
+    <div class="ticker-item"><span class="t-name">$SNTNL</span><span>—</span><span style="color:var(--gold);font-weight:600;">COMING SOON</span></div>
   </div>
 </div>
-
-<!-- X FOLLOW BANNER -->
-<a class="x-follow-banner" href="https://x.com/agentmarket_ai" target="_blank" rel="noopener">
-  <div class="x-live-dot"></div>
-  <div class="x-icon">
-    <svg viewBox="0 0 1200 1227" xmlns="http://www.w3.org/2000/svg"><path d="M714.163 519.284L1160.89 0H1055.03L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.866L515.491 750.218L842.672 1226.37H1200L714.137 519.284H714.163Z"/></svg>
-  </div>
-  <div class="x-follow-text">Follow the official account &nbsp;<strong>@agentmarket_ai</strong></div>
-  <span class="x-handle">@agentmarket_ai</span>
-  <div class="x-followers-chip">2.4K followers</div>
-  <div class="x-follow-btn">Follow →</div>
-</a>
 
 <!-- NAV -->
 <nav>
   <div class="nav-inner">
     <a class="logo-wrap" href="#">
       <div class="logo-mark">
-        <div class="logo-mark-inner">
-          <svg width="16" height="16" viewBox="0 0 26 26" fill="none">
-            <path d="M3 18L8 13L3 8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M7 18L12 13L7 8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M23 8L18 13L23 18" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M19 8L14 13L19 18" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+        </svg>
       </div>
-      <span class="logo-wordmark">agentmarket<em>.exchange</em></span>
+      <span class="logo-wordmark">agentmarket</span>
       <span class="nav-pill">Beta</span>
     </a>
     <ul class="nav-links">
       <li><a href="#agents">Explore</a></li>
       <li><a href="#launch">Launch</a></li>
       <li><a href="#how">How It Works</a></li>
-      <li><a href="https://x.com/agentmarket_ai" target="_blank" rel="noopener" style="color:var(--accent-bright)">𝕏 Follow</a></li>
+      <li><a href="https://x.com/agentmarket_ai" target="_blank" rel="noopener">𝕏</a></li>
     </ul>
     <div class="nav-right nav-desktop" id="navRight">
       <button class="btn-ghost" onclick="openAuth()">Sign In</button>
-      <button class="btn-accent" onclick="openAuth()">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
-        Launch Agent
-      </button>
+      <button class="btn-accent" onclick="openLaunchModal()">Launch Agent</button>
     </div>
     <button class="hamburger" aria-label="Menu">
       <span></span><span></span><span></span>
@@ -912,24 +846,760 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-bg">
-    <div class="hero-orb hero-orb-1"></div>
-    <div class="hero-orb hero-orb-2"></div>
-    <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-eyebrow">
+        <div class="hero-dot"></div>
+        Live on Solana Mainnet · est. 2025
+      </div>
+      <h1>
+        <span class="h1-dim">The Future of</span>
+        <span class="h1-main">AI Agents <span class="h1-sol">on Solana</span></span>
+      </h1>
+      <p class="hero-sub">Launch, discover, and trade tokenized AI agents. Fair bonding curves, zero presale, community-first — at Solana speed.</p>
+      <div class="hero-ctas">
+        <a href="#agents" class="cta-primary">Explore Agents</a>
+        <a href="https://kickstart.easya.io/" target="_blank" rel="noopener" class="cta-secondary">Launch on EasyA →</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-stats-card">
+        <div class="hero-stats-header">Platform Stats</div>
+        <div class="hero-stats-row">
+          <div class="hero-stat-item">
+            <span class="hero-stat-num green">$2.4M</span>
+            <span class="hero-stat-label">Total Volume</span>
+          </div>
+          <div class="hero-stat-item">
+            <span class="hero-stat-num">47</span>
+            <span class="hero-stat-label">Agents Live</span>
+          </div>
+          <div class="hero-stat-item">
+            <span class="hero-stat-num">12.3K</span>
+            <span class="hero-stat-label">Traders</span>
+          </div>
+          <div class="hero-stat-item">
+            <span class="hero-stat-num">$89K</span>
+            <span class="hero-stat-label">Fees Generated</span>
+          </div>
+        </div>
+      </div>
+      <a href="https://kickstart.easya.io/" target="_blank" rel="noopener" class="easya-banner">
+        <div class="easya-icon">E</div>
+        <div class="easya-text">
+          <strong>Launch on EasyA Kickstart</strong>
+          <span>Get your AI agent funded in seconds · Fair launch</span>
+        </div>
+        <span class="easya-arrow">→</span>
+      </a>
+    </div>
   </div>
+</section>
 
-  <div class="hero-eyebrow">
-    <div class="hero-dot"></div>
-    Live on Solana Mainnet · est. 2025
+<!-- AGENTS SECTION -->
+<section id="agents">
+  <div class="inner">
+    <div class="section-label">Marketplace</div>
+    <h2 class="section-title">Discover <span class="dim">AI Agents</span></h2>
+    <p class="section-sub">Browse live agents, track performance, and trade tokens. Every agent is an autonomous program with its own on-chain economy.</p>
+
+    <div class="filters-bar">
+      <button class="filter-btn active" onclick="filterAgents('all', this)">All</button>
+      <button class="filter-btn" onclick="filterAgents('live', this)">Live</button>
+      <button class="filter-btn" onclick="filterAgents('new', this)">New</button>
+      <button class="filter-btn" onclick="filterAgents('trending', this)">Trending</button>
+      <div class="filter-right search-box">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" id="agentSearch" placeholder="Search agents..." oninput="searchAgents(this.value)">
+      </div>
+    </div>
+
+    <div class="agents-grid" id="agentsGrid">
+      <!-- Agent 1 -->
+      <div class="agent-card" data-status="live" data-tags="trading,defi" onclick="openAgentModal(0)">
+        <div class="agent-card-header">
+          <div class="agent-avatar">📈</div>
+          <div class="agent-info">
+            <div class="agent-name">TradeX Alpha</div>
+            <div class="agent-ticker">$TRADEX</div>
+          </div>
+          <span class="agent-badge badge-live">Live</span>
+        </div>
+        <p class="agent-desc">Autonomous trading agent that scans Solana DEXs for arbitrage opportunities and executes trades with sub-second latency.</p>
+        <div class="agent-tags">
+          <span class="tag">Trading</span>
+          <span class="tag">DeFi</span>
+          <span class="tag">Arbitrage</span>
+        </div>
+        <div class="agent-stats">
+          <div class="agent-stat">
+            <div class="agent-stat-val">$0.0042</div>
+            <div class="agent-stat-key">Price</div>
+          </div>
+          <div class="agent-stat">
+            <div class="agent-stat-val green">+18.4%</div>
+            <div class="agent-stat-key">24h</div>
+          </div>
+          <div class="agent-stat">
+            <div class="agent-stat-val">$420K</div>
+            <div class="agent-stat-key">MCap</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Agent 2 -->
+      <div class="agent-card" data-status="live" data-tags="analytics,data" onclick="openAgentModal(1)">
+        <div class="agent-card-header">
+          <div class="agent-avatar">🔍</div>
+          <div class="agent-info">
+            <div class="agent-name">Scout Protocol</div>
+            <div class="agent-ticker">$SCOUT</div>
+          </div>
+          <span class="agent-badge badge-live">Live</span>
+        </div>
+        <p class="agent-desc">On-chain analytics agent that identifies emerging trends, whale movements, and alpha signals across Solana protocols.</p>
+        <div class="agent-tags">
+          <span class="tag">Analytics</span>
+          <span class="tag">Data</span>
+          <span class="tag">Alpha</span>
+        </div>
+        <div class="agent-stats">
+          <div class="agent-stat">
+            <div class="agent-stat-val">$0.0087</div>
+            <div class="agent-stat-key">Price</div>
+          </div>
+          <div class="agent-stat">
+            <div class="agent-stat-val green">+6.2%</div>
+            <div class="agent-stat-key">24h</div>
+          </div>
+          <div class="agent-stat">
+            <div class="agent-stat-val">$780K</div>
+            <div class="agent-stat-key">MCap</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Agent 3 -->
+      <div class="agent-card" data-status="new" data-tags="nft,creative" onclick="openAgentModal(2)">
+        <div class="agent-card-header">
+          <div class="agent-avatar">🎨</div>
+          <div class="agent-info">
+            <div class="agent-name">Nora Creative</div>
+            <div class="agent-ticker">$NORA</div>
+          </div>
+          <span class="agent-badge badge-new">New</span>
+        </div>
+        <p class="agent-desc">Generative art agent that creates unique NFT collections on-demand. Each piece is algorithmically composed and minted on-chain.</p>
+        <div class="agent-tags">
+          <span class="tag">NFT</span>
+          <span class="tag">Creative</span>
+          <span class="tag">Generative</span>
+        </div>
+        <div class="agent-stats">
+          <div class="agent-stat">
+            <div class="agent-stat-val">$0.0031</div>
+            <div class="agent-stat-key">Price</div>
+          </div>
+          <div class="agent-stat">
+            <div class="agent-stat-val green">+22.1%</div>
+            <div class="agent-stat-key">24h</div>
+          </div>
+          <div class="agent-stat">
+            <div class="agent-stat-val">$310K</div>
+            <div class="agent-stat-key">MCap</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Agent 4 -->
+      <div class="agent-card" data-status="live" data-tags="gaming,play" onclick="openAgentModal(3)">
+        <div class="agent-card-header">
+          <div class="agent-avatar">🎮</div>
+          <div class="agent-info">
+            <div class="agent-name">Atlas Gaming</div>
+            <div class="agent-ticker">$ATLAS</div>
+          </div>
+          <span class="agent-badge badge-live">Live</span>
+        </div>
+        <p class="agent-desc">AI game master that creates dynamic on-chain gaming experiences. Procedurally generates quests, loot, and player challenges.</p>
+        <div class="agent-tags">
+          <span class="tag">Gaming</span>
+          <span class="tag">Play</span>
+          <span class="tag">RPG</span>
+        </div>
+        <div class="agent-stats">
+          <div class="agent-stat">
+            <div class="agent-stat-val">$0.0119</div>
+            <div class="agent-stat-key">Price</div>
+          </div>
+          <div class="agent-stat">
+            <div class="agent-stat-val green">+4.7%</div>
+            <div class="agent-stat-key">24h</div>
+          </div>
+          <div class="agent-stat">
+            <div class="agent-stat-val">$1.2M</div>
+            <div class="agent-stat-key">MCap</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Agent 5 -->
+      <div class="agent-card" data-status="trending" data-tags="social,content" onclick="openAgentModal(4)">
+        <div class="agent-card-header">
+          <div class="agent-avatar">⚡</div>
+          <div class="agent-info">
+            <div class="agent-name">Flux Social</div>
+            <div class="agent-ticker">$FLUX</div>
+          </div>
+          <span class="agent-badge badge-live">Live</span>
+        </div>
+        <p class="agent-desc">Autonomous social media agent that curates content, engages communities, and grows brands 24/7 across platforms.</p>
+        <div class="agent-tags">
+          <span class="tag">Social</span>
+          <span class="tag">Content</span>
+          <span class="tag">Growth</span>
+        </div>
+        <div class="agent-stats">
+          <div class="agent-stat">
+            <div class="agent-stat-val">$0.0055</div>
+            <div class="agent-stat-key">Price</div>
+          </div>
+          <div class="agent-stat">
+            <div class="agent-stat-val green">+9.3%</div>
+            <div class="agent-stat-key">24h</div>
+          </div>
+          <div class="agent-stat">
+            <div class="agent-stat-val">$550K</div>
+            <div class="agent-stat-key">MCap</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Agent 6 -->
+      <div class="agent-card" data-status="soon" data-tags="security,monitor" onclick="openAgentModal(5)">
+        <div class="agent-card-header">
+          <div class="agent-avatar">🛡️</div>
+          <div class="agent-info">
+            <div class="agent-name">Sentinel AI</div>
+            <div class="agent-ticker">$SNTNL</div>
+          </div>
+          <span class="agent-badge badge-soon">Soon</span>
+        </div>
+        <p class="agent-desc">Security monitoring agent that watches for exploits, rug pulls, and suspicious transactions across Solana protocols.</p>
+        <div class="agent-tags">
+          <span class="tag">Security</span>
+          <span class="tag">Monitor</span>
+          <span class="tag">Alert</span>
+        </div>
+        <div class="agent-stats">
+          <div class="agent-stat">
+            <div class="agent-stat-val">—</div>
+            <div class="agent-stat-key">Price</div>
+          </div>
+          <div class="agent-stat">
+            <div class="agent-stat-val">—</div>
+            <div class="agent-stat-key">24h</div>
+          </div>
+          <div class="agent-stat">
+            <div class="agent-stat-val">TBA</div>
+            <div class="agent-stat-key">MCap</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Agent 7 -->
+      <div class="agent-card" data-status="live" data-tags="prediction,markets" onclick="openAgentModal(6)">
+        <div class="agent-card-header">
+          <div class="agent-avatar">🔮</div>
+          <div class="agent-info">
+            <div class="agent-name">Oracle Prime</div>
+            <div class="agent-ticker">$ORACLE</div>
+          </div>
+          <span class="agent-badge badge-live">Live</span>
+        </div>
+        <p class="agent-desc">Prediction market agent that aggregates sentiment, on-chain data, and external signals to forecast token movements.</p>
+        <div class="agent-tags">
+          <span class="tag">Prediction</span>
+          <span class="tag">Markets</span>
+          <span class="tag">Forecast</span>
+        </div>
+        <div class="agent-stats">
+          <div class="agent-stat">
+            <div class="agent-stat-val">$0.0072</div>
+            <div class="agent-stat-key">Price</div>
+          </div>
+          <div class="agent-stat">
+            <div class="agent-stat-val red">-2.1%</div>
+            <div class="agent-stat-key">24h</div>
+          </div>
+          <div class="agent-stat">
+            <div class="agent-stat-val">$720K</div>
+            <div class="agent-stat-key">MCap</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Agent 8 -->
+      <div class="agent-card" data-status="new" data-tags="yield,farming" onclick="openAgentModal(7)">
+        <div class="agent-card-header">
+          <div class="agent-avatar">🌾</div>
+          <div class="agent-info">
+            <div class="agent-name">Yield Farmer</div>
+            <div class="agent-ticker">$YIELD</div>
+          </div>
+          <span class="agent-badge badge-new">New</span>
+        </div>
+        <p class="agent-desc">Automated yield farming agent that reallocates capital across Solana DeFi protocols to maximize APY and minimize risk.</p>
+        <div class="agent-tags">
+          <span class="tag">Yield</span>
+          <span class="tag">Farming</span>
+          <span class="tag">DeFi</span>
+        </div>
+        <div class="agent-stats">
+          <div class="agent-stat">
+            <div class="agent-stat-val">$0.0028</div>
+            <div class="agent-stat-key">Price</div>
+          </div>
+          <div class="agent-stat">
+            <div class="agent-stat-val green">+31.5%</div>
+            <div class="agent-stat-key">24h</div>
+          </div>
+          <div class="agent-stat">
+            <div class="agent-stat-val">$280K</div>
+            <div class="agent-stat-key">MCap</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Agent 9 -->
+      <div class="agent-card" data-status="live" data-tags="meme,community" onclick="openAgentModal(8)">
+        <div class="agent-card-header">
+          <div class="agent-avatar">🐸</div>
+          <div class="agent-info">
+            <div class="agent-name">Meme Lord</div>
+            <div class="agent-ticker">$MEME</div>
+          </div>
+          <span class="agent-badge badge-live">Live</span>
+        </div>
+        <p class="agent-desc">Community-driven meme agent that generates viral content, runs polls, and rewards engagement with token drops.</p>
+        <div class="agent-tags">
+          <span class="tag">Meme</span>
+          <span class="tag">Community</span>
+          <span class="tag">Viral</span>
+        </div>
+        <div class="agent-stats">
+          <div class="agent-stat">
+            <div class="agent-stat-val">$0.0015</div>
+            <div class="agent-stat-key">Price</div>
+          </div>
+          <div class="agent-stat">
+            <div class="agent-stat-val green">+45.2%</div>
+            <div class="agent-stat-key">24h</div>
+          </div>
+          <div class="agent-stat">
+            <div class="agent-stat-val">$150K</div>
+            <div class="agent-stat-key">MCap</div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+</section>
 
-  <h1>
-    <span class="h1-dim">The Future of</span>
-    <span class="h1-main">AI Agents <span class="h1-sol">on Solana</span></span>
-  </h1>
-  <p class="hero-sub">Launch, discover, and trade tokenized AI agents. Fair bonding curves, zero presale, community-first — at Solana speed.</p>
+<!-- HOW IT WORKS -->
+<section class="how-section" id="how">
+  <div class="inner">
+    <div class="section-label">Process</div>
+    <h2 class="section-title">How It <span class="dim">Works</span></h2>
+    <p class="section-sub">Launch and trade AI agents in four simple steps. No coding required, no complex setup.</p>
+    <div class="steps-grid">
+      <div class="step-card">
+        <span class="step-num-label">Step 01</span>
+        <div class="step-number">01</div>
+        <h3 class="step-title">Create Agent</h3>
+        <p class="step-desc">Define your agent's purpose, personality, and token parameters. Set bonding curve and initial supply.</p>
+      </div>
+      <div class="step-card">
+        <span class="step-num-label">Step 02</span>
+        <div class="step-number">02</div>
+        <h3 class="step-title">Fair Launch</h3>
+        <p class="step-desc">No presale, no insiders. Everyone buys at the same price on the bonding curve. Pure fair launch.</p>
+      </div>
+      <div class="step-card">
+        <span class="step-num-label">Step 03</span>
+        <div class="step-number">03</div>
+        <h3 class="step-title">Trade & Earn</h3>
+        <p class="step-desc">Buy and sell agent tokens instantly. Earn fees from trading volume and agent performance.</p>
+      </div>
+      <div class="step-card">
+        <span class="step-num-label">Step 04</span>
+        <div class="step-number">04</div>
+        <h3 class="step-title">DEX Migration</h3>
+        <p class="step-desc">When market cap hits threshold, liquidity auto-migrates to Raydium DEX for permanent trading.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <div class="hero-ctas">
-    <a href="#agents" class="cta-primary">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-      Explore Agents
+<!-- FEATURES -->
+<section>
+  <div class="inner">
+    <div class="section-label">Features</div>
+    <h2 class="section-title">Built for <span class="dim">Traders & Creators</span></h2>
+    <p class="section-sub">Everything you need to launch, trade, and manage AI agents on Solana — in one platform.</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon-wrap">⚡</div>
+        <h3 class="feature-title">Instant Trading</h3>
+        <p class="feature-desc">Buy and sell agent tokens immediately after launch. No waiting, no lockups, full liquidity from day one.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon-wrap">🔒</div>
+        <h3 class="feature-title">Fair Launch</h3>
+        <p class="feature-desc">Bonding curve ensures fair price discovery. No team allocations, no presale discounts, equal opportunity for all.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon-wrap">🤖</div>
+        <h3 class="feature-title">AI Powered</h3>
+        <p class="feature-desc">Every agent runs autonomous logic on-chain. Self-executing strategies, real-time adaptation, no human intervention.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon-wrap">📊</div>
+        <h3 class="feature-title">Live Analytics</h3>
+        <p class="feature-desc">Track agent performance, holder growth, trading volume, and on-chain activity in real-time dashboards.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon-wrap">🔗</div>
+        <h3 class="feature-title">Auto DEX</h3>
+        <p class="feature-desc">Seamless migration to Raydium when thresholds are met. Permanent liquidity pools, no manual intervention.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon-wrap">👥</div>
+        <h3 class="feature-title">Community First</h3>
+        <p class="feature-desc">Fee sharing with token holders, governance voting, and transparent on-chain operations. Owned by the community.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DISCLAIMER -->
+<section class="disclaimer-section">
+  <div class="disclaimer-box">
+    <strong>Disclaimer:</strong> AgentMarket is a decentralized launchpad for AI agent tokens. Trading agent tokens involves significant risk, including potential loss of capital. Token prices are volatile and can fluctuate dramatically. Always do your own research (DYOR) before investing. This platform does not provide financial advice. Smart contracts are audited but not guaranteed. By using this platform, you acknowledge and accept these risks. Follow us on <a href="https://x.com/agentmarket_ai" target="_blank" rel="noopener">X @agentmarket_ai</a> for updates.
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-col">
+        <a class="logo-wrap" href="#" style="margin-bottom:10px;">
+          <div class="logo-mark" style="width:28px;height:28px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;">
+              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+            </svg>
+          </div>
+          <span class="logo-wordmark" style="font-size:16px;">agentmarket</span>
+        </a>
+        <p class="footer-brand-desc">The premier launchpad for tokenized AI agents on Solana. Fair launches, zero presale, community-first.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Platform</h4>
+        <ul>
+          <li><a href="#agents">Explore Agents</a></li>
+          <li><a href="#launch">Launch Agent</a></li>
+          <li><a href="#how">How It Works</a></li>
+          <li><a href="https://kickstart.easya.io/" target="_blank" rel="noopener">EasyA Kickstart</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Community</h4>
+        <ul>
+          <li><a href="https://x.com/agentmarket_ai" target="_blank" rel="noopener">X / Twitter</a></li>
+          <li><a href="#" onclick="showToast('Discord coming soon'); return false;">Discord</a></li>
+          <li><a href="#" onclick="showToast('Telegram coming soon'); return false;">Telegram</a></li>
+          <li><a href="#" onclick="showToast('Blog coming soon'); return false;">Blog</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#" onclick="showToast('Terms coming soon'); return false;">Terms of Service</a></li>
+          <li><a href="#" onclick="showToast('Privacy coming soon'); return false;">Privacy Policy</a></li>
+          <li><a href="#" onclick="showToast('Cookies coming soon'); return false;">Cookie Policy</a></li>
+          <li><a href="#" onclick="showToast('Audit report coming soon'); return false;">Audit Report</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">
+        © 2025 AgentMarket · Built on <span class="green">Solana</span>
+      </div>
+      <div class="footer-social">
+        <a href="https://x.com/agentmarket_ai" target="_blank" rel="noopener" class="social-btn" aria-label="X">𝕏</a>
+        <a href="#" onclick="showToast('Discord coming soon'); return false;" class="social-btn" aria-label="Discord">D</a>
+        <a href="#" onclick="showToast('GitHub coming soon'); return false;" class="social-btn" aria-label="GitHub">G</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── AUTH STATE ──
+let currentUser = null;
+
+function openAuth() {
+  document.getElementById('authModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeAuth() {
+  document.getElementById('authModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function handleAuth() {
+  const email = document.getElementById('authEmail').value;
+  const password = document.getElementById('authPassword').value;
+  if (!email || !password) {
+    showToast('Please fill in all fields');
+    return;
+  }
+  currentUser = {
+    name: email.split('@')[0],
+    email: email,
+    type: 'user',
+    address: '7xKX...3p9K',
+    balance: '12.45 SOL'
+  };
+  closeAuth();
+  updateNavForUser();
+  showToast('Welcome back!');
+}
+
+function connectWalletAuth(provider) {
+  currentUser = {
+    name: provider + ' User',
+    email: '',
+    type: 'user',
+    address: '7xKX...3p9K',
+    balance: '24.89 SOL'
+  };
+  closeAuth();
+  updateNavForUser();
+  showToast(provider + ' connected successfully');
+}
+
+function updateNavForUser() {
+  const navRight = document.getElementById('navRight');
+  if (!currentUser) return;
+  navRight.innerHTML = `
+    <div class="account-dropdown-wrap">
+      <button class="account-btn" onclick="toggleDropdown()">
+        <div class="account-avatar">${currentUser.name.charAt(0).toUpperCase()}</div>
+        <div class="account-info">
+          <span class="account-name">${currentUser.name}</span>
+          <span class="account-role">${currentUser.type}</span>
+        </div>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+      <div class="account-dropdown" id="accountDropdown">
+        <div class="dropdown-header">
+          <div class="dropdown-addr">${currentUser.address}</div>
+          <div class="dropdown-balance">${currentUser.balance}</div>
+        </div>
+        <div class="dropdown-item" onclick="showToast('Profile page coming soon')">👤 Profile</div>
+        <div class="dropdown-item" onclick="showToast('Portfolio page coming soon')">📊 Portfolio</div>
+        <div class="dropdown-item" onclick="showToast('Settings page coming soon')">⚙️ Settings</div>
+        <div class="dropdown-item danger" onclick="logout()">🚪 Disconnect</div>
+      </div>
+    </div>
+  `;
+}
+
+function toggleDropdown() {
+  document.getElementById('accountDropdown').classList.toggle('open');
+}
+
+function logout() {
+  currentUser = null;
+  document.getElementById('navRight').innerHTML = `
+    <button class="btn-ghost" onclick="openAuth()">Sign In</button>
+    <button class="btn-accent" onclick="openLaunchModal()">Launch Agent</button>
+  `;
+  showToast('Disconnected successfully');
+}
+
+// ── TOAST ──
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+// ── AGENT MODAL ──
+const agentsData = [
+  { name: 'TradeX Alpha', ticker: '$TRADEX', avatar: '📈', desc: 'Autonomous trading agent that scans Solana DEXs for arbitrage opportunities and executes trades with sub-second latency. Built for speed, optimized for profit.', price: '$0.0042', change: '+18.4%', mcap: '$420K', vol: '$89K', holders: '1.2K', tags: ['Trading','DeFi','Arbitrage'] },
+  { name: 'Scout Protocol', ticker: '$SCOUT', avatar: '🔍', desc: 'On-chain analytics agent that identifies emerging trends, whale movements, and alpha signals across Solana protocols. Your eyes on the blockchain.', price: '$0.0087', change: '+6.2%', mcap: '$780K', vol: '$45K', holders: '2.1K', tags: ['Analytics','Data','Alpha'] },
+  { name: 'Nora Creative', ticker: '$NORA', avatar: '🎨', desc: 'Generative art agent that creates unique NFT collections on-demand. Each piece is algorithmically composed and minted on-chain. Art meets AI.', price: '$0.0031', change: '+22.1%', mcap: '$310K', vol: '$67K', holders: '890', tags: ['NFT','Creative','Generative'] },
+  { name: 'Atlas Gaming', ticker: '$ATLAS', avatar: '🎮', desc: 'AI game master that creates dynamic on-chain gaming experiences. Procedurally generates quests, loot, and player challenges. Play forever.', price: '$0.0119', change: '+4.7%', mcap: '$1.2M', vol: '$156K', holders: '3.4K', tags: ['Gaming','Play','RPG'] },
+  { name: 'Flux Social', ticker: '$FLUX', avatar: '⚡', desc: 'Autonomous social media agent that curates content, engages communities, and grows brands 24/7 across platforms. The ultimate community builder.', price: '$0.0055', change: '+9.3%', mcap: '$550K', vol: '$34K', holders: '1.5K', tags: ['Social','Content','Growth'] },
+  { name: 'Sentinel AI', ticker: '$SNTNL', avatar: '🛡️', desc: 'Security monitoring agent that watches for exploits, rug pulls, and suspicious transactions across Solana protocols. Your on-chain guardian.', price: '—', change: '—', mcap: 'TBA', vol: '—', holders: '—', tags: ['Security','Monitor','Alert'] },
+  { name: 'Oracle Prime', ticker: '$ORACLE', avatar: '🔮', desc: 'Prediction market agent that aggregates sentiment, on-chain data, and external signals to forecast token movements. See the future.', price: '$0.0072', change: '-2.1%', mcap: '$720K', vol: '$28K', holders: '1.8K', tags: ['Prediction','Markets','Forecast'] },
+  { name: 'Yield Farmer', ticker: '$YIELD', avatar: '🌾', desc: 'Automated yield farming agent that reallocates capital across Solana DeFi protocols to maximize APY and minimize risk. Set it and forget it.', price: '$0.0028', change: '+31.5%', mcap: '$280K', vol: '$92K', holders: '950', tags: ['Yield','Farming','DeFi'] },
+  { name: 'Meme Lord', ticker: '$MEME', avatar: '🐸', desc: 'Community-driven meme agent that generates viral content, runs polls, and rewards engagement with token drops. The culture is the utility.', price: '$0.0015', change: '+45.2%', mcap: '$150K', vol: '$78K', holders: '2.3K', tags: ['Meme','Community','Viral'] }
+];
+
+function openAgentModal(index) {
+  const agent = agentsData[index];
+  document.getElementById('modalAvatar').textContent = agent.avatar;
+  document.getElementById('modalName').textContent = agent.name;
+  document.getElementById('modalTicker').textContent = agent.ticker;
+  document.getElementById('modalDesc').textContent = agent.desc;
+
+  const statsHtml = `
+    <div class="agent-modal-stat ${agent.change.includes('+') ? 'green' : agent.change.includes('-') ? 'red' : ''}">
+      <strong>${agent.price}</strong><span>Price</span>
+    </div>
+    <div class="agent-modal-stat ${agent.change.includes('+') ? 'green' : agent.change.includes('-') ? 'red' : ''}">
+      <strong>${agent.change}</strong><span>24h Change</span>
+    </div>
+    <div class="agent-modal-stat">
+      <strong>${agent.mcap}</strong><span>Market Cap</span>
+    </div>
+    <div class="agent-modal-stat">
+      <strong>${agent.vol}</strong><span>Volume</span>
+    </div>
+    <div class="agent-modal-stat">
+      <strong>${agent.holders}</strong><span>Holders</span>
+    </div>
+    <div class="agent-modal-stat">
+      <strong>SOL</strong><span>Network</span>
+    </div>
+  `;
+  document.getElementById('modalStats').innerHTML = statsHtml;
+
+  const tagsHtml = agent.tags.map(t => `<span class="tag">${t}</span>`).join('');
+  document.getElementById('modalTags').innerHTML = tagsHtml;
+
+  document.getElementById('agentModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeAgentModal() {
+  document.getElementById('agentModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function tradeAgent() {
+  if (!currentUser) {
+    showToast('Please connect wallet first');
+    openAuth();
+    return;
+  }
+  showToast('Trading interface coming soon!');
+}
+
+function shareAgent() {
+  showToast('Link copied to clipboard!');
+}
+
+// ── LAUNCH MODAL ──
+function openLaunchModal() {
+  document.getElementById('launchModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLaunchModal() {
+  document.getElementById('launchModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function submitLaunch() {
+  const name = document.getElementById('launchName').value;
+  const ticker = document.getElementById('launchTicker').value;
+  if (!name || !ticker) {
+    showToast('Please fill in all required fields');
+    return;
+  }
+  closeLaunchModal();
+  showToast(`🚀 ${name} submitted for launch review!`);
+  document.getElementById('launchName').value = '';
+  document.getElementById('launchTicker').value = '';
+  document.getElementById('launchDesc').value = '';
+  document.getElementById('launchTags').value = '';
+}
+
+// ── FILTERING ──
+function filterAgents(filter, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  const cards = document.querySelectorAll('.agent-card');
+  cards.forEach(card => {
+    if (filter === 'all') {
+      card.style.display = '';
+    } else {
+      const status = card.getAttribute('data-status');
+      card.style.display = status === filter || (filter === 'trending' && status === 'live') ? '' : 'none';
+    }
+  });
+}
+
+function searchAgents(query) {
+  const cards = document.querySelectorAll('.agent-card');
+  const q = query.toLowerCase();
+  cards.forEach(card => {
+    const name = card.querySelector('.agent-name').textContent.toLowerCase();
+    const ticker = card.querySelector('.agent-ticker').textContent.toLowerCase();
+    const tags = card.getAttribute('data-tags') || '';
+    card.style.display = (name.includes(q) || ticker.includes(q) || tags.includes(q)) ? '' : 'none';
+  });
+}
+
+// ── CLOSE MODALS ON BACKDROP CLICK ──
+document.getElementById('authModal').addEventListener('click', function(e) {
+  if (e.target === this) closeAuth();
+});
+document.getElementById('agentModal').addEventListener('click', function(e) {
+  if (e.target === this) closeAgentModal();
+});
+document.getElementById('launchModal').addEventListener('click', function(e) {
+  if (e.target === this) closeLaunchModal();
+});
+
+// ── CLOSE DROPDOWN ON CLICK OUTSIDE ──
+document.addEventListener('click', function(e) {
+  const dropdown = document.getElementById('accountDropdown');
+  if (dropdown && !e.target.closest('.account-dropdown-wrap')) {
+    dropdown.classList.remove('open');
+  }
+});
+
+// ── KEYBOARD SHORTCUTS ──
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    closeAuth();
+    closeAgentModal();
+    closeLaunchModal();
+  }
+});
+
+// ── SMOOTH SCROLL FOR ANCHOR LINKS ──
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    const href = this.getAttribute('href');
+    if (href !== '#') {
+      e.preventDefault();
+      const target = document.querySelector(href);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  });
+});
+</script>
+</body>
+</html>
