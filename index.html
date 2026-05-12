@@ -4,426 +4,604 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AgentMarket.exchange — AI Agent Launchpad on Solana</title>
-<meta name="description" content="The premier AI agent launchpad and marketplace on Solana. Launch, discover, and trade AI agents. $OPENAGENT token launching soon.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,700&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #0a0a0f;
-  --bg-2: #0f0f17;
-  --bg-3: #13131d;
-  --surface: #16161f;
-  --surface-2: #1c1c28;
-  --border: rgba(255,255,255,0.07);
-  --border-light: rgba(255,255,255,0.04);
-  --text-1: #f5f4ef;
-  --text-2: #a09e9a;
-  --text-3: #5c5a58;
+  --bg: #06060a;
+  --bg-2: #09090f;
+  --bg-3: #0d0d16;
+  --surface: #111118;
+  --surface-2: #17171f;
+  --border: rgba(255,255,255,0.06);
+  --border-glow: rgba(153,69,255,0.2);
+  --text-1: #f0eff8;
+  --text-2: #8e8ca8;
+  --text-3: #4a4862;
   --accent: #9945FF;
-  --accent-dim: rgba(153,69,255,0.12);
+  --accent-bright: #b87aff;
+  --accent-dim: rgba(153,69,255,0.1);
   --green: #14F195;
-  --green-dim: rgba(20,241,149,0.1);
-  --gold: #c9a84c;
-  --gold-dim: rgba(201,168,76,0.1);
-  --serif: 'Playfair Display', Georgia, serif;
-  --sans: 'Instrument Sans', sans-serif;
-  --mono: 'DM Mono', monospace;
+  --green-dim: rgba(20,241,149,0.08);
+  --gold: #e8b84b;
+  --gold-dim: rgba(232,184,75,0.1);
+  --red: #ff5b5b;
+  --display: 'Syne', sans-serif;
+  --body: 'Space Grotesk', sans-serif;
+  --mono: 'JetBrains Mono', monospace;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 html { scroll-behavior: smooth; }
 
 body {
-  font-family: var(--sans);
+  font-family: var(--body);
   background: var(--bg);
   color: var(--text-1);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  cursor: default;
+}
+
+/* Noise overlay */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 9999;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity: 0.02;
 }
 
 /* ── TICKER ── */
 .ticker {
   background: var(--bg-2);
   border-bottom: 1px solid var(--border);
-  padding: 9px 0;
+  padding: 0;
   overflow: hidden;
+  height: 34px;
+  display: flex; align-items: center;
+  position: relative;
 }
+.ticker::before, .ticker::after {
+  content: ''; position: absolute; top: 0; bottom: 0; width: 60px; z-index: 2;
+}
+.ticker::before { left: 0; background: linear-gradient(to right, var(--bg-2), transparent); }
+.ticker::after { right: 0; background: linear-gradient(to left, var(--bg-2), transparent); }
 .ticker-track {
-  display: flex;
-  animation: slide 32s linear infinite;
-  width: max-content;
+  display: flex; animation: slide 40s linear infinite;
+  width: max-content; align-items: center;
 }
-@keyframes slide {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
+@keyframes slide { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 .ticker-item {
-  padding: 0 28px;
-  font-size: 11px;
-  font-family: var(--mono);
-  color: var(--text-3);
-  white-space: nowrap;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  letter-spacing: 0.04em;
+  padding: 0 20px; font-size: 10.5px; font-family: var(--mono);
+  color: var(--text-3); white-space: nowrap;
+  display: flex; align-items: center; gap: 7px; letter-spacing: 0.03em;
 }
-.ticker-item .t-name { color: var(--text-2); }
+.ticker-item .t-name { color: var(--text-2); font-weight: 500; }
 .ticker-item .t-up { color: var(--green); }
-.ticker-item .t-div { color: var(--border); }
+.ticker-item .t-down { color: var(--red); }
+.ticker-sep { color: var(--border); padding: 0 4px; font-size: 16px; }
+
+/* ── X FOLLOW CARD ── */
+.x-follow-banner {
+  background: var(--bg-2);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  gap: 12px; padding: 9px 24px;
+  cursor: pointer; text-decoration: none;
+  transition: background 0.2s;
+  position: relative; overflow: hidden;
+}
+.x-follow-banner::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(153,69,255,0.03), transparent);
+  animation: shimmer 3s linear infinite;
+}
+@keyframes shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+.x-follow-banner:hover { background: var(--bg-3); }
+.x-icon {
+  width: 18px; height: 18px;
+  background: var(--text-1);
+  border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.x-icon svg { width: 11px; height: 11px; fill: var(--bg); }
+.x-follow-text {
+  font-family: var(--mono); font-size: 10.5px;
+  color: var(--text-3); letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.x-follow-text strong { color: var(--text-2); font-weight: 500; }
+.x-handle {
+  font-family: var(--mono); font-size: 11px;
+  color: var(--accent-bright); letter-spacing: 0.04em;
+}
+.x-follow-btn {
+  padding: 3px 12px; border-radius: 4px;
+  border: 1px solid var(--border-glow);
+  font-size: 10.5px; font-weight: 600; font-family: var(--body);
+  color: var(--accent-bright);
+  background: var(--accent-dim);
+  transition: all 0.2s;
+}
+.x-follow-banner:hover .x-follow-btn {
+  background: rgba(153,69,255,0.2);
+  border-color: rgba(153,69,255,0.4);
+}
+.x-followers-chip {
+  font-family: var(--mono); font-size: 9.5px;
+  color: var(--text-3); letter-spacing: 0.04em;
+  padding: 2px 8px; border: 1px solid var(--border); border-radius: 20px;
+}
+.x-live-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--green);
+  animation: pulse 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
 
 /* ── NAV ── */
 nav {
   position: sticky; top: 0; z-index: 100;
-  background: rgba(10,10,15,0.92);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: rgba(6,6,10,0.88);
+  backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
   border-bottom: 1px solid var(--border);
-  padding: 0 24px;
 }
 .nav-inner {
-  max-width: 1160px; margin: 0 auto;
+  max-width: 1200px; margin: 0 auto;
   display: flex; align-items: center; justify-content: space-between;
-  height: 60px; gap: 20px;
+  height: 58px; padding: 0 24px; gap: 20px;
 }
 .logo-wrap {
-  display: flex; align-items: center; gap: 10px;
-  text-decoration: none; flex-shrink: 0;
+  display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0;
 }
 .logo-mark {
-  width: 34px; height: 34px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 8px;
+  width: 30px; height: 30px;
+  border: 1px solid rgba(153,69,255,0.3);
+  border-radius: 7px;
   display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
+  background: rgba(153,69,255,0.08);
+  position: relative; overflow: hidden;
+}
+.logo-mark::before {
+  content: '';
+  position: absolute; inset: -1px;
+  background: conic-gradient(from 0deg, transparent 0deg, var(--accent) 60deg, transparent 120deg);
+  animation: spin 4s linear infinite;
+  opacity: 0.3;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.logo-mark-inner {
+  width: 26px; height: 26px; border-radius: 5px;
+  background: var(--surface); display: flex; align-items: center; justify-content: center;
+  position: relative; z-index: 1;
 }
 .logo-wordmark {
-  font-family: var(--serif);
-  font-size: 15px; font-weight: 700;
-  color: var(--text-1);
-  letter-spacing: -0.3px;
+  font-family: var(--display); font-size: 15px; font-weight: 700;
+  color: var(--text-1); letter-spacing: -0.5px;
 }
-.logo-wordmark em {
-  font-style: normal;
-  color: var(--accent);
-}
-.logo-est {
-  font-family: var(--mono);
-  font-size: 9px;
-  color: var(--text-3);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  padding: 2px 6px;
-  border: 1px solid var(--border);
-  border-radius: 3px;
+.logo-wordmark em { font-style: normal; color: var(--text-3); font-weight: 400; }
+.nav-pill {
+  font-family: var(--mono); font-size: 9px; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--green);
+  border: 1px solid rgba(20,241,149,0.2); border-radius: 20px;
+  padding: 2px 8px; background: var(--green-dim);
 }
 .nav-links {
-  display: flex; align-items: center; gap: 2px;
-  list-style: none;
+  display: flex; align-items: center; gap: 0; list-style: none;
 }
 .nav-links a {
-  display: block; padding: 5px 12px;
-  font-size: 13px; font-weight: 500;
-  color: var(--text-2);
-  text-decoration: none; border-radius: 6px;
-  transition: color 0.15s;
-  letter-spacing: 0.01em;
+  display: block; padding: 6px 14px; font-size: 13px; font-weight: 500;
+  color: var(--text-3); text-decoration: none; border-radius: 6px;
+  transition: color 0.15s; letter-spacing: 0.01em;
 }
 .nav-links a:hover { color: var(--text-1); }
-.nav-right { display: flex; align-items: center; gap: 10px; }
+.nav-right { display: flex; align-items: center; gap: 8px; }
+
+/* login modal */
+.auth-modal-overlay {
+  display: none; position: fixed; inset: 0; z-index: 9999;
+  background: rgba(0,0,0,0.7); backdrop-filter: blur(10px);
+  align-items: center; justify-content: center;
+}
+.auth-modal-overlay.open { display: flex; }
+.auth-modal {
+  background: var(--surface); border: 1px solid var(--border-glow);
+  border-radius: 16px; padding: 36px; width: 380px; max-width: 95vw;
+  position: relative; box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+}
+.auth-modal::before {
+  content: ''; position: absolute; top: 0; left: 20%; right: 20%; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+.auth-close {
+  position: absolute; top: 14px; right: 14px; cursor: pointer;
+  color: var(--text-3); font-size: 18px; transition: color 0.15s;
+  background: none; border: none;
+}
+.auth-close:hover { color: var(--text-1); }
+.auth-tabs {
+  display: flex; border: 1px solid var(--border); border-radius: 8px;
+  overflow: hidden; margin-bottom: 24px; background: var(--bg-2);
+}
+.auth-tab {
+  flex: 1; padding: 8px 0; font-size: 13px; font-weight: 600;
+  font-family: var(--body); border: none; cursor: pointer;
+  color: var(--text-3); background: none; transition: all 0.15s;
+}
+.auth-tab.active { color: var(--text-1); background: var(--surface-2); }
+.auth-heading {
+  font-family: var(--display); font-size: 22px; font-weight: 700;
+  margin-bottom: 6px; letter-spacing: -0.5px;
+}
+.auth-sub { font-size: 13px; color: var(--text-2); margin-bottom: 24px; }
+.auth-types { display: flex; gap: 8px; margin-bottom: 24px; }
+.auth-type-btn {
+  flex: 1; padding: 12px 8px; border-radius: 8px;
+  border: 1px solid var(--border); background: var(--bg-2);
+  cursor: pointer; transition: all 0.15s; text-align: center;
+  font-family: var(--body);
+}
+.auth-type-btn:hover, .auth-type-btn.selected {
+  border-color: var(--border-glow); background: var(--accent-dim);
+}
+.auth-type-icon { font-size: 22px; display: block; margin-bottom: 6px; }
+.auth-type-label { font-size: 12px; font-weight: 600; color: var(--text-1); display: block; }
+.auth-type-desc { font-size: 10px; color: var(--text-3); display: block; margin-top: 2px; }
+.auth-input {
+  width: 100%; padding: 11px 14px; background: var(--bg-2);
+  border: 1px solid var(--border); border-radius: 8px;
+  color: var(--text-1); font-size: 14px; font-family: var(--body);
+  outline: none; margin-bottom: 10px;
+  transition: border-color 0.15s;
+}
+.auth-input:focus { border-color: var(--border-glow); }
+.auth-input::placeholder { color: var(--text-3); }
+.auth-submit {
+  width: 100%; padding: 12px; border-radius: 8px;
+  border: 1px solid rgba(153,69,255,0.5);
+  font-size: 14px; font-weight: 700; font-family: var(--body);
+  color: var(--text-1); background: rgba(153,69,255,0.2);
+  cursor: pointer; transition: all 0.2s; margin-top: 6px;
+}
+.auth-submit:hover { background: rgba(153,69,255,0.35); transform: translateY(-1px); }
+.auth-divider { text-align: center; color: var(--text-3); font-size: 12px; margin: 16px 0; position: relative; }
+.auth-divider::before {
+  content: ''; position: absolute; left: 0; top: 50%; right: 0; height: 1px; background: var(--border);
+}
+.auth-divider span { position: relative; background: var(--surface); padding: 0 12px; }
+.wallet-options { display: flex; flex-direction: column; gap: 6px; }
+.wallet-opt {
+  display: flex; align-items: center; gap: 10px; padding: 10px 14px;
+  border: 1px solid var(--border); border-radius: 8px;
+  background: var(--bg-2); cursor: pointer; transition: all 0.15s;
+  font-size: 13px; font-weight: 500; color: var(--text-2); font-family: var(--body);
+}
+.wallet-opt:hover { border-color: var(--border-glow); color: var(--text-1); background: var(--accent-dim); }
+.wallet-opt-icon { width: 26px; height: 26px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 14px; background: var(--surface-2); flex-shrink: 0; }
+
+/* user account dropdown */
+.account-btn {
+  display: flex; align-items: center; gap: 8px;
+  padding: 6px 10px 6px 6px; border-radius: 8px;
+  border: 1px solid var(--border); background: var(--surface);
+  cursor: pointer; transition: all 0.15s; font-family: var(--body);
+}
+.account-btn:hover { border-color: var(--border-glow); }
+.account-avatar {
+  width: 24px; height: 24px; border-radius: 6px;
+  background: linear-gradient(135deg, var(--accent), var(--green));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; color: white;
+}
+.account-info { display: flex; flex-direction: column; align-items: flex-start; }
+.account-name { font-size: 11.5px; font-weight: 600; color: var(--text-1); line-height: 1.2; }
+.account-role { font-size: 9px; font-family: var(--mono); color: var(--text-3); letter-spacing: 0.06em; text-transform: uppercase; }
+.account-dropdown-wrap { position: relative; }
+.account-dropdown {
+  display: none; position: absolute; right: 0; top: calc(100% + 8px);
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 10px; width: 200px; z-index: 999;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.5); overflow: hidden;
+  padding: 4px;
+}
+.account-dropdown.open { display: block; }
+.dropdown-header {
+  padding: 10px 12px 8px;
+  border-bottom: 1px solid var(--border); margin-bottom: 4px;
+}
+.dropdown-addr { font-family: var(--mono); font-size: 10px; color: var(--text-3); }
+.dropdown-balance { font-size: 13px; font-weight: 600; color: var(--text-1); margin-top: 2px; }
+.dropdown-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 12px; border-radius: 6px; cursor: pointer;
+  font-size: 13px; color: var(--text-2); transition: all 0.1s;
+}
+.dropdown-item:hover { background: var(--surface-2); color: var(--text-1); }
+.dropdown-item.danger:hover { color: var(--red); }
+
+/* buttons */
 .btn-ghost {
-  padding: 7px 14px; border-radius: 7px;
-  border: 1px solid var(--border);
-  font-size: 12px; font-weight: 600;
-  color: var(--text-2); background: none;
+  padding: 7px 14px; border-radius: 7px; border: 1px solid var(--border);
+  font-size: 12px; font-weight: 600; color: var(--text-2); background: none;
   cursor: pointer; text-decoration: none;
-  transition: all 0.15s;
   display: inline-flex; align-items: center; gap: 6px;
-  font-family: var(--sans);
-  letter-spacing: 0.02em;
+  font-family: var(--body); transition: all 0.15s;
 }
 .btn-ghost:hover { border-color: rgba(255,255,255,0.15); color: var(--text-1); }
 .btn-accent {
   padding: 7px 16px; border-radius: 7px;
   border: 1px solid rgba(153,69,255,0.4);
-  font-size: 12px; font-weight: 600;
-  color: var(--text-1);
+  font-size: 12px; font-weight: 700; color: var(--text-1);
   background: rgba(153,69,255,0.15);
   cursor: pointer; text-decoration: none;
   display: inline-flex; align-items: center; gap: 6px;
-  font-family: var(--sans);
-  letter-spacing: 0.02em;
-  transition: all 0.2s;
+  font-family: var(--body); transition: all 0.2s;
 }
-.btn-accent:hover { background: rgba(153,69,255,0.25); border-color: rgba(153,69,255,0.6); }
+.btn-accent:hover { background: rgba(153,69,255,0.28); border-color: rgba(153,69,255,0.7); }
+
 .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
-.hamburger span { display: block; width: 20px; height: 1.5px; background: var(--text-2); margin: 5px 0; border-radius: 1px; transition: all 0.3s; }
-@media (max-width: 768px) {
-  .nav-links, .nav-desktop { display: none; }
-  .hamburger { display: block; }
-}
+.hamburger span { display: block; width: 20px; height: 1.5px; background: var(--text-2); margin: 5px 0; border-radius: 1px; }
+@media (max-width: 768px) { .nav-links, .nav-desktop { display: none; } .hamburger { display: block; } }
 
 /* ── HERO ── */
 .hero {
-  padding: 96px 24px 80px;
-  text-align: center;
-  position: relative;
-  border-bottom: 1px solid var(--border);
-  overflow: hidden;
+  padding: 100px 24px 80px; text-align: center;
+  position: relative; border-bottom: 1px solid var(--border); overflow: hidden;
 }
-.hero::before {
-  content: '';
+.hero-bg {
+  position: absolute; inset: 0; pointer-events: none; overflow: hidden;
+}
+.hero-orb {
+  position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.12;
+}
+.hero-orb-1 {
+  width: 600px; height: 600px; background: var(--accent);
+  top: -200px; left: 50%; transform: translateX(-50%);
+}
+.hero-orb-2 {
+  width: 300px; height: 300px; background: var(--green);
+  bottom: -100px; right: 10%; opacity: 0.06;
+}
+.hero-grid {
   position: absolute; inset: 0;
-  background: radial-gradient(ellipse 70% 60% at 50% 0%, rgba(153,69,255,0.06) 0%, transparent 70%);
-  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 70% 80% at 50% 0%, black, transparent);
 }
 .hero-eyebrow {
   display: inline-flex; align-items: center; gap: 8px;
-  font-family: var(--mono);
-  font-size: 10px; letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--text-3);
-  margin-bottom: 32px;
-  padding: 6px 14px;
-  border: 1px solid var(--border);
-  border-radius: 3px;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--text-3);
+  margin-bottom: 32px; padding: 6px 16px;
+  border: 1px solid var(--border); border-radius: 20px;
+  background: var(--surface);
+  position: relative; z-index: 1;
 }
-.hero-dot {
-  width: 5px; height: 5px; border-radius: 50%;
-  background: var(--green);
-  animation: pulse 2.4s ease-in-out infinite;
-}
-@keyframes pulse {
-  0%,100% { opacity: 1; }
-  50% { opacity: 0.3; }
-}
+.hero-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--green); animation: pulse 2.4s ease-in-out infinite; }
+@keyframes pulse { 0%,100% { opacity: 1; box-shadow: 0 0 6px var(--green); } 50% { opacity: 0.3; box-shadow: none; } }
+
 .hero h1 {
-  font-family: var(--serif);
-  font-size: clamp(38px, 7vw, 80px);
-  font-weight: 400;
-  letter-spacing: -2px;
-  line-height: 1.05;
-  margin-bottom: 24px;
-  color: var(--text-1);
+  font-family: var(--display); font-size: clamp(44px, 8vw, 96px);
+  font-weight: 800; letter-spacing: -3px; line-height: 0.95;
+  margin-bottom: 28px; position: relative; z-index: 1;
 }
-.hero h1 em {
-  font-style: italic;
-  color: var(--text-2);
-}
-.hero h1 strong {
-  font-weight: 700;
-  background: linear-gradient(135deg, #b87aff 0%, #9945FF 60%, #7a32d4 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+.hero h1 .h1-dim { color: var(--text-3); display: block; font-weight: 400; }
+.hero h1 .h1-main { display: block; }
+.hero h1 .h1-sol {
+  background: linear-gradient(110deg, #c87fff 0%, #9945FF 40%, #14F195 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
 .hero-sub {
-  font-size: clamp(14px, 2vw, 17px);
-  color: var(--text-2);
-  max-width: 480px;
-  margin: 0 auto 40px;
-  line-height: 1.75;
-  font-weight: 400;
+  font-size: clamp(14px, 1.8vw, 16px); color: var(--text-2);
+  max-width: 420px; margin: 0 auto 40px; line-height: 1.8;
+  position: relative; z-index: 1;
 }
 .hero-ctas {
   display: flex; gap: 10px; justify-content: center;
-  flex-wrap: wrap; margin-bottom: 64px;
+  flex-wrap: wrap; margin-bottom: 64px; position: relative; z-index: 1;
 }
 .cta-primary {
-  padding: 13px 26px; border-radius: 8px;
+  padding: 14px 28px; border-radius: 10px;
   border: 1px solid rgba(153,69,255,0.5);
-  font-size: 14px; font-weight: 600;
-  color: var(--text-1);
-  background: rgba(153,69,255,0.18);
+  font-size: 14px; font-weight: 700; color: var(--text-1);
+  background: rgba(153,69,255,0.15);
   cursor: pointer; text-decoration: none;
   display: inline-flex; align-items: center; gap: 8px;
-  font-family: var(--sans);
-  transition: all 0.2s;
-  letter-spacing: 0.01em;
+  font-family: var(--body); transition: all 0.2s;
+  position: relative; overflow: hidden;
 }
-.cta-primary:hover { background: rgba(153,69,255,0.28); transform: translateY(-1px); }
+.cta-primary::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(153,69,255,0.2), transparent);
+  opacity: 0; transition: opacity 0.2s;
+}
+.cta-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(153,69,255,0.25); }
+.cta-primary:hover::before { opacity: 1; }
 .cta-secondary {
-  padding: 13px 26px; border-radius: 8px;
-  border: 1px solid var(--border);
-  font-size: 14px; font-weight: 600;
-  color: var(--text-2); background: none;
+  padding: 14px 28px; border-radius: 10px; border: 1px solid var(--border);
+  font-size: 14px; font-weight: 600; color: var(--text-2); background: none;
   cursor: pointer; text-decoration: none;
   display: inline-flex; align-items: center; gap: 8px;
-  font-family: var(--sans);
-  transition: all 0.15s;
-  letter-spacing: 0.01em;
+  font-family: var(--body); transition: all 0.15s;
 }
 .cta-secondary:hover { border-color: rgba(255,255,255,0.15); color: var(--text-1); }
-.hero-rule {
-  display: flex; align-items: center; gap: 0;
-  max-width: 640px; margin: 0 auto;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  overflow: hidden;
-  background: var(--surface);
+
+/* hero stats bar */
+.hero-stats {
+  display: flex; position: relative; z-index: 1;
+  max-width: 680px; margin: 0 auto;
+  border: 1px solid var(--border); border-radius: 12px;
+  background: var(--surface); overflow: hidden;
 }
-.hero-stat {
-  flex: 1; padding: 16px 20px; text-align: center;
+.hero-stat { flex: 1; padding: 18px 12px; text-align: center; position: relative; }
+.hero-stat:not(:last-child)::after {
+  content: ''; position: absolute; right: 0; top: 20%; bottom: 20%; width: 1px;
+  background: var(--border);
 }
-.hero-stat:not(:last-child) { border-right: 1px solid var(--border); }
 .hero-stat-num {
-  font-family: var(--serif);
-  font-size: 22px; font-weight: 700;
-  color: var(--text-1); letter-spacing: -0.5px;
+  font-family: var(--display); font-size: 22px; font-weight: 700;
+  color: var(--text-1); letter-spacing: -0.5px; display: block;
 }
+.hero-stat-num.green { color: var(--green); }
 .hero-stat-label {
-  font-family: var(--mono);
-  font-size: 9px; letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text-3); margin-top: 3px;
+  font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--text-3); margin-top: 4px; display: block;
 }
 
-/* ── SECTION BASE ── */
-section { padding: 80px 24px; }
-.inner { max-width: 1160px; margin: 0 auto; }
-.section-label {
-  font-family: var(--mono);
-  font-size: 10px; letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--text-3); margin-bottom: 10px;
+/* ── SCROLL STRIP ── */
+.scroll-strip {
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  padding: 11px 0; overflow: hidden; background: var(--bg-2);
+  position: relative;
 }
-.section-label span { color: var(--accent); margin-right: 6px; }
-.section-title {
-  font-family: var(--serif);
-  font-size: clamp(26px, 4vw, 44px);
-  font-weight: 400; letter-spacing: -1px;
-  line-height: 1.15; margin-bottom: 14px;
-  color: var(--text-1);
+.scroll-strip::before, .scroll-strip::after {
+  content: ''; position: absolute; top: 0; bottom: 0; width: 80px; z-index: 2;
 }
-.section-title em { font-style: italic; color: var(--text-2); }
-.section-sub {
-  font-size: 15px; color: var(--text-2);
-  line-height: 1.75; max-width: 480px;
+.scroll-strip::before { left: 0; background: linear-gradient(to right, var(--bg-2), transparent); }
+.scroll-strip::after { right: 0; background: linear-gradient(to left, var(--bg-2), transparent); }
+.strip-track { display: flex; animation: stripSlide 22s linear infinite; width: max-content; }
+@keyframes stripSlide { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+.strip-item {
+  padding: 0 28px; font-family: var(--mono); font-size: 11px;
+  color: var(--text-3); white-space: nowrap;
+  display: flex; align-items: center; gap: 16px; letter-spacing: 0.1em; text-transform: uppercase;
 }
+.strip-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--accent); opacity: 0.5; }
+
+/* ── X CARD (FLOATING) ── */
+.x-card-section { padding: 0 24px; margin-top: -1px; }
+.x-card-inner { max-width: 1200px; margin: 0 auto; padding: 32px 0 0; }
+.x-social-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px; overflow: hidden;
+  display: flex; flex-direction: column;
+  max-width: 420px; margin: 0 auto;
+  position: relative;
+}
+.x-card-header {
+  background: linear-gradient(135deg, rgba(153,69,255,0.08), rgba(20,241,149,0.04));
+  border-bottom: 1px solid var(--border);
+  padding: 20px 20px 16px; display: flex; align-items: flex-start; gap: 14px;
+}
+.x-card-avatar {
+  width: 50px; height: 50px; border-radius: 50%;
+  background: linear-gradient(135deg, #9945FF, #14F195);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; flex-shrink: 0; position: relative;
+}
+.x-verified { position: absolute; bottom: -2px; right: -2px; background: #1d9bf0; border-radius: 50%; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; }
+.x-card-meta { flex: 1; }
+.x-card-name { font-family: var(--display); font-size: 16px; font-weight: 700; color: var(--text-1); }
+.x-card-handle { font-family: var(--mono); font-size: 12px; color: var(--text-3); margin-top: 2px; }
+.x-card-bio { font-size: 13px; color: var(--text-2); margin-top: 6px; line-height: 1.5; }
+.x-card-stats { display: flex; gap: 16px; padding: 14px 20px; border-bottom: 1px solid var(--border); }
+.x-card-stat strong { font-size: 14px; font-weight: 700; color: var(--text-1); font-family: var(--display); }
+.x-card-stat span { font-size: 11px; color: var(--text-3); font-family: var(--mono); margin-left: 4px; }
+.x-card-cta {
+  padding: 14px 20px; display: flex; align-items: center; justify-content: space-between;
+}
+.x-follow-big {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 9px 20px; border-radius: 8px;
+  background: var(--text-1); color: var(--bg);
+  font-size: 13px; font-weight: 700; font-family: var(--body);
+  text-decoration: none; cursor: pointer; border: none;
+  transition: all 0.2s;
+}
+.x-follow-big:hover { background: var(--text-2); transform: translateY(-1px); }
+.x-recent-label { font-family: var(--mono); font-size: 9px; color: var(--text-3); letter-spacing: 0.1em; text-transform: uppercase; }
 
 /* ── TOKEN SECTION ── */
 .token-section {
-  background: var(--bg-2);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
+  background: var(--bg-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  padding: 80px 24px;
 }
-.token-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 48px;
-  display: flex;
-  justify-content: space-between;
-  gap: 40px;
-  flex-wrap: wrap;
-  position: relative;
-  overflow: hidden;
+.token-grid-outer { max-width: 1200px; margin: 0 auto; }
+.token-main-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 16px; overflow: hidden; position: relative;
 }
-.token-card::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0; height: 1px;
-  background: linear-gradient(90deg, transparent, var(--accent), var(--green), transparent);
+.token-main-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, #9945FF, #14F195, #9945FF);
+  background-size: 200%; animation: gradientShift 4s linear infinite;
 }
-.token-card::after {
-  content: '';
-  position: absolute; top: 0; right: -100px; width: 300px; height: 300px;
-  background: radial-gradient(circle, rgba(153,69,255,0.05) 0%, transparent 70%);
-  pointer-events: none;
+@keyframes gradientShift { 0%,100% { background-position: 0%; } 50% { background-position: 100%; } }
+.token-body { display: flex; gap: 0; flex-wrap: wrap; }
+.token-left {
+  flex: 1; min-width: 280px; padding: 44px;
+  border-right: 1px solid var(--border);
 }
-.token-info { flex: 1; min-width: 280px; position: relative; z-index: 1; }
-.token-eyebrow {
+.token-right { padding: 44px; display: flex; flex-direction: column; gap: 20px; justify-content: center; align-items: flex-start; min-width: 240px; }
+.token-badge {
   display: inline-flex; align-items: center; gap: 6px;
-  font-family: var(--mono);
-  font-size: 9px; letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--gold);
-  border: 1px solid rgba(201,168,76,0.25);
-  border-radius: 3px;
-  padding: 4px 10px;
-  margin-bottom: 16px;
+  font-family: var(--mono); font-size: 9px; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--gold);
+  border: 1px solid rgba(232,184,75,0.25); border-radius: 20px;
+  padding: 4px 12px; background: var(--gold-dim); margin-bottom: 18px;
 }
-.token-name {
-  font-family: var(--serif);
-  font-size: clamp(28px, 4vw, 42px);
-  font-weight: 700; letter-spacing: -1px;
-  margin-bottom: 12px;
+.token-name-display {
+  font-family: var(--display); font-size: clamp(32px, 5vw, 52px);
+  font-weight: 800; letter-spacing: -2px; line-height: 1; margin-bottom: 8px;
 }
-.token-name em {
-  font-style: italic; font-weight: 400;
-  color: var(--text-2);
+.token-name-display .sub { color: var(--text-3); font-weight: 400; font-size: 0.5em; display: block; margin-top: 4px; letter-spacing: -0.5px; }
+.token-desc { font-size: 14px; color: var(--text-2); line-height: 1.75; max-width: 380px; margin-bottom: 28px; }
+.token-stats-row {
+  display: flex; gap: 1px; background: var(--border);
+  border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
 }
-.token-desc {
-  font-size: 15px; color: var(--text-2);
-  line-height: 1.75; max-width: 420px;
-  margin-bottom: 28px;
-}
-.token-grid {
-  display: grid; grid-template-columns: repeat(4, 1fr);
-  gap: 1px;
-  background: var(--border);
-  border: 1px solid var(--border);
-  border-radius: 8px; overflow: hidden;
-}
-@media (max-width: 640px) { .token-grid { grid-template-columns: repeat(2, 1fr); } }
-.token-stat {
-  padding: 14px 18px;
-  background: var(--bg-2);
-}
-.token-stat strong {
-  display: block;
-  font-family: var(--serif);
-  font-size: 18px; font-weight: 700;
-  color: var(--text-1); margin-bottom: 3px;
-}
-.token-stat.green-stat strong { color: var(--green); }
-.token-stat span {
-  font-family: var(--mono);
-  font-size: 9px; letter-spacing: 0.1em;
-  text-transform: uppercase; color: var(--text-3);
-}
-.token-cta-side { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; justify-content: center; }
+.token-stat-box { flex: 1; padding: 14px 16px; background: var(--bg-2); }
+.token-stat-box strong { display: block; font-family: var(--display); font-size: 20px; font-weight: 700; color: var(--text-1); }
+.token-stat-box.green-val strong { color: var(--green); }
+.token-stat-box span { font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-3); }
 .btn-launch {
-  padding: 16px 32px; border-radius: 8px;
+  padding: 16px 32px; border-radius: 10px;
   border: 1px solid rgba(153,69,255,0.5);
-  font-size: 15px; font-weight: 700;
-  color: var(--text-1);
-  background: rgba(153,69,255,0.18);
-  cursor: pointer; text-decoration: none;
+  font-size: 15px; font-weight: 700; color: var(--text-1);
+  background: rgba(153,69,255,0.15); cursor: pointer; text-decoration: none;
   display: inline-flex; align-items: center; gap: 10px;
-  font-family: var(--sans);
-  letter-spacing: 0.02em;
-  transition: all 0.2s;
-  white-space: nowrap;
+  font-family: var(--body); transition: all 0.2s; white-space: nowrap;
 }
-.btn-launch:hover { background: rgba(153,69,255,0.28); transform: translateY(-1px); }
-.launch-note {
-  font-family: var(--mono);
-  font-size: 10px; letter-spacing: 0.08em;
-  color: var(--text-3);
-  display: flex; align-items: center; gap: 6px;
-}
-.sol-pip { width: 12px; height: 12px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--green)); }
+.btn-launch:hover { background: rgba(153,69,255,0.3); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(153,69,255,0.2); }
+.launch-info { font-family: var(--mono); font-size: 10px; letter-spacing: 0.06em; color: var(--text-3); }
+.sol-badge { display: inline-flex; align-items: center; gap: 5px; }
+.sol-pip { width: 8px; height: 8px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--green)); }
 
-/* ── FILTER / SEARCH ── */
+/* ── SECTION ── */
+section { padding: 80px 24px; }
+.inner { max-width: 1200px; margin: 0 auto; }
+.section-label {
+  font-family: var(--mono); font-size: 9px; letter-spacing: 0.25em;
+  text-transform: uppercase; color: var(--text-3); margin-bottom: 10px;
+  display: flex; align-items: center; gap: 8px;
+}
+.section-label::before { content: ''; width: 16px; height: 1px; background: var(--accent); opacity: 0.5; }
+.section-title {
+  font-family: var(--display); font-size: clamp(28px, 4.5vw, 52px);
+  font-weight: 800; letter-spacing: -1.5px; line-height: 1.05;
+  margin-bottom: 12px; color: var(--text-1);
+}
+.section-title .dim { color: var(--text-3); font-weight: 400; }
+.section-sub { font-size: 14px; color: var(--text-2); line-height: 1.8; max-width: 440px; }
+
+/* ── FILTERS ── */
 .filters-bar {
-  display: flex; gap: 6px; flex-wrap: wrap;
-  align-items: center; margin-bottom: 24px;
+  display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin-bottom: 20px;
 }
 .filter-btn {
-  padding: 6px 13px; border-radius: 5px;
-  border: 1px solid var(--border);
-  font-size: 12px; font-weight: 500;
-  color: var(--text-3); background: none;
-  cursor: pointer; transition: all 0.15s;
-  font-family: var(--sans); letter-spacing: 0.01em;
+  padding: 6px 13px; border-radius: 6px; border: 1px solid var(--border);
+  font-size: 12px; font-weight: 500; color: var(--text-3); background: none;
+  cursor: pointer; transition: all 0.15s; font-family: var(--body);
 }
 .filter-btn:hover, .filter-btn.active {
-  border-color: rgba(153,69,255,0.4);
-  color: var(--text-1);
-  background: var(--accent-dim);
+  border-color: var(--border-glow); color: var(--text-1); background: var(--accent-dim);
 }
 .filter-right { margin-left: auto; }
 .search-box {
@@ -433,342 +611,300 @@ section { padding: 80px 24px; }
 }
 .search-box input {
   border: none; outline: none; font-size: 12px;
-  font-family: var(--sans); color: var(--text-1);
+  font-family: var(--body); color: var(--text-1);
   width: 160px; background: transparent;
 }
 .search-box input::placeholder { color: var(--text-3); }
 
 /* ── AGENT GRID ── */
 .agents-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-  gap: 1px;
-  background: var(--border);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  overflow: hidden;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1px; background: var(--border);
+  border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
 }
 .agent-card {
-  background: var(--surface);
-  padding: 24px;
-  cursor: pointer;
-  transition: background 0.15s;
-  position: relative;
+  background: var(--surface); padding: 24px; cursor: pointer;
+  transition: background 0.15s; position: relative;
 }
 .agent-card:hover { background: var(--surface-2); }
-.agent-card-header {
-  display: flex; align-items: flex-start; gap: 12px;
-  margin-bottom: 14px;
+.agent-card::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(153,69,255,0.04), transparent);
+  opacity: 0; transition: opacity 0.2s; pointer-events: none;
 }
+.agent-card:hover::after { opacity: 1; }
+.agent-card-header { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 14px; }
 .agent-avatar {
-  width: 40px; height: 40px;
-  border-radius: 8px;
+  width: 42px; height: 42px; border-radius: 10px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 18px; flex-shrink: 0;
-  border: 1px solid var(--border);
-  background: var(--bg-2);
+  font-size: 20px; flex-shrink: 0;
+  border: 1px solid var(--border); background: var(--bg-2);
 }
 .agent-info { flex: 1; min-width: 0; }
 .agent-name {
-  font-family: var(--serif);
-  font-size: 16px; font-weight: 700;
-  color: var(--text-1); letter-spacing: -0.3px;
-  margin-bottom: 2px;
+  font-family: var(--display); font-size: 16px; font-weight: 700;
+  color: var(--text-1); letter-spacing: -0.3px; margin-bottom: 2px;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
-.agent-ticker {
-  font-family: var(--mono);
-  font-size: 11px; color: var(--accent);
-  letter-spacing: 0.05em;
-}
+.agent-ticker { font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.04em; }
 .agent-badge {
-  padding: 3px 8px; border-radius: 3px;
-  font-family: var(--mono);
-  font-size: 9px; letter-spacing: 0.1em;
-  text-transform: uppercase; font-weight: 500;
-  flex-shrink: 0;
+  padding: 3px 9px; border-radius: 20px;
+  font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em;
+  text-transform: uppercase; font-weight: 500; flex-shrink: 0;
 }
 .badge-live { color: var(--green); background: var(--green-dim); border: 1px solid rgba(20,241,149,0.2); }
-.badge-soon { color: var(--gold); background: var(--gold-dim); border: 1px solid rgba(201,168,76,0.2); }
-.badge-new { color: #a78bfa; background: rgba(167,139,250,0.1); border: 1px solid rgba(167,139,250,0.2); }
+.badge-soon { color: var(--gold); background: var(--gold-dim); border: 1px solid rgba(232,184,75,0.2); }
+.badge-new { color: #c4b5fd; background: rgba(167,139,250,0.08); border: 1px solid rgba(167,139,250,0.2); }
 .agent-desc {
-  font-size: 13px; color: var(--text-2);
-  line-height: 1.65; margin-bottom: 14px;
-  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
-  overflow: hidden;
+  font-size: 13px; color: var(--text-2); line-height: 1.65; margin-bottom: 14px;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
 }
-.agent-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
+.agent-tags { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 16px; }
 .tag {
-  padding: 3px 8px; border-radius: 3px;
-  font-family: var(--mono);
-  font-size: 9px; letter-spacing: 0.1em;
-  text-transform: uppercase; font-weight: 500;
-  background: var(--bg-2); color: var(--text-3);
-  border: 1px solid var(--border);
+  padding: 2px 8px; border-radius: 4px; font-family: var(--mono);
+  font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase;
+  background: var(--bg-2); color: var(--text-3); border: 1px solid var(--border);
 }
 .agent-stats {
-  display: flex; gap: 0;
-  border-top: 1px solid var(--border);
-  margin: 0 -24px -24px;
-  padding: 12px 24px;
-  background: var(--bg-2);
+  display: flex; border-top: 1px solid var(--border);
+  margin: 0 -24px -24px; padding: 12px 24px; background: var(--bg-2);
 }
 .agent-stat { flex: 1; text-align: center; }
 .agent-stat:not(:last-child) { border-right: 1px solid var(--border); }
-.agent-stat-val {
-  font-family: var(--mono);
-  font-size: 12px; font-weight: 500; color: var(--text-1);
-}
+.agent-stat-val { font-family: var(--mono); font-size: 12px; font-weight: 500; color: var(--text-1); }
 .agent-stat-val.green { color: var(--green); }
-.agent-stat-key {
-  font-family: var(--mono);
-  font-size: 9px; color: var(--text-3);
-  margin-top: 2px; text-transform: uppercase; letter-spacing: 0.08em;
-}
+.agent-stat-key { font-family: var(--mono); font-size: 9px; color: var(--text-3); margin-top: 2px; text-transform: uppercase; letter-spacing: 0.07em; }
 
 /* ── HOW IT WORKS ── */
-.how-section {
-  background: var(--bg-2);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-}
-.steps-grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1px; margin-top: 48px;
-  background: var(--border);
-  border: 1px solid var(--border);
-  border-radius: 12px; overflow: hidden;
-}
+.how-section { background: var(--bg-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0; margin-top: 48px; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
 .step-card {
-  background: var(--surface);
-  padding: 32px 28px;
+  padding: 32px 28px; background: var(--surface);
+  border-right: 1px solid var(--border); position: relative; transition: background 0.15s;
 }
-.step-num {
-  font-family: var(--serif);
-  font-size: 13px; font-style: italic;
-  color: var(--text-3); margin-bottom: 20px;
-  display: block;
+.step-card:last-child { border-right: none; }
+.step-card:hover { background: var(--surface-2); }
+.step-number {
+  font-family: var(--display); font-size: 48px; font-weight: 800;
+  color: rgba(255,255,255,0.03); line-height: 1; margin-bottom: 16px; letter-spacing: -2px;
 }
-.step-title {
-  font-family: var(--serif);
-  font-size: 20px; font-weight: 700;
-  letter-spacing: -0.3px; margin-bottom: 10px;
-  color: var(--text-1);
-}
+.step-title { font-family: var(--display); font-size: 17px; font-weight: 700; letter-spacing: -0.3px; margin-bottom: 8px; color: var(--text-1); }
 .step-desc { font-size: 13px; color: var(--text-2); line-height: 1.7; }
+.step-num-label {
+  font-family: var(--mono); font-size: 9px; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--accent); opacity: 0.7; margin-bottom: 12px; display: block;
+}
 
 /* ── FEATURES ── */
-.features-grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1px; margin-top: 48px;
-  background: var(--border);
-  border: 1px solid var(--border);
-  border-radius: 12px; overflow: hidden;
-}
-.feature-card {
-  background: var(--surface);
-  padding: 32px 28px;
-  transition: background 0.15s;
-}
+.features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1px; margin-top: 48px; background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+.feature-card { background: var(--surface); padding: 32px 28px; transition: background 0.15s; }
 .feature-card:hover { background: var(--surface-2); }
-.feature-icon {
-  font-size: 22px; margin-bottom: 18px; display: block;
+.feature-icon-wrap {
+  width: 42px; height: 42px; border-radius: 10px;
+  background: var(--accent-dim); border: 1px solid var(--border-glow);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; margin-bottom: 18px;
 }
-.feature-title {
-  font-family: var(--serif);
-  font-size: 18px; font-weight: 700;
-  letter-spacing: -0.3px; margin-bottom: 8px;
-  color: var(--text-1);
-}
+.feature-title { font-family: var(--display); font-size: 17px; font-weight: 700; letter-spacing: -0.3px; margin-bottom: 8px; color: var(--text-1); }
 .feature-desc { font-size: 13px; color: var(--text-2); line-height: 1.7; }
 
-/* ── SCROLLING STRIP ── */
-.scroll-strip {
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  padding: 14px 0; overflow: hidden;
-  background: var(--bg-2);
-}
-.strip-track {
-  display: flex; gap: 0;
-  animation: stripSlide 20s linear infinite;
-  width: max-content;
-}
-@keyframes stripSlide {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-.strip-item {
-  padding: 0 24px;
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 14px; color: var(--text-3);
-  white-space: nowrap;
-  display: flex; align-items: center; gap: 16px;
-}
-.strip-item::after { content: '·'; color: var(--text-3); }
-
 /* ── DISCLAIMER ── */
-.disclaimer-section {
-  border-top: 1px solid var(--border);
-  background: var(--bg);
-}
+.disclaimer-section { border-top: 1px solid var(--border); background: var(--bg); padding: 32px 24px; }
 .disclaimer-box {
-  border: 1px solid var(--border);
-  border-radius: 8px; padding: 20px 24px;
-  font-family: var(--mono);
-  font-size: 11px; color: var(--text-3);
-  line-height: 1.8; letter-spacing: 0.02em;
+  border: 1px solid var(--border); border-radius: 10px; padding: 20px 24px;
+  font-family: var(--mono); font-size: 10.5px; color: var(--text-3);
+  line-height: 1.8; letter-spacing: 0.02em; max-width: 1200px; margin: 0 auto;
 }
 .disclaimer-box strong { color: var(--text-2); }
-.disclaimer-box a { color: var(--accent); text-decoration: none; }
+.disclaimer-box a { color: var(--accent-bright); text-decoration: none; }
 
 /* ── FOOTER ── */
-footer {
-  background: var(--bg-2);
-  border-top: 1px solid var(--border);
-  padding: 56px 24px 32px;
-}
-.footer-inner { max-width: 1160px; margin: 0 auto; }
-.footer-top {
-  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
-  gap: 48px; margin-bottom: 48px;
-}
+footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 56px 24px 32px; }
+.footer-inner { max-width: 1200px; margin: 0 auto; }
+.footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
 @media (max-width: 768px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; } }
-@media (max-width: 480px) { .footer-top { grid-template-columns: 1fr; } }
-.footer-brand .logo-wrap { margin-bottom: 14px; }
-.footer-brand-desc { font-size: 13px; color: var(--text-3); line-height: 1.7; max-width: 240px; }
-.footer-col h4 {
-  font-family: var(--mono);
-  font-size: 9px; letter-spacing: 0.18em;
-  text-transform: uppercase; color: var(--text-3);
-  margin-bottom: 16px;
-}
+.footer-brand-desc { font-size: 13px; color: var(--text-3); line-height: 1.7; max-width: 240px; margin-top: 14px; }
+.footer-col h4 { font-family: var(--mono); font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-3); margin-bottom: 16px; }
 .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-.footer-col a { font-size: 14px; color: var(--text-2); text-decoration: none; transition: color 0.15s; }
+.footer-col a { font-size: 13px; color: var(--text-2); text-decoration: none; transition: color 0.15s; }
 .footer-col a:hover { color: var(--text-1); }
-.footer-bottom {
-  border-top: 1px solid var(--border);
-  padding-top: 24px; display: flex;
-  justify-content: space-between; align-items: center;
-  flex-wrap: wrap; gap: 12px;
-}
-.footer-copy {
-  font-family: var(--mono);
-  font-size: 11px; color: var(--text-3);
-  letter-spacing: 0.04em;
-}
-.footer-copy span { color: var(--green); }
-.footer-social { display: flex; gap: 8px; }
+.footer-bottom { border-top: 1px solid var(--border); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+.footer-copy { font-family: var(--mono); font-size: 10.5px; color: var(--text-3); letter-spacing: 0.04em; }
+.footer-copy .green { color: var(--green); }
+.footer-social { display: flex; gap: 6px; }
 .social-btn {
-  width: 32px; height: 32px; border-radius: 6px;
+  width: 32px; height: 32px; border-radius: 7px;
   background: var(--surface); border: 1px solid var(--border);
   display: flex; align-items: center; justify-content: center;
-  text-decoration: none; color: var(--text-3);
-  font-size: 12px; font-weight: 700; transition: all 0.15s;
+  text-decoration: none; color: var(--text-3); font-size: 12px; font-weight: 700;
+  transition: all 0.15s;
 }
 .social-btn:hover { border-color: rgba(255,255,255,0.15); color: var(--text-1); }
 
-/* ── WALLET DROPDOWN ── */
-.connect-wrap { position: relative; }
-.wallet-dropdown {
-  display: none; position: absolute; right: 0; top: calc(100% + 8px);
-  background: var(--surface); border-radius: 10px;
-  border: 1px solid var(--border);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.5);
-  padding: 6px; min-width: 200px; z-index: 999;
-}
-.wallet-dropdown.open { display: block; }
-.wallet-option {
+/* toast */
+.toast {
+  position: fixed; bottom: 24px; right: 24px; z-index: 9999;
+  background: var(--surface); border: 1px solid var(--border-glow);
+  border-radius: 10px; padding: 14px 18px;
   display: flex; align-items: center; gap: 10px;
-  padding: 9px 12px; border-radius: 7px; cursor: pointer;
-  font-size: 13px; font-weight: 500; color: var(--text-2);
-  transition: all 0.1s;
+  font-size: 13px; font-weight: 500; color: var(--text-1);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  transform: translateY(100px); opacity: 0;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-.wallet-option:hover { background: var(--surface-2); color: var(--text-1); }
+.toast.show { transform: translateY(0); opacity: 1; }
+.toast-icon { font-size: 18px; }
 
-/* ── MOBILE ── */
 @media (max-width: 640px) {
   section { padding: 56px 16px; }
   .hero { padding: 64px 16px 56px; }
-  .token-card { padding: 28px; }
-  .agent-card { padding: 20px; }
+  .token-left, .token-right { padding: 28px; }
+  .token-body { flex-direction: column; }
+  .token-left { border-right: none; border-bottom: 1px solid var(--border); }
   .agents-grid { grid-template-columns: 1fr; }
   .steps-grid { grid-template-columns: 1fr; }
-  .hero-rule { flex-direction: column; border-radius: 10px; }
-  .hero-stat:not(:last-child) { border-right: none; border-bottom: 1px solid var(--border); }
+  .step-card { border-right: none; border-bottom: 1px solid var(--border); }
+  .hero-stats { flex-wrap: wrap; }
   .filters-bar { flex-direction: column; align-items: stretch; }
   .filter-right { margin-left: 0; }
-  .token-grid { grid-template-columns: repeat(2, 1fr); }
+  .token-stats-row { flex-wrap: wrap; }
 }
 </style>
 </head>
 <body>
 
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <span class="toast-icon">✅</span>
+  <span id="toastMsg">Connected successfully</span>
+</div>
+
+<!-- AUTH MODAL -->
+<div class="auth-modal-overlay" id="authModal">
+  <div class="auth-modal">
+    <button class="auth-close" onclick="closeAuth()">✕</button>
+    <div class="auth-tabs">
+      <button class="auth-tab active" onclick="switchAuthTab(this,'login')">Sign In</button>
+      <button class="auth-tab" onclick="switchAuthTab(this,'register')">Register</button>
+    </div>
+    <div class="auth-heading" id="authHeading">Welcome back</div>
+    <div class="auth-sub" id="authSub">Choose your account type to continue</div>
+
+    <!-- Account type selector -->
+    <div class="auth-types" id="authTypes">
+      <div class="auth-type-btn selected" onclick="selectType(this,'user')" id="typeUser">
+        <span class="auth-type-icon">👤</span>
+        <span class="auth-type-label">User</span>
+        <span class="auth-type-desc">Trade & Explore</span>
+      </div>
+      <div class="auth-type-btn" onclick="selectType(this,'agent')" id="typeAgent">
+        <span class="auth-type-icon">🤖</span>
+        <span class="auth-type-label">AI Agent</span>
+        <span class="auth-type-desc">Launch & Manage</span>
+      </div>
+    </div>
+
+    <input class="auth-input" type="email" id="authEmail" placeholder="Email address">
+    <input class="auth-input" type="password" id="authPassword" placeholder="Password">
+    <div id="agentFields" style="display:none;">
+      <input class="auth-input" type="text" id="agentName" placeholder="Agent Name (e.g. TradeX Alpha)">
+      <input class="auth-input" type="text" id="agentTicker" placeholder="Token Ticker (e.g. $TRADEX)">
+    </div>
+    <button class="auth-submit" id="authSubmitBtn" onclick="handleAuth()">Sign In</button>
+
+    <div class="auth-divider"><span>or connect wallet</span></div>
+    <div class="wallet-options">
+      <div class="wallet-opt" onclick="connectWalletAuth('Phantom')">
+        <div class="wallet-opt-icon">👻</div> Phantom Wallet
+        <span style="margin-left:auto;font-family:var(--mono);font-size:9px;color:var(--text-3);letter-spacing:0.06em;">POPULAR</span>
+      </div>
+      <div class="wallet-opt" onclick="connectWalletAuth('Solflare')">
+        <div class="wallet-opt-icon">🔥</div> Solflare
+      </div>
+      <div class="wallet-opt" onclick="connectWalletAuth('Backpack')">
+        <div class="wallet-opt-icon">🎒</div> Backpack
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- TICKER -->
 <div class="ticker" aria-hidden="true">
   <div class="ticker-track">
-    <div class="ticker-item"><span class="t-name">$OPENAGENT</span><span>—</span><span class="t-up">LAUNCHING SOON</span></div>
-    <span class="ticker-item t-div">·</span>
+    <div class="ticker-item"><span class="t-name">$ENTEX</span><span>—</span><span class="t-up">LAUNCHING SOON</span></div>
+    <span class="ticker-sep">·</span>
     <div class="ticker-item"><span class="t-name">$TRADEX</span><span>$0.0042</span><span class="t-up">+18.4%</span></div>
-    <span class="ticker-item t-div">·</span>
+    <span class="ticker-sep">·</span>
     <div class="ticker-item"><span class="t-name">$SCOUT</span><span>$0.0087</span><span class="t-up">+6.2%</span></div>
-    <span class="ticker-item t-div">·</span>
+    <span class="ticker-sep">·</span>
     <div class="ticker-item"><span class="t-name">$NORA</span><span>$0.0031</span><span class="t-up">+22.1%</span></div>
-    <span class="ticker-item t-div">·</span>
+    <span class="ticker-sep">·</span>
     <div class="ticker-item"><span class="t-name">$ATLAS</span><span>$0.0119</span><span class="t-up">+4.7%</span></div>
-    <span class="ticker-item t-div">·</span>
+    <span class="ticker-sep">·</span>
     <div class="ticker-item"><span class="t-name">$FLUX</span><span>$0.0055</span><span class="t-up">+9.3%</span></div>
-    <span class="ticker-item t-div">·</span>
-    <!-- duplicate -->
-    <div class="ticker-item"><span class="t-name">$OPENAGENT</span><span>—</span><span class="t-up">LAUNCHING SOON</span></div>
-    <span class="ticker-item t-div">·</span>
+    <span class="ticker-sep">·</span>
+    <div class="ticker-item"><span class="t-name">$SNTNL</span><span>—</span><span style="color:var(--gold)">COMING SOON</span></div>
+    <span class="ticker-sep">·</span>
+    <!-- dupe -->
+    <div class="ticker-item"><span class="t-name">$ENTEX</span><span>—</span><span class="t-up">LAUNCHING SOON</span></div>
+    <span class="ticker-sep">·</span>
     <div class="ticker-item"><span class="t-name">$TRADEX</span><span>$0.0042</span><span class="t-up">+18.4%</span></div>
-    <span class="ticker-item t-div">·</span>
+    <span class="ticker-sep">·</span>
     <div class="ticker-item"><span class="t-name">$SCOUT</span><span>$0.0087</span><span class="t-up">+6.2%</span></div>
-    <span class="ticker-item t-div">·</span>
+    <span class="ticker-sep">·</span>
     <div class="ticker-item"><span class="t-name">$NORA</span><span>$0.0031</span><span class="t-up">+22.1%</span></div>
-    <span class="ticker-item t-div">·</span>
+    <span class="ticker-sep">·</span>
     <div class="ticker-item"><span class="t-name">$ATLAS</span><span>$0.0119</span><span class="t-up">+4.7%</span></div>
-    <span class="ticker-item t-div">·</span>
+    <span class="ticker-sep">·</span>
     <div class="ticker-item"><span class="t-name">$FLUX</span><span>$0.0055</span><span class="t-up">+9.3%</span></div>
+    <span class="ticker-sep">·</span>
+    <div class="ticker-item"><span class="t-name">$SNTNL</span><span>—</span><span style="color:var(--gold)">COMING SOON</span></div>
   </div>
 </div>
+
+<!-- X FOLLOW BANNER -->
+<a class="x-follow-banner" href="https://x.com/agentmarket_ai" target="_blank" rel="noopener">
+  <div class="x-live-dot"></div>
+  <div class="x-icon">
+    <svg viewBox="0 0 1200 1227" xmlns="http://www.w3.org/2000/svg"><path d="M714.163 519.284L1160.89 0H1055.03L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.866L515.491 750.218L842.672 1226.37H1200L714.137 519.284H714.163Z"/></svg>
+  </div>
+  <div class="x-follow-text">Follow the official account &nbsp;<strong>@agentmarket_ai</strong></div>
+  <span class="x-handle">@agentmarket_ai</span>
+  <div class="x-followers-chip">2.4K followers</div>
+  <div class="x-follow-btn">Follow →</div>
+</a>
 
 <!-- NAV -->
 <nav>
   <div class="nav-inner">
     <a class="logo-wrap" href="#">
       <div class="logo-mark">
-        <svg width="18" height="18" viewBox="0 0 26 26" fill="none">
-          <path d="M3 18L8 13L3 8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M7 18L12 13L7 8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M23 8L18 13L23 18" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M19 8L14 13L19 18" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+        <div class="logo-mark-inner">
+          <svg width="16" height="16" viewBox="0 0 26 26" fill="none">
+            <path d="M3 18L8 13L3 8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M7 18L12 13L7 8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M23 8L18 13L23 18" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M19 8L14 13L19 18" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
       </div>
       <span class="logo-wordmark">agentmarket<em>.exchange</em></span>
-      <span class="logo-est">Beta</span>
+      <span class="nav-pill">Beta</span>
     </a>
     <ul class="nav-links">
       <li><a href="#agents">Explore</a></li>
       <li><a href="#launch">Launch</a></li>
       <li><a href="#how">How It Works</a></li>
-      <li><a href="https://x.com/agentmarket_ex" target="_blank" rel="noopener">𝕏 Follow</a></li>
+      <li><a href="https://x.com/agentmarket_ai" target="_blank" rel="noopener" style="color:var(--accent-bright)">𝕏 Follow</a></li>
     </ul>
-    <div class="nav-right nav-desktop">
-      <a href="https://x.com/agentmarket_ex" target="_blank" rel="noopener" class="btn-ghost">@agentmarket_ex</a>
-      <div class="connect-wrap">
-        <button class="btn-accent" id="connectBtn" onclick="toggleWallet()">Connect Wallet</button>
-        <div class="wallet-dropdown" id="walletDropdown">
-          <div class="wallet-option" onclick="connectWallet('Phantom')">👻 Phantom</div>
-          <div class="wallet-option" onclick="connectWallet('Solflare')">🔥 Solflare</div>
-          <div class="wallet-option" onclick="connectWallet('Backpack')">🎒 Backpack</div>
-          <div class="wallet-option" onclick="connectWallet('Glow')">✨ Glow</div>
-        </div>
-      </div>
+    <div class="nav-right nav-desktop" id="navRight">
+      <button class="btn-ghost" onclick="openAuth()">Sign In</button>
+      <button class="btn-accent" onclick="openAuth()">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+        Launch Agent
+      </button>
     </div>
-    <button class="hamburger" aria-label="Menu" onclick="toggleMenu()">
+    <button class="hamburger" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
   </div>
@@ -776,417 +912,24 @@ footer {
 
 <!-- HERO -->
 <section class="hero">
+  <div class="hero-bg">
+    <div class="hero-orb hero-orb-1"></div>
+    <div class="hero-orb hero-orb-2"></div>
+    <div class="hero-grid"></div>
+  </div>
+
   <div class="hero-eyebrow">
     <div class="hero-dot"></div>
-    Live on Solana — Mainnet Beta · est. 2025
+    Live on Solana Mainnet · est. 2025
   </div>
-  <h1>The <em>AI Agent</em><br>Launchpad &amp; Market<br>on <strong>Solana.</strong></h1>
-  <p class="hero-sub">Discover, launch, and trade tokenized AI agents. Fair launches, bonding curves, community-driven — all on the fastest chain.</p>
+
+  <h1>
+    <span class="h1-dim">The Future of</span>
+    <span class="h1-main">AI Agents <span class="h1-sol">on Solana</span></span>
+  </h1>
+  <p class="hero-sub">Launch, discover, and trade tokenized AI agents. Fair bonding curves, zero presale, community-first — at Solana speed.</p>
+
   <div class="hero-ctas">
     <a href="#agents" class="cta-primary">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
       Explore Agents
-    </a>
-    <a href="#launch" class="cta-secondary">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      Launch Your Agent
-    </a>
-  </div>
-  <div class="hero-rule">
-    <div class="hero-stat">
-      <div class="hero-stat-num">$2.4M</div>
-      <div class="hero-stat-label">Total Volume</div>
-    </div>
-    <div class="hero-stat">
-      <div class="hero-stat-num">142</div>
-      <div class="hero-stat-label">Agents Live</div>
-    </div>
-    <div class="hero-stat">
-      <div class="hero-stat-num">8,400+</div>
-      <div class="hero-stat-label">Traders</div>
-    </div>
-    <div class="hero-stat">
-      <div class="hero-stat-num">~$0.001</div>
-      <div class="hero-stat-label">Avg Tx Fee</div>
-    </div>
-  </div>
-</section>
-
-<!-- SCROLLING TEXT STRIP -->
-<div class="scroll-strip" aria-hidden="true">
-  <div class="strip-track">
-    <div class="strip-item">Fair Launch</div>
-    <div class="strip-item">No Presale</div>
-    <div class="strip-item">Permissionless</div>
-    <div class="strip-item">Solana Speed</div>
-    <div class="strip-item">Bonding Curves</div>
-    <div class="strip-item">Community-Driven</div>
-    <div class="strip-item">DEX Graduation</div>
-    <div class="strip-item">On-Chain Verified</div>
-    <div class="strip-item">Fair Launch</div>
-    <div class="strip-item">No Presale</div>
-    <div class="strip-item">Permissionless</div>
-    <div class="strip-item">Solana Speed</div>
-    <div class="strip-item">Bonding Curves</div>
-    <div class="strip-item">Community-Driven</div>
-    <div class="strip-item">DEX Graduation</div>
-    <div class="strip-item">On-Chain Verified</div>
-  </div>
-</div>
-
-<!-- TOKEN SECTION -->
-<section class="token-section" id="launch">
-  <div class="inner">
-    <div class="token-card">
-      <div class="token-info">
-        <div class="token-eyebrow">🚀 Token Launch</div>
-        <div class="token-name">$OPENAGENT<br><em>Official Platform Token</em></div>
-        <p class="token-desc">The native governance and utility token of AgentMarket.exchange. Stake to earn platform fees, vote on listings, and access early agent launches. Fair launch — no presale, no VC allocation.</p>
-        <div class="token-grid">
-          <div class="token-stat">
-            <strong>0%</strong>
-            <span>Team Alloc</span>
-          </div>
-          <div class="token-stat">
-            <strong>Fair</strong>
-            <span>Launch Model</span>
-          </div>
-          <div class="token-stat green-stat">
-            <strong>🔒</strong>
-            <span>Streamflow Lock</span>
-          </div>
-          <div class="token-stat">
-            <strong>SOL</strong>
-            <span>Network</span>
-          </div>
-        </div>
-      </div>
-      <div class="token-cta-side">
-        <a href="https://kickstart.easya.io/" target="_blank" rel="noopener" class="btn-launch">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-          Buy $OPENAGENT
-        </a>
-        <div class="launch-note">
-          <div class="sol-pip"></div>
-          Powered by Solana · EasyA Kickstart
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- AGENTS MARKETPLACE -->
-<section id="agents">
-  <div class="inner">
-    <div class="section-label"><span>·</span>Marketplace</div>
-    <h2 class="section-title">Live <em>AI Agents</em></h2>
-    <p class="section-sub">Permissionless. Anyone can launch. Trade instantly with Solana-speed finality.</p>
-    <div style="margin-top:36px;">
-      <div class="filters-bar">
-        <button class="filter-btn active" onclick="filterAgents(this,'all')">All</button>
-        <button class="filter-btn" onclick="filterAgents(this,'trending')">Trending</button>
-        <button class="filter-btn" onclick="filterAgents(this,'new')">New</button>
-        <button class="filter-btn" onclick="filterAgents(this,'defi')">DeFi</button>
-        <button class="filter-btn" onclick="filterAgents(this,'trading')">Trading</button>
-        <button class="filter-btn" onclick="filterAgents(this,'data')">Data</button>
-        <button class="filter-btn" onclick="filterAgents(this,'social')">Social</button>
-        <div class="filter-right">
-          <div class="search-box">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-            <input type="text" placeholder="Search agents..." oninput="searchAgents(this.value)">
-          </div>
-        </div>
-      </div>
-      <div class="agents-grid" id="agentsGrid">
-        <div class="agent-card" data-category="trading trending">
-          <div class="agent-card-header">
-            <div class="agent-avatar">⚡</div>
-            <div class="agent-info">
-              <div class="agent-name">TradeX Alpha</div>
-              <div class="agent-ticker">$TRADEX</div>
-            </div>
-            <span class="agent-badge badge-live">Live</span>
-          </div>
-          <div class="agent-desc">Autonomous on-chain trading agent. Executes MEV-protected swaps across Solana DEXs using real-time signal analysis and dynamic slippage management.</div>
-          <div class="agent-tags"><span class="tag">Trading</span><span class="tag">MEV-Protected</span><span class="tag">Auto-Rebalance</span></div>
-          <div class="agent-stats">
-            <div class="agent-stat"><div class="agent-stat-val">$42.8K</div><div class="agent-stat-key">Market Cap</div></div>
-            <div class="agent-stat"><div class="agent-stat-val green">+18.4%</div><div class="agent-stat-key">24h Change</div></div>
-            <div class="agent-stat"><div class="agent-stat-val">$12.1K</div><div class="agent-stat-key">24h Vol</div></div>
-          </div>
-        </div>
-        <div class="agent-card" data-category="data new">
-          <div class="agent-card-header">
-            <div class="agent-avatar">🔭</div>
-            <div class="agent-info">
-              <div class="agent-name">Scout AI</div>
-              <div class="agent-ticker">$SCOUT</div>
-            </div>
-            <span class="agent-badge badge-new">New</span>
-          </div>
-          <div class="agent-desc">On-chain intelligence agent that monitors wallet movements, flags whale activity, and surfaces alpha signals from Solana blockchain data in real-time.</div>
-          <div class="agent-tags"><span class="tag">Data</span><span class="tag">Whale Tracking</span><span class="tag">Alpha Signals</span></div>
-          <div class="agent-stats">
-            <div class="agent-stat"><div class="agent-stat-val">$87.2K</div><div class="agent-stat-key">Market Cap</div></div>
-            <div class="agent-stat"><div class="agent-stat-val green">+6.2%</div><div class="agent-stat-key">24h Change</div></div>
-            <div class="agent-stat"><div class="agent-stat-val">$31.4K</div><div class="agent-stat-key">24h Vol</div></div>
-          </div>
-        </div>
-        <div class="agent-card" data-category="social trending">
-          <div class="agent-card-header">
-            <div class="agent-avatar">🌟</div>
-            <div class="agent-info">
-              <div class="agent-name">Nora Social</div>
-              <div class="agent-ticker">$NORA</div>
-            </div>
-            <span class="agent-badge badge-live">Live</span>
-          </div>
-          <div class="agent-desc">AI-powered community manager. Automates engagement, identifies trending narratives in crypto X/Twitter, and generates sentiment reports.</div>
-          <div class="agent-tags"><span class="tag">Social</span><span class="tag">Sentiment</span><span class="tag">X / Twitter</span></div>
-          <div class="agent-stats">
-            <div class="agent-stat"><div class="agent-stat-val">$31.5K</div><div class="agent-stat-key">Market Cap</div></div>
-            <div class="agent-stat"><div class="agent-stat-val green">+22.1%</div><div class="agent-stat-key">24h Change</div></div>
-            <div class="agent-stat"><div class="agent-stat-val">$8.9K</div><div class="agent-stat-key">24h Vol</div></div>
-          </div>
-        </div>
-        <div class="agent-card" data-category="defi trending">
-          <div class="agent-card-header">
-            <div class="agent-avatar">🗺️</div>
-            <div class="agent-info">
-              <div class="agent-name">Atlas DeFi</div>
-              <div class="agent-ticker">$ATLAS</div>
-            </div>
-            <span class="agent-badge badge-live">Live</span>
-          </div>
-          <div class="agent-desc">Yield optimization agent that autonomously allocates liquidity across Solana DeFi protocols — Raydium, Orca, Marginfi — to maximize risk-adjusted returns.</div>
-          <div class="agent-tags"><span class="tag">DeFi</span><span class="tag">Yield</span><span class="tag">Auto-Compound</span></div>
-          <div class="agent-stats">
-            <div class="agent-stat"><div class="agent-stat-val">$119K</div><div class="agent-stat-key">Market Cap</div></div>
-            <div class="agent-stat"><div class="agent-stat-val green">+4.7%</div><div class="agent-stat-key">24h Change</div></div>
-            <div class="agent-stat"><div class="agent-stat-val">$44.2K</div><div class="agent-stat-key">24h Vol</div></div>
-          </div>
-        </div>
-        <div class="agent-card" data-category="data new">
-          <div class="agent-card-header">
-            <div class="agent-avatar">💧</div>
-            <div class="agent-info">
-              <div class="agent-name">Flux Oracle</div>
-              <div class="agent-ticker">$FLUX</div>
-            </div>
-            <span class="agent-badge badge-new">New</span>
-          </div>
-          <div class="agent-desc">Decentralized oracle agent that aggregates off-chain data sources and pushes verified price feeds on-chain. Integrates with Pyth and Switchboard.</div>
-          <div class="agent-tags"><span class="tag">Oracle</span><span class="tag">Price Feed</span><span class="tag">Data</span></div>
-          <div class="agent-stats">
-            <div class="agent-stat"><div class="agent-stat-val">$55.3K</div><div class="agent-stat-key">Market Cap</div></div>
-            <div class="agent-stat"><div class="agent-stat-val green">+9.3%</div><div class="agent-stat-key">24h Change</div></div>
-            <div class="agent-stat"><div class="agent-stat-val">$18.7K</div><div class="agent-stat-key">24h Vol</div></div>
-          </div>
-        </div>
-        <div class="agent-card" data-category="defi">
-          <div class="agent-card-header">
-            <div class="agent-avatar">🛡️</div>
-            <div class="agent-info">
-              <div class="agent-name">Sentinel Guard</div>
-              <div class="agent-ticker">$SNTNL</div>
-            </div>
-            <span class="agent-badge badge-soon">Soon</span>
-          </div>
-          <div class="agent-desc">Smart contract security agent. Continuously monitors on-chain activity for anomalies, rug pull patterns, and exploit signatures — alerting holders in real-time.</div>
-          <div class="agent-tags"><span class="tag">Security</span><span class="tag">Monitoring</span><span class="tag">Alerts</span></div>
-          <div class="agent-stats">
-            <div class="agent-stat"><div class="agent-stat-val">—</div><div class="agent-stat-key">Market Cap</div></div>
-            <div class="agent-stat"><div class="agent-stat-val">—</div><div class="agent-stat-key">24h Change</div></div>
-            <div class="agent-stat"><div class="agent-stat-val">—</div><div class="agent-stat-key">Launching</div></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- HOW IT WORKS -->
-<section class="how-section" id="how">
-  <div class="inner">
-    <div class="section-label"><span>·</span>Process</div>
-    <h2 class="section-title">How <em>It Works</em></h2>
-    <p class="section-sub">From idea to live market in minutes. Fair, transparent, and permissionless on Solana.</p>
-    <div class="steps-grid">
-      <div class="step-card">
-        <span class="step-num">I.</span>
-        <div class="step-title">Connect Your Wallet</div>
-        <div class="step-desc">Link any Solana wallet — Phantom, Solflare, Backpack. No sign-up, no KYC. Your keys, your agents.</div>
-      </div>
-      <div class="step-card">
-        <span class="step-num">II.</span>
-        <div class="step-title">Describe Your Agent</div>
-        <div class="step-desc">Name your AI agent, define its capabilities, set the token ticker, and configure bonding curve parameters.</div>
-      </div>
-      <div class="step-card">
-        <span class="step-num">III.</span>
-        <div class="step-title">Fair Launch</div>
-        <div class="step-desc">Your agent token launches on a transparent bonding curve. No presale. No insider allocation. Community-driven price discovery from block zero.</div>
-      </div>
-      <div class="step-card">
-        <span class="step-num">IV.</span>
-        <div class="step-title">Trade &amp; Grow</div>
-        <div class="step-desc">Holders trade with Solana-speed finality. Agent usage drives token demand. Reach market cap threshold to graduate to a full DEX listing.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FEATURES -->
-<section>
-  <div class="inner">
-    <div class="section-label"><span>·</span>Why AgentMarket</div>
-    <h2 class="section-title">Built for the<br><em>Agent Economy</em></h2>
-    <p class="section-sub">Every feature designed for AI-native token launches on Solana's high-performance infrastructure.</p>
-    <div class="features-grid">
-      <div class="feature-card">
-        <span class="feature-icon">⚡</span>
-        <div class="feature-title">Solana Speed</div>
-        <div class="feature-desc">Sub-second finality, near-zero fees (~$0.001 per tx), and 65,000 TPS capacity means your agent trades at the speed of AI.</div>
-      </div>
-      <div class="feature-card">
-        <span class="feature-icon">📈</span>
-        <div class="feature-title">Bonding Curve Launches</div>
-        <div class="feature-desc">Every agent launches on a fair bonding curve. Price increases with demand. Transparent, predictable, and manipulation-resistant.</div>
-      </div>
-      <div class="feature-card">
-        <span class="feature-icon">🔓</span>
-        <div class="feature-title">Permissionless</div>
-        <div class="feature-desc">Anyone can launch an AI agent token. We don't gatekeep. We surface the data — you make the calls.</div>
-      </div>
-      <div class="feature-card">
-        <span class="feature-icon">🏛️</span>
-        <div class="feature-title">$OPENAGENT Governance</div>
-        <div class="feature-desc">Stake $OPENAGENT to vote on platform upgrades, whitelist new agent categories, and earn a share of trading fees.</div>
-      </div>
-      <div class="feature-card">
-        <span class="feature-icon">🤝</span>
-        <div class="feature-title">DEX Graduation</div>
-        <div class="feature-desc">Agents that hit their market cap milestone automatically graduate to Raydium / Orca liquidity pools with locked LP.</div>
-      </div>
-      <div class="feature-card">
-        <span class="feature-icon">📊</span>
-        <div class="feature-title">Real-Time Analytics</div>
-        <div class="feature-desc">Live price feeds, holder distribution, volume charts, and agent performance metrics — all on-chain verified.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- DISCLAIMER -->
-<section class="disclaimer-section">
-  <div class="inner">
-    <div class="disclaimer-box">
-      <strong>⚠ Risk Disclosure —</strong> AgentMarket.exchange is a permissionless AI agent launchpad on Solana. You are not investing in companies, equity, ownership rights, revenue, or financial instruments. There is no expectation of profit or return from any launch on this platform. Anyone can launch — we do not vet every agent or team. These launches are highly speculative; many will fail and may become worthless. Never invest more than you can afford to lose. Always do your own due diligence. <a href="#">Terms</a> · <a href="#">Privacy Policy</a>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-inner">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <a class="logo-wrap" href="#" style="margin-bottom:14px;display:inline-flex;">
-          <div class="logo-mark">
-            <svg width="16" height="16" viewBox="0 0 26 26" fill="none">
-              <path d="M3 18L8 13L3 8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M7 18L12 13L7 8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M23 8L18 13L23 18" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M19 8L14 13L19 18" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <span class="logo-wordmark" style="font-size:14px;">agentmarket<em>.exchange</em></span>
-        </a>
-        <p class="footer-brand-desc">The premier AI agent launchpad and marketplace built on Solana. Fast, fair, and permissionless.</p>
-      </div>
-      <div class="footer-col">
-        <h4>Platform</h4>
-        <ul>
-          <li><a href="#agents">Explore Agents</a></li>
-          <li><a href="#launch">Launch Agent</a></li>
-          <li><a href="#how">How It Works</a></li>
-          <li><a href="https://kickstart.easya.io/" target="_blank">$OPENAGENT Sale</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Community</h4>
-        <ul>
-          <li><a href="https://x.com/agentmarket_ex" target="_blank">𝕏 Twitter / X</a></li>
-          <li><a href="#">Discord</a></li>
-          <li><a href="#">Telegram</a></li>
-          <li><a href="#">GitHub</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Legal</h4>
-        <ul>
-          <li><a href="#">Terms of Service</a></li>
-          <li><a href="#">Privacy Policy</a></li>
-          <li><a href="#">Risk Disclosure</a></li>
-          <li><a href="#">Fee Schedule</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <div class="footer-copy">
-        © 2025 AgentMarket.exchange — Built on <span>Solana</span> · v0.1 Beta
-      </div>
-      <div class="footer-social">
-        <a href="https://x.com/agentmarket_ex" target="_blank" rel="noopener" class="social-btn">𝕏</a>
-        <a href="#" class="social-btn">💬</a>
-        <a href="#" class="social-btn">✈</a>
-      </div>
-    </div>
-  </div>
-</footer>
-
-<script>
-function toggleWallet() {
-  document.getElementById('walletDropdown').classList.toggle('open');
-}
-function connectWallet(name) {
-  document.getElementById('walletDropdown').classList.remove('open');
-  const btn = document.getElementById('connectBtn');
-  btn.textContent = '✓ ' + name;
-  btn.style.borderColor = 'rgba(20,241,149,0.4)';
-  btn.style.color = '#14F195';
-  btn.style.background = 'rgba(20,241,149,0.08)';
-}
-document.addEventListener('click', function(e) {
-  if (!e.target.closest('.connect-wrap')) {
-    document.getElementById('walletDropdown').classList.remove('open');
-  }
-});
-function toggleMenu() {
-  const links = document.querySelector('.nav-links');
-  const open = links.style.display === 'flex';
-  links.style.display = open ? '' : 'flex';
-  if (!open) {
-    Object.assign(links.style, {
-      position: 'absolute', top: '60px', left: '0', right: '0',
-      background: '#0f0f17', borderBottom: '1px solid rgba(255,255,255,0.07)',
-      padding: '12px 24px 16px', flexDirection: 'column', zIndex: '99'
-    });
-  }
-}
-function filterAgents(btn, cat) {
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  document.querySelectorAll('.agent-card').forEach(card => {
-    card.style.display = (cat === 'all' || (card.dataset.category||'').includes(cat)) ? '' : 'none';
-  });
-}
-function searchAgents(q) {
-  const lq = q.toLowerCase();
-  document.querySelectorAll('.agent-card').forEach(card => {
-    card.style.display = card.innerText.toLowerCase().includes(lq) ? '' : 'none';
-  });
-}
-</script>
-</body>
-</html>
