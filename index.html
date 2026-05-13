@@ -70,9 +70,7 @@ nav {
   background: var(--accent-dim);
   flex-shrink: 0;
 }
-.logo-mark svg {
-  width: 20px; height: 20px;
-}
+.logo-mark svg { width: 20px; height: 20px; }
 .logo-wordmark {
   font-family: var(--display); font-size: 18px; font-weight: 700;
   color: var(--text-1); letter-spacing: -0.5px;
@@ -132,9 +130,7 @@ nav {
   gap: 48px;
   align-items: center;
 }
-.hero-left {
-  text-align: left;
-}
+.hero-left { text-align: left; }
 .hero-eyebrow {
   display: inline-flex; align-items: center; gap: 8px;
   font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em;
@@ -148,8 +144,7 @@ nav {
 .hero h1 {
   font-family: var(--display); font-size: clamp(32px, 4.5vw, 56px);
   font-weight: 700; letter-spacing: -1.5px; line-height: 1.1;
-  margin-bottom: 20px;
-  color: var(--text-1);
+  margin-bottom: 20px; color: var(--text-1);
 }
 .hero h1 .h1-dim { color: var(--text-3); display: block; font-weight: 400; font-size: 0.5em; letter-spacing: 0; margin-bottom: 8px; }
 .hero h1 .h1-main { display: block; }
@@ -162,8 +157,7 @@ nav {
   max-width: 440px; margin-bottom: 32px; line-height: 1.7;
 }
 .hero-ctas {
-  display: flex; gap: 12px;
-  flex-wrap: wrap;
+  display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 28px;
 }
 .cta-primary {
   padding: 14px 24px; border-radius: 10px;
@@ -183,6 +177,22 @@ nav {
   font-family: var(--body); transition: all 0.15s;
 }
 .cta-secondary:hover { border-color: var(--text-3); color: var(--text-1); }
+
+/* ── ORYNTH BADGE ── */
+.orynth-badge-wrap {
+  display: inline-block;
+  transition: opacity 0.2s, transform 0.2s;
+}
+.orynth-badge-wrap:hover {
+  opacity: 0.85;
+  transform: translateY(-1px);
+}
+.orynth-badge-wrap img {
+  display: block;
+  border-radius: 8px;
+  max-width: 100%;
+  height: auto;
+}
 
 /* Hero Right - Stats Card */
 .hero-right {
@@ -214,9 +224,11 @@ nav {
 }
 .hero-stat-item {
   padding: 12px 0;
-}
-.hero-stat-item:not(:last-child) {
   border-bottom: 1px solid var(--border);
+}
+.hero-stat-item:last-child,
+.hero-stat-item:nth-last-child(2) {
+  border-bottom: none;
 }
 .hero-stat-num {
   font-family: var(--display); font-size: 28px; font-weight: 700;
@@ -252,27 +264,17 @@ nav {
   color: #fff; font-size: 18px; font-weight: 700;
   flex-shrink: 0;
 }
-.easya-text {
-  flex: 1;
-}
-.easya-text strong {
-  font-size: 14px; font-weight: 600; color: var(--text-1); display: block;
-}
-.easya-text span {
-  font-size: 12px; color: var(--text-3); margin-top: 2px; display: block;
-}
-.easya-arrow {
-  color: var(--accent); font-size: 18px;
-}
+.easya-text { flex: 1; }
+.easya-text strong { font-size: 14px; font-weight: 600; color: var(--text-1); display: block; }
+.easya-text span { font-size: 12px; color: var(--text-3); margin-top: 2px; display: block; }
+.easya-arrow { color: var(--accent); font-size: 18px; }
 
 @media (max-width: 768px) {
-  .hero-inner {
-    grid-template-columns: 1fr;
-    gap: 32px;
-  }
+  .hero-inner { grid-template-columns: 1fr; gap: 32px; }
   .hero-left { text-align: center; }
   .hero-sub { margin-left: auto; margin-right: auto; }
   .hero-ctas { justify-content: center; }
+  .orynth-badge-wrap { display: flex; justify-content: center; }
   .hero-stats-row { grid-template-columns: 1fr 1fr; }
 }
 
@@ -387,6 +389,7 @@ section { padding: 80px 24px; }
 .badge-live { color: var(--green); background: var(--green-dim); border: 1px solid rgba(16,185,129,0.2); }
 .badge-soon { color: var(--gold); background: var(--gold-dim); border: 1px solid rgba(245,158,11,0.2); }
 .badge-new { color: var(--accent); background: var(--accent-dim); border: 1px solid rgba(124,58,237,0.2); }
+.badge-trending { color: var(--red); background: var(--red-dim); border: 1px solid rgba(239,68,68,0.2); }
 .agent-desc {
   font-size: 14px; color: var(--text-2); line-height: 1.6; margin-bottom: 16px;
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
@@ -462,6 +465,18 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
 .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
 .footer-col a { font-size: 14px; color: var(--text-2); text-decoration: none; transition: color 0.15s; }
 .footer-col a:hover { color: var(--text-1); }
+
+/* Orynth in footer */
+.footer-orynth {
+  margin-top: 20px;
+}
+.footer-orynth img {
+  border-radius: 6px;
+  transition: opacity 0.2s;
+  display: block;
+}
+.footer-orynth a:hover img { opacity: 0.8; }
+
 .footer-bottom { border-top: 1px solid var(--border); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
 .footer-copy { font-family: var(--mono); font-size: 11px; color: var(--text-3); letter-spacing: 0.04em; }
 .footer-copy .green { color: var(--green); }
@@ -513,9 +528,7 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
 .auth-sub { font-size: 14px; color: var(--text-2); margin-bottom: 28px; }
 
 /* Social Login Buttons */
-.social-login-grid {
-  display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px;
-}
+.social-login-grid { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
 .social-login-btn {
   display: flex; align-items: center; gap: 12px;
   padding: 12px 16px; border-radius: 10px;
@@ -544,14 +557,12 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
   width: 100%; padding: 12px 16px; background: var(--bg);
   border: 1px solid var(--border); border-radius: 10px;
   color: var(--text-1); font-size: 15px; font-family: var(--body);
-  outline: none; margin-bottom: 12px;
-  transition: border-color 0.15s;
+  outline: none; margin-bottom: 12px; transition: border-color 0.15s;
 }
 .auth-input:focus { border-color: var(--accent); }
 .auth-input::placeholder { color: var(--text-3); }
 .auth-submit {
-  width: 100%; padding: 14px; border-radius: 10px;
-  border: none;
+  width: 100%; padding: 14px; border-radius: 10px; border: none;
   font-size: 15px; font-weight: 600; font-family: var(--body);
   color: #fff; background: var(--accent);
   cursor: pointer; transition: all 0.2s; margin-top: 8px;
@@ -562,8 +573,7 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
 .agent-modal-overlay {
   display: none; position: fixed; inset: 0; z-index: 9998;
   background: rgba(0,0,0,0.4); backdrop-filter: blur(8px);
-  align-items: center; justify-content: center;
-  padding: 24px;
+  align-items: center; justify-content: center; padding: 24px;
 }
 .agent-modal-overlay.open { display: flex; }
 .agent-modal {
@@ -573,8 +583,7 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
   position: relative; box-shadow: 0 24px 80px rgba(0,0,0,0.15);
 }
 .agent-modal-header {
-  padding: 32px 32px 24px;
-  border-bottom: 1px solid var(--border);
+  padding: 32px 32px 24px; border-bottom: 1px solid var(--border);
   display: flex; align-items: flex-start; gap: 18px;
 }
 .agent-modal-avatar {
@@ -595,17 +604,13 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
   margin-bottom: 24px;
 }
 .agent-modal-stat { padding: 16px; background: var(--bg); text-align: center; }
-.agent-modal-stat strong { display: block; font-family: var(--display); font-size: 20px; font-weight: 700; color: var(--text-1); }
+.agent-modal-stat strong { display: block; font-family: var(--display); font-size: 18px; font-weight: 700; color: var(--text-1); }
 .agent-modal-stat.green strong { color: var(--green); }
 .agent-modal-stat.red strong { color: var(--red); }
 .agent-modal-stat span { font-family: var(--mono); font-size: 10px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; }
 .agent-modal-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
-.agent-modal-actions {
-  display: flex; gap: 12px;
-}
-.agent-modal-actions .btn-accent {
-  flex: 1; justify-content: center; padding: 14px 24px;
-}
+.agent-modal-actions { display: flex; gap: 12px; }
+.agent-modal-actions .btn-accent { flex: 1; justify-content: center; padding: 14px 24px; }
 .agent-modal-close {
   position: absolute; top: 16px; right: 16px;
   background: none; border: none; color: var(--text-3);
@@ -617,8 +622,7 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
 .launch-modal-overlay {
   display: none; position: fixed; inset: 0; z-index: 9997;
   background: rgba(0,0,0,0.4); backdrop-filter: blur(8px);
-  align-items: center; justify-content: center;
-  padding: 24px;
+  align-items: center; justify-content: center; padding: 24px;
 }
 .launch-modal-overlay.open { display: flex; }
 .launch-modal {
@@ -632,22 +636,16 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
   font-family: var(--display); font-size: 22px; font-weight: 700;
   margin-bottom: 8px; letter-spacing: -0.3px;
 }
-.launch-modal p {
-  font-size: 14px; color: var(--text-2); margin-bottom: 28px;
-}
+.launch-modal p { font-size: 14px; color: var(--text-2); margin-bottom: 28px; }
 .launch-input {
   width: 100%; padding: 12px 16px; background: var(--bg);
   border: 1px solid var(--border); border-radius: 10px;
   color: var(--text-1); font-size: 15px; font-family: var(--body);
-  outline: none; margin-bottom: 14px;
-  transition: border-color 0.15s;
+  outline: none; margin-bottom: 14px; transition: border-color 0.15s;
 }
 .launch-input:focus { border-color: var(--accent); }
 .launch-input::placeholder { color: var(--text-3); }
-.launch-modal .btn-accent {
-  width: 100%; justify-content: center; padding: 14px;
-  margin-top: 10px;
-}
+.launch-modal .btn-accent { width: 100%; justify-content: center; padding: 14px; margin-top: 10px; }
 
 /* ACCOUNT DROPDOWN */
 .account-btn {
@@ -671,13 +669,11 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
   display: none; position: absolute; right: 0; top: calc(100% + 10px);
   background: var(--surface); border: 1px solid var(--border-strong);
   border-radius: 12px; width: 220px; z-index: 999;
-  box-shadow: 0 16px 48px rgba(0,0,0,0.12); overflow: hidden;
-  padding: 6px;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.12); overflow: hidden; padding: 6px;
 }
 .account-dropdown.open { display: block; }
 .dropdown-header {
-  padding: 12px 14px 10px;
-  border-bottom: 1px solid var(--border); margin-bottom: 6px;
+  padding: 12px 14px 10px; border-bottom: 1px solid var(--border); margin-bottom: 6px;
 }
 .dropdown-addr { font-family: var(--mono); font-size: 11px; color: var(--text-3); }
 .dropdown-balance { font-size: 14px; font-weight: 600; color: var(--text-1); margin-top: 3px; }
@@ -689,22 +685,30 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
 .dropdown-item:hover { background: var(--bg); color: var(--text-1); }
 .dropdown-item.danger:hover { color: var(--red); }
 
+/* No results state */
+.agents-empty {
+  display: none;
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 64px 24px;
+  color: var(--text-3);
+  font-family: var(--mono);
+  font-size: 13px;
+}
+
 @media (max-width: 640px) {
   section { padding: 56px 16px; }
   .hero { padding: 48px 16px; }
   .hero-stats-row { grid-template-columns: 1fr 1fr; }
-  .token-left, .token-right { padding: 28px; }
-  .token-body { flex-direction: column; }
-  .token-left { border-right: none; border-bottom: 1px solid var(--border); }
   .agents-grid { grid-template-columns: 1fr; }
   .steps-grid { grid-template-columns: 1fr; }
   .step-card { border-right: none; border-bottom: 1px solid var(--border); }
-  .hero-stats { flex-wrap: wrap; }
   .filters-bar { flex-direction: column; align-items: stretch; }
   .filter-right { margin-left: 0; }
-  .token-stats-row { flex-wrap: wrap; }
   .footer-top { grid-template-columns: 1fr; }
   .agent-modal-stats { grid-template-columns: repeat(2, 1fr); }
+  .agent-modal-body { padding: 20px; }
+  .agent-modal-header { padding: 20px 20px 16px; }
 }
 </style>
 </head>
@@ -722,7 +726,6 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
     <button class="auth-close" onclick="closeAuth()">✕</button>
     <div class="auth-heading" id="authHeading">Welcome to AgentMarket</div>
     <div class="auth-sub" id="authSub">Sign in to trade, launch, and manage AI agents</div>
-
     <div class="social-login-grid">
       <button class="social-login-btn" onclick="connectWalletAuth('AI Agent')">
         <div class="social-login-icon ai-icon">🤖</div>
@@ -737,9 +740,7 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
         <span>Continue with Gmail</span>
       </button>
     </div>
-
     <div class="auth-divider"><span>or use email</span></div>
-
     <input class="auth-input" type="email" id="authEmail" placeholder="Email address">
     <input class="auth-input" type="password" id="authPassword" placeholder="Password">
     <button class="auth-submit" id="authSubmitBtn" onclick="handleAuth()">Sign In</button>
@@ -830,7 +831,7 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
     </a>
     <ul class="nav-links">
       <li><a href="#agents">Explore</a></li>
-      <li><a href="#launch">Launch</a></li>
+      <li><a href="#launch" onclick="openLaunchModal(); return false;">Launch</a></li>
       <li><a href="#how">How It Works</a></li>
       <li><a href="https://x.com/agentmarket_ai" target="_blank" rel="noopener">𝕏</a></li>
     </ul>
@@ -861,6 +862,10 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
         <a href="#agents" class="cta-primary">Explore Agents</a>
         <a href="https://kickstart.easya.io/" target="_blank" rel="noopener" class="cta-secondary">Launch on EasyA →</a>
       </div>
+      <!-- Orynth Badge -->
+      <a href="https://orynth.dev/projects/agent-market" target="_blank" rel="noopener" class="orynth-badge-wrap">
+        <img src="https://orynth.dev/api/badge/agent-market?theme=light&style=default" alt="Featured on Orynth" width="200" height="62" />
+      </a>
     </div>
     <div class="hero-right">
       <div class="hero-stats-card">
@@ -908,6 +913,7 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
       <button class="filter-btn" onclick="filterAgents('live', this)">Live</button>
       <button class="filter-btn" onclick="filterAgents('new', this)">New</button>
       <button class="filter-btn" onclick="filterAgents('trending', this)">Trending</button>
+      <button class="filter-btn" onclick="filterAgents('soon', this)">Coming Soon</button>
       <div class="filter-right search-box">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
         <input type="text" id="agentSearch" placeholder="Search agents..." oninput="searchAgents(this.value)">
@@ -927,23 +933,12 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
         </div>
         <p class="agent-desc">Autonomous trading agent that scans Solana DEXs for arbitrage opportunities and executes trades with sub-second latency.</p>
         <div class="agent-tags">
-          <span class="tag">Trading</span>
-          <span class="tag">DeFi</span>
-          <span class="tag">Arbitrage</span>
+          <span class="tag">Trading</span><span class="tag">DeFi</span><span class="tag">Arbitrage</span>
         </div>
         <div class="agent-stats">
-          <div class="agent-stat">
-            <div class="agent-stat-val">$0.0042</div>
-            <div class="agent-stat-key">Price</div>
-          </div>
-          <div class="agent-stat">
-            <div class="agent-stat-val green">+18.4%</div>
-            <div class="agent-stat-key">24h</div>
-          </div>
-          <div class="agent-stat">
-            <div class="agent-stat-val">$420K</div>
-            <div class="agent-stat-key">MCap</div>
-          </div>
+          <div class="agent-stat"><div class="agent-stat-val">$0.0042</div><div class="agent-stat-key">Price</div></div>
+          <div class="agent-stat"><div class="agent-stat-val green">+18.4%</div><div class="agent-stat-key">24h</div></div>
+          <div class="agent-stat"><div class="agent-stat-val">$420K</div><div class="agent-stat-key">MCap</div></div>
         </div>
       </div>
 
@@ -959,23 +954,12 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
         </div>
         <p class="agent-desc">On-chain analytics agent that identifies emerging trends, whale movements, and alpha signals across Solana protocols.</p>
         <div class="agent-tags">
-          <span class="tag">Analytics</span>
-          <span class="tag">Data</span>
-          <span class="tag">Alpha</span>
+          <span class="tag">Analytics</span><span class="tag">Data</span><span class="tag">Alpha</span>
         </div>
         <div class="agent-stats">
-          <div class="agent-stat">
-            <div class="agent-stat-val">$0.0087</div>
-            <div class="agent-stat-key">Price</div>
-          </div>
-          <div class="agent-stat">
-            <div class="agent-stat-val green">+6.2%</div>
-            <div class="agent-stat-key">24h</div>
-          </div>
-          <div class="agent-stat">
-            <div class="agent-stat-val">$780K</div>
-            <div class="agent-stat-key">MCap</div>
-          </div>
+          <div class="agent-stat"><div class="agent-stat-val">$0.0087</div><div class="agent-stat-key">Price</div></div>
+          <div class="agent-stat"><div class="agent-stat-val green">+6.2%</div><div class="agent-stat-key">24h</div></div>
+          <div class="agent-stat"><div class="agent-stat-val">$780K</div><div class="agent-stat-key">MCap</div></div>
         </div>
       </div>
 
@@ -991,23 +975,12 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
         </div>
         <p class="agent-desc">Generative art agent that creates unique NFT collections on-demand. Each piece is algorithmically composed and minted on-chain.</p>
         <div class="agent-tags">
-          <span class="tag">NFT</span>
-          <span class="tag">Creative</span>
-          <span class="tag">Generative</span>
+          <span class="tag">NFT</span><span class="tag">Creative</span><span class="tag">Generative</span>
         </div>
         <div class="agent-stats">
-          <div class="agent-stat">
-            <div class="agent-stat-val">$0.0031</div>
-            <div class="agent-stat-key">Price</div>
-          </div>
-          <div class="agent-stat">
-            <div class="agent-stat-val green">+22.1%</div>
-            <div class="agent-stat-key">24h</div>
-          </div>
-          <div class="agent-stat">
-            <div class="agent-stat-val">$310K</div>
-            <div class="agent-stat-key">MCap</div>
-          </div>
+          <div class="agent-stat"><div class="agent-stat-val">$0.0031</div><div class="agent-stat-key">Price</div></div>
+          <div class="agent-stat"><div class="agent-stat-val green">+22.1%</div><div class="agent-stat-key">24h</div></div>
+          <div class="agent-stat"><div class="agent-stat-val">$310K</div><div class="agent-stat-key">MCap</div></div>
         </div>
       </div>
 
@@ -1023,27 +996,16 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
         </div>
         <p class="agent-desc">AI game master that creates dynamic on-chain gaming experiences. Procedurally generates quests, loot, and player challenges.</p>
         <div class="agent-tags">
-          <span class="tag">Gaming</span>
-          <span class="tag">Play</span>
-          <span class="tag">RPG</span>
+          <span class="tag">Gaming</span><span class="tag">Play</span><span class="tag">RPG</span>
         </div>
         <div class="agent-stats">
-          <div class="agent-stat">
-            <div class="agent-stat-val">$0.0119</div>
-            <div class="agent-stat-key">Price</div>
-          </div>
-          <div class="agent-stat">
-            <div class="agent-stat-val green">+4.7%</div>
-            <div class="agent-stat-key">24h</div>
-          </div>
-          <div class="agent-stat">
-            <div class="agent-stat-val">$1.2M</div>
-            <div class="agent-stat-key">MCap</div>
-          </div>
+          <div class="agent-stat"><div class="agent-stat-val">$0.0119</div><div class="agent-stat-key">Price</div></div>
+          <div class="agent-stat"><div class="agent-stat-val green">+4.7%</div><div class="agent-stat-key">24h</div></div>
+          <div class="agent-stat"><div class="agent-stat-val">$1.2M</div><div class="agent-stat-key">MCap</div></div>
         </div>
       </div>
 
-      <!-- Agent 5 -->
+      <!-- Agent 5 — Trending -->
       <div class="agent-card" data-status="trending" data-tags="social,content" onclick="openAgentModal(4)">
         <div class="agent-card-header">
           <div class="agent-avatar">⚡</div>
@@ -1051,27 +1013,16 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
             <div class="agent-name">Flux Social</div>
             <div class="agent-ticker">$FLUX</div>
           </div>
-          <span class="agent-badge badge-live">Live</span>
+          <span class="agent-badge badge-trending">Trending</span>
         </div>
         <p class="agent-desc">Autonomous social media agent that curates content, engages communities, and grows brands 24/7 across platforms.</p>
         <div class="agent-tags">
-          <span class="tag">Social</span>
-          <span class="tag">Content</span>
-          <span class="tag">Growth</span>
+          <span class="tag">Social</span><span class="tag">Content</span><span class="tag">Growth</span>
         </div>
         <div class="agent-stats">
-          <div class="agent-stat">
-            <div class="agent-stat-val">$0.0055</div>
-            <div class="agent-stat-key">Price</div>
-          </div>
-          <div class="agent-stat">
-            <div class="agent-stat-val green">+9.3%</div>
-            <div class="agent-stat-key">24h</div>
-          </div>
-          <div class="agent-stat">
-            <div class="agent-stat-val">$550K</div>
-            <div class="agent-stat-key">MCap</div>
-          </div>
+          <div class="agent-stat"><div class="agent-stat-val">$0.0055</div><div class="agent-stat-key">Price</div></div>
+          <div class="agent-stat"><div class="agent-stat-val green">+9.3%</div><div class="agent-stat-key">24h</div></div>
+          <div class="agent-stat"><div class="agent-stat-val">$550K</div><div class="agent-stat-key">MCap</div></div>
         </div>
       </div>
 
@@ -1087,23 +1038,12 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
         </div>
         <p class="agent-desc">Security monitoring agent that watches for exploits, rug pulls, and suspicious transactions across Solana protocols.</p>
         <div class="agent-tags">
-          <span class="tag">Security</span>
-          <span class="tag">Monitor</span>
-          <span class="tag">Alert</span>
+          <span class="tag">Security</span><span class="tag">Monitor</span><span class="tag">Alert</span>
         </div>
         <div class="agent-stats">
-          <div class="agent-stat">
-            <div class="agent-stat-val">—</div>
-            <div class="agent-stat-key">Price</div>
-          </div>
-          <div class="agent-stat">
-            <div class="agent-stat-val">—</div>
-            <div class="agent-stat-key">24h</div>
-          </div>
-          <div class="agent-stat">
-            <div class="agent-stat-val">TBA</div>
-            <div class="agent-stat-key">MCap</div>
-          </div>
+          <div class="agent-stat"><div class="agent-stat-val">—</div><div class="agent-stat-key">Price</div></div>
+          <div class="agent-stat"><div class="agent-stat-val">—</div><div class="agent-stat-key">24h</div></div>
+          <div class="agent-stat"><div class="agent-stat-val">TBA</div><div class="agent-stat-key">MCap</div></div>
         </div>
       </div>
 
@@ -1119,23 +1059,12 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
         </div>
         <p class="agent-desc">Prediction market agent that aggregates sentiment, on-chain data, and external signals to forecast token movements.</p>
         <div class="agent-tags">
-          <span class="tag">Prediction</span>
-          <span class="tag">Markets</span>
-          <span class="tag">Forecast</span>
+          <span class="tag">Prediction</span><span class="tag">Markets</span><span class="tag">Forecast</span>
         </div>
         <div class="agent-stats">
-          <div class="agent-stat">
-            <div class="agent-stat-val">$0.0072</div>
-            <div class="agent-stat-key">Price</div>
-          </div>
-          <div class="agent-stat">
-            <div class="agent-stat-val red">-2.1%</div>
-            <div class="agent-stat-key">24h</div>
-          </div>
-          <div class="agent-stat">
-            <div class="agent-stat-val">$720K</div>
-            <div class="agent-stat-key">MCap</div>
-          </div>
+          <div class="agent-stat"><div class="agent-stat-val">$0.0072</div><div class="agent-stat-key">Price</div></div>
+          <div class="agent-stat"><div class="agent-stat-val red">-2.1%</div><div class="agent-stat-key">24h</div></div>
+          <div class="agent-stat"><div class="agent-stat-val">$720K</div><div class="agent-stat-key">MCap</div></div>
         </div>
       </div>
 
@@ -1151,57 +1080,38 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
         </div>
         <p class="agent-desc">Automated yield farming agent that reallocates capital across Solana DeFi protocols to maximize APY and minimize risk.</p>
         <div class="agent-tags">
-          <span class="tag">Yield</span>
-          <span class="tag">Farming</span>
-          <span class="tag">DeFi</span>
+          <span class="tag">Yield</span><span class="tag">Farming</span><span class="tag">DeFi</span>
         </div>
         <div class="agent-stats">
-          <div class="agent-stat">
-            <div class="agent-stat-val">$0.0028</div>
-            <div class="agent-stat-key">Price</div>
-          </div>
-          <div class="agent-stat">
-            <div class="agent-stat-val green">+31.5%</div>
-            <div class="agent-stat-key">24h</div>
-          </div>
-          <div class="agent-stat">
-            <div class="agent-stat-val">$280K</div>
-            <div class="agent-stat-key">MCap</div>
-          </div>
+          <div class="agent-stat"><div class="agent-stat-val">$0.0028</div><div class="agent-stat-key">Price</div></div>
+          <div class="agent-stat"><div class="agent-stat-val green">+31.5%</div><div class="agent-stat-key">24h</div></div>
+          <div class="agent-stat"><div class="agent-stat-val">$280K</div><div class="agent-stat-key">MCap</div></div>
         </div>
       </div>
 
       <!-- Agent 9 -->
-      <div class="agent-card" data-status="live" data-tags="meme,community" onclick="openAgentModal(8)">
+      <div class="agent-card" data-status="trending" data-tags="meme,community" onclick="openAgentModal(8)">
         <div class="agent-card-header">
           <div class="agent-avatar">🐸</div>
           <div class="agent-info">
             <div class="agent-name">Meme Lord</div>
             <div class="agent-ticker">$MEME</div>
           </div>
-          <span class="agent-badge badge-live">Live</span>
+          <span class="agent-badge badge-trending">Trending</span>
         </div>
         <p class="agent-desc">Community-driven meme agent that generates viral content, runs polls, and rewards engagement with token drops.</p>
         <div class="agent-tags">
-          <span class="tag">Meme</span>
-          <span class="tag">Community</span>
-          <span class="tag">Viral</span>
+          <span class="tag">Meme</span><span class="tag">Community</span><span class="tag">Viral</span>
         </div>
         <div class="agent-stats">
-          <div class="agent-stat">
-            <div class="agent-stat-val">$0.0015</div>
-            <div class="agent-stat-key">Price</div>
-          </div>
-          <div class="agent-stat">
-            <div class="agent-stat-val green">+45.2%</div>
-            <div class="agent-stat-key">24h</div>
-          </div>
-          <div class="agent-stat">
-            <div class="agent-stat-val">$150K</div>
-            <div class="agent-stat-key">MCap</div>
-          </div>
+          <div class="agent-stat"><div class="agent-stat-val">$0.0015</div><div class="agent-stat-key">Price</div></div>
+          <div class="agent-stat"><div class="agent-stat-val green">+45.2%</div><div class="agent-stat-key">24h</div></div>
+          <div class="agent-stat"><div class="agent-stat-val">$150K</div><div class="agent-stat-key">MCap</div></div>
         </div>
       </div>
+
+      <!-- Empty state -->
+      <div class="agents-empty" id="agentsEmpty">No agents found matching your search.</div>
     </div>
   </div>
 </section>
@@ -1303,12 +1213,18 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
           <span class="logo-wordmark" style="font-size:16px;">agentmarket</span>
         </a>
         <p class="footer-brand-desc">The premier launchpad for tokenized AI agents on Solana. Fair launches, zero presale, community-first.</p>
+        <!-- Orynth Badge in footer -->
+        <div class="footer-orynth">
+          <a href="https://orynth.dev/projects/agent-market" target="_blank" rel="noopener">
+            <img src="https://orynth.dev/api/badge/agent-market?theme=light&style=default" alt="Featured on Orynth" width="180" height="56" />
+          </a>
+        </div>
       </div>
       <div class="footer-col">
         <h4>Platform</h4>
         <ul>
           <li><a href="#agents">Explore Agents</a></li>
-          <li><a href="#launch">Launch Agent</a></li>
+          <li><a href="#" onclick="openLaunchModal(); return false;">Launch Agent</a></li>
           <li><a href="#how">How It Works</a></li>
           <li><a href="https://kickstart.easya.io/" target="_blank" rel="noopener">EasyA Kickstart</a></li>
         </ul>
@@ -1353,48 +1269,28 @@ function openAuth() {
   document.getElementById('authModal').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
-
 function closeAuth() {
   document.getElementById('authModal').classList.remove('open');
   document.body.style.overflow = '';
 }
-
 function handleAuth() {
   const email = document.getElementById('authEmail').value;
   const password = document.getElementById('authPassword').value;
-  if (!email || !password) {
-    showToast('Please fill in all fields');
-    return;
-  }
-  currentUser = {
-    name: email.split('@')[0],
-    email: email,
-    type: 'user',
-    address: '7xKX...3p9K',
-    balance: '12.45 SOL'
-  };
+  if (!email || !password) { showToast('Please fill in all fields'); return; }
+  currentUser = { name: email.split('@')[0], email, type: 'user', address: '7xKX...3p9K', balance: '12.45 SOL' };
   closeAuth();
   updateNavForUser();
   showToast('Welcome back!');
 }
-
 function connectWalletAuth(provider) {
-  currentUser = {
-    name: provider + ' User',
-    email: '',
-    type: 'user',
-    address: '7xKX...3p9K',
-    balance: '24.89 SOL'
-  };
+  currentUser = { name: provider + ' User', email: '', type: 'user', address: '7xKX...3p9K', balance: '24.89 SOL' };
   closeAuth();
   updateNavForUser();
   showToast(provider + ' connected successfully');
 }
-
 function updateNavForUser() {
-  const navRight = document.getElementById('navRight');
   if (!currentUser) return;
-  navRight.innerHTML = `
+  document.getElementById('navRight').innerHTML = `
     <div class="account-dropdown-wrap">
       <button class="account-btn" onclick="toggleDropdown()">
         <div class="account-avatar">${currentUser.name.charAt(0).toUpperCase()}</div>
@@ -1417,11 +1313,9 @@ function updateNavForUser() {
     </div>
   `;
 }
-
 function toggleDropdown() {
   document.getElementById('accountDropdown').classList.toggle('open');
 }
-
 function logout() {
   currentUser = null;
   document.getElementById('navRight').innerHTML = `
@@ -1439,7 +1333,7 @@ function showToast(msg) {
   setTimeout(() => toast.classList.remove('show'), 3000);
 }
 
-// ── AGENT MODAL ──
+// ── AGENT DATA ──
 const agentsData = [
   { name: 'TradeX Alpha', ticker: '$TRADEX', avatar: '📈', desc: 'Autonomous trading agent that scans Solana DEXs for arbitrage opportunities and executes trades with sub-second latency. Built for speed, optimized for profit.', price: '$0.0042', change: '+18.4%', mcap: '$420K', vol: '$89K', holders: '1.2K', tags: ['Trading','DeFi','Arbitrage'] },
   { name: 'Scout Protocol', ticker: '$SCOUT', avatar: '🔍', desc: 'On-chain analytics agent that identifies emerging trends, whale movements, and alpha signals across Solana protocols. Your eyes on the blockchain.', price: '$0.0087', change: '+6.2%', mcap: '$780K', vol: '$45K', holders: '2.1K', tags: ['Analytics','Data','Alpha'] },
@@ -1452,6 +1346,7 @@ const agentsData = [
   { name: 'Meme Lord', ticker: '$MEME', avatar: '🐸', desc: 'Community-driven meme agent that generates viral content, runs polls, and rewards engagement with token drops. The culture is the utility.', price: '$0.0015', change: '+45.2%', mcap: '$150K', vol: '$78K', holders: '2.3K', tags: ['Meme','Community','Viral'] }
 ];
 
+// ── AGENT MODAL ──
 function openAgentModal(index) {
   const agent = agentsData[index];
   document.getElementById('modalAvatar').textContent = agent.avatar;
@@ -1459,51 +1354,36 @@ function openAgentModal(index) {
   document.getElementById('modalTicker').textContent = agent.ticker;
   document.getElementById('modalDesc').textContent = agent.desc;
 
-  const statsHtml = `
-    <div class="agent-modal-stat ${agent.change.includes('+') ? 'green' : agent.change.includes('-') ? 'red' : ''}">
-      <strong>${agent.price}</strong><span>Price</span>
-    </div>
-    <div class="agent-modal-stat ${agent.change.includes('+') ? 'green' : agent.change.includes('-') ? 'red' : ''}">
-      <strong>${agent.change}</strong><span>24h Change</span>
-    </div>
-    <div class="agent-modal-stat">
-      <strong>${agent.mcap}</strong><span>Market Cap</span>
-    </div>
-    <div class="agent-modal-stat">
-      <strong>${agent.vol}</strong><span>Volume</span>
-    </div>
-    <div class="agent-modal-stat">
-      <strong>${agent.holders}</strong><span>Holders</span>
-    </div>
-    <div class="agent-modal-stat">
-      <strong>SOL</strong><span>Network</span>
-    </div>
+  const isPositive = agent.change.includes('+');
+  const isNegative = agent.change.includes('-');
+  const changeClass = isPositive ? 'green' : isNegative ? 'red' : '';
+
+  document.getElementById('modalStats').innerHTML = `
+    <div class="agent-modal-stat ${changeClass}"><strong>${agent.price}</strong><span>Price</span></div>
+    <div class="agent-modal-stat ${changeClass}"><strong>${agent.change}</strong><span>24h Change</span></div>
+    <div class="agent-modal-stat"><strong>${agent.mcap}</strong><span>Market Cap</span></div>
+    <div class="agent-modal-stat"><strong>${agent.vol}</strong><span>Volume</span></div>
+    <div class="agent-modal-stat"><strong>${agent.holders}</strong><span>Holders</span></div>
+    <div class="agent-modal-stat"><strong>SOL</strong><span>Network</span></div>
   `;
-  document.getElementById('modalStats').innerHTML = statsHtml;
-
-  const tagsHtml = agent.tags.map(t => `<span class="tag">${t}</span>`).join('');
-  document.getElementById('modalTags').innerHTML = tagsHtml;
-
+  document.getElementById('modalTags').innerHTML = agent.tags.map(t => `<span class="tag">${t}</span>`).join('');
   document.getElementById('agentModal').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
-
 function closeAgentModal() {
   document.getElementById('agentModal').classList.remove('open');
   document.body.style.overflow = '';
 }
-
 function tradeAgent() {
-  if (!currentUser) {
-    showToast('Please connect wallet first');
-    openAuth();
-    return;
-  }
+  if (!currentUser) { showToast('Please connect wallet first'); openAuth(); return; }
   showToast('Trading interface coming soon!');
 }
-
 function shareAgent() {
-  showToast('Link copied to clipboard!');
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(window.location.href).then(() => showToast('Link copied to clipboard!'));
+  } else {
+    showToast('Link copied to clipboard!');
+  }
 }
 
 // ── LAUNCH MODAL ──
@@ -1511,92 +1391,78 @@ function openLaunchModal() {
   document.getElementById('launchModal').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
-
 function closeLaunchModal() {
   document.getElementById('launchModal').classList.remove('open');
   document.body.style.overflow = '';
 }
-
 function submitLaunch() {
-  const name = document.getElementById('launchName').value;
-  const ticker = document.getElementById('launchTicker').value;
-  if (!name || !ticker) {
-    showToast('Please fill in all required fields');
-    return;
-  }
+  const name = document.getElementById('launchName').value.trim();
+  const ticker = document.getElementById('launchTicker').value.trim();
+  if (!name || !ticker) { showToast('Please fill in all required fields'); return; }
   closeLaunchModal();
   showToast(`🚀 ${name} submitted for launch review!`);
-  document.getElementById('launchName').value = '';
-  document.getElementById('launchTicker').value = '';
-  document.getElementById('launchDesc').value = '';
-  document.getElementById('launchTags').value = '';
+  ['launchName','launchTicker','launchDesc','launchTags'].forEach(id => document.getElementById(id).value = '');
 }
 
-// ── FILTERING ──
+// ── FILTERING ── (fixed: trending is now its own status, not a subset of live)
+let currentFilter = 'all';
+let currentSearch = '';
+
 function filterAgents(filter, btn) {
+  currentFilter = filter;
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-
-  const cards = document.querySelectorAll('.agent-card');
-  cards.forEach(card => {
-    if (filter === 'all') {
-      card.style.display = '';
-    } else {
-      const status = card.getAttribute('data-status');
-      card.style.display = status === filter || (filter === 'trending' && status === 'live') ? '' : 'none';
-    }
-  });
+  applyFilters();
 }
 
 function searchAgents(query) {
+  currentSearch = query.toLowerCase();
+  applyFilters();
+}
+
+function applyFilters() {
   const cards = document.querySelectorAll('.agent-card');
-  const q = query.toLowerCase();
+  let visibleCount = 0;
   cards.forEach(card => {
+    const status = card.getAttribute('data-status');
+    const tags = card.getAttribute('data-tags') || '';
     const name = card.querySelector('.agent-name').textContent.toLowerCase();
     const ticker = card.querySelector('.agent-ticker').textContent.toLowerCase();
-    const tags = card.getAttribute('data-tags') || '';
-    card.style.display = (name.includes(q) || ticker.includes(q) || tags.includes(q)) ? '' : 'none';
+
+    const matchesFilter = currentFilter === 'all' || status === currentFilter;
+    const matchesSearch = !currentSearch || name.includes(currentSearch) || ticker.includes(currentSearch) || tags.includes(currentSearch);
+
+    const show = matchesFilter && matchesSearch;
+    card.style.display = show ? '' : 'none';
+    if (show) visibleCount++;
   });
+  document.getElementById('agentsEmpty').style.display = visibleCount === 0 ? 'block' : 'none';
 }
 
 // ── CLOSE MODALS ON BACKDROP CLICK ──
-document.getElementById('authModal').addEventListener('click', function(e) {
-  if (e.target === this) closeAuth();
-});
-document.getElementById('agentModal').addEventListener('click', function(e) {
-  if (e.target === this) closeAgentModal();
-});
-document.getElementById('launchModal').addEventListener('click', function(e) {
-  if (e.target === this) closeLaunchModal();
-});
+document.getElementById('authModal').addEventListener('click', e => { if (e.target === document.getElementById('authModal')) closeAuth(); });
+document.getElementById('agentModal').addEventListener('click', e => { if (e.target === document.getElementById('agentModal')) closeAgentModal(); });
+document.getElementById('launchModal').addEventListener('click', e => { if (e.target === document.getElementById('launchModal')) closeLaunchModal(); });
 
 // ── CLOSE DROPDOWN ON CLICK OUTSIDE ──
-document.addEventListener('click', function(e) {
+document.addEventListener('click', e => {
   const dropdown = document.getElementById('accountDropdown');
-  if (dropdown && !e.target.closest('.account-dropdown-wrap')) {
-    dropdown.classList.remove('open');
-  }
+  if (dropdown && !e.target.closest('.account-dropdown-wrap')) dropdown.classList.remove('open');
 });
 
 // ── KEYBOARD SHORTCUTS ──
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') {
-    closeAuth();
-    closeAgentModal();
-    closeLaunchModal();
-  }
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeAuth(); closeAgentModal(); closeLaunchModal(); }
 });
 
-// ── SMOOTH SCROLL FOR ANCHOR LINKS ──
+// ── SMOOTH SCROLL ──
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function(e) {
     const href = this.getAttribute('href');
-    if (href !== '#') {
+    if (href && href !== '#') {
       e.preventDefault();
       const target = document.querySelector(href);
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   });
 });
