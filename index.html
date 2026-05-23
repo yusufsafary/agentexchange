@@ -178,22 +178,6 @@ nav {
 }
 .cta-secondary:hover { border-color: var(--text-3); color: var(--text-1); }
 
-/* ── ORYNTH BADGE ── */
-.orynth-badge-wrap {
-  display: inline-block;
-  transition: opacity 0.2s, transform 0.2s;
-}
-.orynth-badge-wrap:hover {
-  opacity: 0.85;
-  transform: translateY(-1px);
-}
-.orynth-badge-wrap img {
-  display: block;
-  border-radius: 8px;
-  max-width: 100%;
-  height: auto;
-}
-
 /* Hero Right - Stats Card */
 .hero-right {
   display: flex;
@@ -274,7 +258,6 @@ nav {
   .hero-left { text-align: center; }
   .hero-sub { margin-left: auto; margin-right: auto; }
   .hero-ctas { justify-content: center; }
-  .orynth-badge-wrap { display: flex; justify-content: center; }
   .hero-stats-row { grid-template-columns: 1fr 1fr; }
 }
 
@@ -465,17 +448,6 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
 .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
 .footer-col a { font-size: 14px; color: var(--text-2); text-decoration: none; transition: color 0.15s; }
 .footer-col a:hover { color: var(--text-1); }
-
-/* Orynth in footer */
-.footer-orynth {
-  margin-top: 20px;
-}
-.footer-orynth img {
-  border-radius: 6px;
-  transition: opacity 0.2s;
-  display: block;
-}
-.footer-orynth a:hover img { opacity: 0.8; }
 
 .footer-bottom { border-top: 1px solid var(--border); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
 .footer-copy { font-family: var(--mono); font-size: 11px; color: var(--text-3); letter-spacing: 0.04em; }
@@ -862,10 +834,6 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
         <a href="#agents" class="cta-primary">Explore Agents</a>
         <a href="https://kickstart.easya.io/" target="_blank" rel="noopener" class="cta-secondary">Launch on EasyA →</a>
       </div>
-      <!-- Orynth Badge -->
-      <a href="https://orynth.dev/projects/agent-market" target="_blank" rel="noopener" class="orynth-badge-wrap">
-        <img src="https://orynth.dev/api/badge/agent-market?theme=light&style=default" alt="Featured on Orynth" width="200" height="62" />
-      </a>
     </div>
     <div class="hero-right">
       <div class="hero-stats-card">
@@ -1213,12 +1181,6 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
           <span class="logo-wordmark" style="font-size:16px;">agentmarket</span>
         </a>
         <p class="footer-brand-desc">The premier launchpad for tokenized AI agents on Solana. Fair launches, zero presale, community-first.</p>
-        <!-- Orynth Badge in footer -->
-        <div class="footer-orynth">
-          <a href="https://orynth.dev/projects/agent-market" target="_blank" rel="noopener">
-            <img src="https://orynth.dev/api/badge/agent-market?theme=light&style=default" alt="Featured on Orynth" width="180" height="56" />
-          </a>
-        </div>
       </div>
       <div class="footer-col">
         <h4>Platform</h4>
