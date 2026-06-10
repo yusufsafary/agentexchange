@@ -126,11 +126,12 @@ nav {
 
 /* HERO */
 .hero {
-  padding: 72px 24px 64px;
+  padding: 120px 24px 100px;
   position: relative;
   border-bottom: 1px solid var(--border);
-  background: #ffffff;
+  background: #fafafa;
   overflow: hidden;
+  text-align: center;
 }
 .hero::before {
   content: '';
@@ -147,19 +148,16 @@ nav {
   pointer-events: none;
 }
 .hero-inner {
-  max-width: 1200px; margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 56px;
-  align-items: center;
+  max-width: 760px; margin: 0 auto;
   position: relative; z-index: 1;
 }
-.hero-left { text-align: left; }
+.hero-center { display: flex; flex-direction: column; align-items: center; }
+
 .hero-eyebrow {
   display: inline-flex; align-items: center; gap: 8px;
   font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em;
   text-transform: uppercase; color: var(--text-3);
-  margin-bottom: 22px; padding: 5px 13px;
+  margin-bottom: 28px; padding: 5px 13px;
   border: 1px solid var(--border); border-radius: 24px;
   background: var(--bg);
 }
@@ -167,22 +165,22 @@ nav {
 @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
 
 .hero h1 {
-  font-family: var(--display); font-size: clamp(34px, 4.5vw, 60px);
-  font-weight: 700; letter-spacing: -0.5px; line-height: 1.05;
-  margin-bottom: 18px; color: var(--text-1);
+  font-family: var(--display); font-size: clamp(42px, 7vw, 88px);
+  font-weight: 700; letter-spacing: -1px; line-height: 1.0;
+  margin-bottom: 24px; color: var(--text-1);
 }
-.hero h1 .h1-dim { color: var(--text-3); display: block; font-weight: 500; font-size: 0.48em; letter-spacing: -0.5px; margin-bottom: 6px; }
+.hero h1 .h1-dim { display: none; }
 .hero h1 .h1-main { display: block; }
 .hero h1 .h1-sol {
   background: linear-gradient(110deg, var(--accent) 0%, #8c9e58 45%, #059669 100%);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
 .hero-sub {
-  font-size: 15.5px; color: var(--text-2);
-  max-width: 400px; margin-bottom: 32px; line-height: 1.65;
+  font-size: 16px; color: var(--text-2);
+  max-width: 460px; margin: 0 auto 36px; line-height: 1.65;
 }
 .hero-ctas {
-  display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 32px;
+  display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-bottom: 0;
 }
 .cta-primary {
   padding: 13px 22px; border-radius: 10px;
@@ -204,115 +202,13 @@ nav {
 }
 .cta-secondary:hover { border-color: var(--text-3); color: var(--text-1); }
 
-.hero-trust {
-  display: flex; align-items: center; gap: 6px;
-  font-family: var(--mono); font-size: 11px; color: var(--text-3);
-}
-.trust-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--border-strong); }
 
-/* Hero Right */
-.hero-right { display: flex; flex-direction: column; gap: 16px; }
-.hero-stats-card {
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  padding: 26px;
-  position: relative; overflow: hidden;
-}
-.hero-stats-card::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(90deg, var(--accent), #8c9e58, var(--green));
-  border-radius: 18px 18px 0 0;
-}
-.hero-stats-header {
-  font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em;
-  text-transform: uppercase; color: var(--text-3);
-  margin-bottom: 20px;
-  display: flex; align-items: center; gap: 8px;
-}
-.hero-stats-header::before {
-  content: '';
-  width: 7px; height: 7px; border-radius: 50%;
-  background: var(--green);
-  animation: pulse 2s infinite;
-}
-.hero-stats-row {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 0;
-}
-.hero-stat-item {
-  padding: 14px 12px;
-  border-bottom: 1px solid var(--border);
-}
-.hero-stat-item:nth-child(odd) { border-right: 1px solid var(--border); }
-.hero-stat-item:last-child, .hero-stat-item:nth-last-child(2) { border-bottom: none; }
-.hero-stat-num {
-  font-family: var(--display); font-size: 26px; font-weight: 700;
-  color: var(--text-1); letter-spacing: -0.5px; display: block; line-height: 1.2;
-}
-.hero-stat-num.green { color: var(--green); }
-.hero-stat-label {
-  font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em;
-  text-transform: uppercase; color: var(--text-3); margin-top: 4px; display: block;
-}
-
-.easya-banner {
-  background: linear-gradient(135deg, rgba(107,122,66,0.04), rgba(5,150,105,0.04));
-  border: 1px solid var(--border);
-  border-radius: 12px; padding: 14px 18px;
-  display: flex; align-items: center; gap: 12px;
-  text-decoration: none; transition: all 0.2s;
-}
-.easya-banner:hover {
-  border-color: rgba(107,122,66,0.25);
-  background: linear-gradient(135deg, rgba(107,122,66,0.07), rgba(5,150,105,0.06));
-}
-.easya-icon {
-  width: 38px; height: 38px; border-radius: 9px;
-  background: linear-gradient(135deg, var(--accent), #8c9e58);
-  display: flex; align-items: center; justify-content: center;
-  color: #fff; font-size: 16px; font-weight: 800; font-family: var(--display);
-  flex-shrink: 0;
-}
-.easya-text { flex: 1; }
-.easya-text strong { font-size: 13.5px; font-weight: 600; color: var(--text-1); display: block; }
-.easya-text span { font-size: 12px; color: var(--text-3); margin-top: 2px; display: block; }
-.easya-arrow { color: var(--accent); font-size: 16px; font-weight: 600; }
 
 @media (max-width: 768px) {
-  .hero-inner { grid-template-columns: 1fr; gap: 32px; }
-  .hero-left { text-align: center; }
-  .hero-sub { margin-left: auto; margin-right: auto; }
-  .hero-ctas { justify-content: center; }
-  .hero-trust { justify-content: center; }
+  .hero-inner { max-width: 100%; }
 }
 
 /* TICKER */
-.ticker {
-  background: var(--bg-2); border-bottom: 1px solid var(--border);
-  overflow: hidden; height: 38px;
-  display: flex; align-items: center; position: relative;
-}
-.ticker::before, .ticker::after {
-  content: ''; position: absolute; top: 0; bottom: 0; width: 80px; z-index: 2;
-}
-.ticker::before { left: 0; background: linear-gradient(to right, var(--bg-2), transparent); }
-.ticker::after { right: 0; background: linear-gradient(to left, var(--bg-2), transparent); }
-.ticker-track {
-  display: flex; animation: slide 50s linear infinite;
-  width: max-content; align-items: center;
-}
-@keyframes slide { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-.ticker-item {
-  padding: 0 22px; font-size: 11.5px; font-family: var(--mono);
-  color: var(--text-3); white-space: nowrap;
-  display: flex; align-items: center; gap: 8px; letter-spacing: 0.02em;
-}
-.ticker-item .t-name { color: var(--text-2); font-weight: 600; }
-.ticker-item .t-up { color: var(--green); font-weight: 600; }
-.ticker-item .t-down { color: var(--red); font-weight: 600; }
-.ticker-sep { color: var(--border-strong); padding: 0 4px; font-size: 10px; }
-
 /* SECTION */
 section { padding: 80px 24px; }
 .inner { max-width: 1200px; margin: 0 auto; }
@@ -853,37 +749,6 @@ footer ul li a:hover { color: var(--accent); }
   </div>
 </div>
 
-<!-- TICKER -->
-<div class="ticker" aria-hidden="true">
-  <div class="ticker-track">
-    <div class="ticker-item"><span class="t-name">$ENTEX</span><span class="t-up">LAUNCHING SOON</span></div>
-    <span class="ticker-sep">·</span>
-    <div class="ticker-item"><span class="t-name">$TRADEX</span><span>$0.0042</span><span class="t-up">+18.4%</span></div>
-    <span class="ticker-sep">·</span>
-    <div class="ticker-item"><span class="t-name">$SCOUT</span><span>$0.0087</span><span class="t-up">+6.2%</span></div>
-    <span class="ticker-sep">·</span>
-    <div class="ticker-item"><span class="t-name">$NORA</span><span>$0.0031</span><span class="t-up">+22.1%</span></div>
-    <span class="ticker-sep">·</span>
-    <div class="ticker-item"><span class="t-name">$ATLAS</span><span>$0.0119</span><span class="t-up">+4.7%</span></div>
-    <span class="ticker-sep">·</span>
-    <div class="ticker-item"><span class="t-name">$FLUX</span><span>$0.0055</span><span class="t-up">+9.3%</span></div>
-    <span class="ticker-sep">·</span>
-    <div class="ticker-item"><span class="t-name">$SNTNL</span><span style="color:var(--gold);font-weight:600;">COMING SOON</span></div>
-    <span class="ticker-sep">·</span>
-    <div class="ticker-item"><span class="t-name">$ENTEX</span><span class="t-up">LAUNCHING SOON</span></div>
-    <span class="ticker-sep">·</span>
-    <div class="ticker-item"><span class="t-name">$TRADEX</span><span>$0.0042</span><span class="t-up">+18.4%</span></div>
-    <span class="ticker-sep">·</span>
-    <div class="ticker-item"><span class="t-name">$SCOUT</span><span>$0.0087</span><span class="t-up">+6.2%</span></div>
-    <span class="ticker-sep">·</span>
-    <div class="ticker-item"><span class="t-name">$NORA</span><span>$0.0031</span><span class="t-up">+22.1%</span></div>
-    <span class="ticker-sep">·</span>
-    <div class="ticker-item"><span class="t-name">$ATLAS</span><span>$0.0119</span><span class="t-up">+4.7%</span></div>
-    <span class="ticker-sep">·</span>
-    <div class="ticker-item"><span class="t-name">$FLUX</span><span>$0.0055</span><span class="t-up">+9.3%</span></div>
-    <span class="ticker-sep">·</span>
-    <div class="ticker-item"><span class="t-name">$SNTNL</span><span style="color:var(--gold);font-weight:600;">COMING SOON</span></div>
-  </div>
 </div>
 
 <!-- NAV -->
@@ -901,7 +766,6 @@ footer ul li a:hover { color: var(--accent); }
     <ul class="nav-links">
       <li><a href="#agents">Explore</a></li>
       <li><a href="#launch" onclick="openLaunchModal(); return false;">Launch</a></li>
-      <li><a href="#how">How It Works</a></li>
       <li>
         <a href="https://x.com/yaroslavrasov" target="_blank" rel="noopener" class="builder-link">
           <span>𝕏</span><span class="builder-label">Builder</span>
@@ -921,68 +785,27 @@ footer ul li a:hover { color: var(--accent); }
 <!-- HERO -->
 <section class="hero">
   <div class="hero-inner">
-    <div class="hero-left">
+    <div class="hero-center">
       <div class="hero-eyebrow">
         <div class="hero-dot"></div>
-        Live on Solana Mainnet · est. 2025
+        Live on Solana Mainnet · Beta
       </div>
       <h1>
-        <span class="h1-dim">The Future of</span>
         <span class="h1-main">AI Agents <span class="h1-sol">on Solana</span></span>
       </h1>
       <p class="hero-sub">Launch, discover, and trade tokenized AI agents. Fair bonding curves, zero presale, community-first.</p>
       <div class="hero-ctas">
         <a href="#agents" class="cta-primary">Explore Agents</a>
-        <a href="https://kickstart.easya.io/" target="_blank" rel="noopener" class="cta-secondary">Launch on EasyA &rarr;</a>
+        <button class="cta-secondary" onclick="openLaunchModal()">Launch Agent</button>
       </div>
-      <div class="hero-trust">
-        <span>Fair launch</span>
-        <span class="trust-dot"></span>
-        <span>No presale</span>
-        <span class="trust-dot"></span>
-        <span>Audited contracts</span>
-      </div>
-    </div>
-    <div class="hero-right">
-      <div class="hero-stats-card">
-        <div class="hero-stats-header">Live Platform Stats</div>
-        <div class="hero-stats-row">
-          <div class="hero-stat-item">
-            <span class="hero-stat-num green">$2.4M</span>
-            <span class="hero-stat-label">Total Volume</span>
-          </div>
-          <div class="hero-stat-item">
-            <span class="hero-stat-num">47</span>
-            <span class="hero-stat-label">Agents Live</span>
-          </div>
-          <div class="hero-stat-item">
-            <span class="hero-stat-num">12.3K</span>
-            <span class="hero-stat-label">Traders</span>
-          </div>
-          <div class="hero-stat-item">
-            <span class="hero-stat-num">$89K</span>
-            <span class="hero-stat-label">Fees Generated</span>
-          </div>
-        </div>
-      </div>
-      <a href="https://kickstart.easya.io/" target="_blank" rel="noopener" class="easya-banner">
-        <div class="easya-icon">E</div>
-        <div class="easya-text">
-          <strong>Launch on EasyA Kickstart</strong>
-          <span>Get your AI agent funded in seconds · Fair launch</span>
-        </div>
-        <span class="easya-arrow">&rarr;</span>
-      </a>
     </div>
   </div>
 </section>
 
 <!-- AGENTS SECTION -->
-<section id="agents">
+<section id="agents" style="padding-top: 56px;">
   <div class="inner">
-    <div class="section-label">Marketplace</div>
-    <h2 class="section-title">Discover <span class="dim">AI Agents</span></h2>
-    <p class="section-sub">Browse live agents, track performance, and trade tokens. Every agent runs its own on-chain economy.</p>
+    
 
     <div class="filters-bar">
       <button class="filter-btn active" onclick="filterAgents('all', this)">All</button>
@@ -1182,137 +1005,12 @@ footer ul li a:hover { color: var(--accent); }
   </div>
 </section>
 
-<!-- HOW IT WORKS -->
-<section class="how-section" id="how">
-  <div class="inner">
-    <div class="section-label">Process</div>
-    <h2 class="section-title">How It <span class="dim">Works</span></h2>
-    <p class="section-sub">Four steps from idea to live tokenized agent. No coding required.</p>
-    <div class="steps-grid">
-      <div class="step-card">
-        <span class="step-num-label">Step 01</span>
-        <div class="step-number">01</div>
-        <h3 class="step-title">Create Agent</h3>
-        <p class="step-desc">Define your agent's purpose, personality, and token parameters. Set bonding curve and initial supply.</p>
-      </div>
-      <div class="step-card">
-        <span class="step-num-label">Step 02</span>
-        <div class="step-number">02</div>
-        <h3 class="step-title">Fair Launch</h3>
-        <p class="step-desc">No presale, no insiders. Everyone buys at the same price on the bonding curve. Pure fair launch.</p>
-      </div>
-      <div class="step-card">
-        <span class="step-num-label">Step 03</span>
-        <div class="step-number">03</div>
-        <h3 class="step-title">Trade &amp; Earn</h3>
-        <p class="step-desc">Buy and sell agent tokens instantly. Earn fees from trading volume and agent performance.</p>
-      </div>
-      <div class="step-card">
-        <span class="step-num-label">Step 04</span>
-        <div class="step-number">04</div>
-        <h3 class="step-title">DEX Migration</h3>
-        <p class="step-desc">When market cap hits threshold, liquidity auto-migrates to Raydium DEX for permanent trading.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FEATURES -->
-<section>
-  <div class="inner">
-    <div class="section-label">Features</div>
-    <h2 class="section-title">Built for <span class="dim">Traders &amp; Creators</span></h2>
-    <p class="section-sub">Everything you need to launch, trade, and manage AI agents on Solana.</p>
-    <div class="features-grid">
-      <div class="feature-card">
-        <div class="feature-icon-wrap">⚡</div>
-        <h3 class="feature-title">Instant Trading</h3>
-        <p class="feature-desc">Buy and sell agent tokens immediately after launch. No waiting, no lockups, full liquidity from day one.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon-wrap">🔒</div>
-        <h3 class="feature-title">Fair Launch</h3>
-        <p class="feature-desc">Bonding curve ensures fair price discovery. No team allocations, no presale discounts, equal opportunity for all.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon-wrap">
-          <svg viewBox="0 0 20 20" fill="none" width="18" height="18"><circle cx="10" cy="7" r="3" stroke="var(--accent)" stroke-width="1.8"/><path d="M4 17c0-3 2.686-5 6-5s6 2 6 5" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round"/></svg>
-        </div>
-        <h3 class="feature-title">AI Powered</h3>
-        <p class="feature-desc">Every agent runs autonomous logic on-chain. Self-executing strategies, real-time adaptation, no human intervention.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon-wrap">📊</div>
-        <h3 class="feature-title">Live Analytics</h3>
-        <p class="feature-desc">Track agent performance, holder growth, trading volume, and on-chain activity in real-time.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon-wrap">🔗</div>
-        <h3 class="feature-title">Auto DEX</h3>
-        <p class="feature-desc">Seamless migration to Raydium when thresholds are met. Permanent liquidity pools, no manual intervention.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon-wrap">👥</div>
-        <h3 class="feature-title">Community First</h3>
-        <p class="feature-desc">Fee sharing with token holders, governance voting, and transparent on-chain operations. Owned by the community.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- DISCLAIMER -->
-<section class="disclaimer-section">
-  <div class="disclaimer-box">
-    <strong>Disclaimer:</strong> AgentExchange is a decentralized launchpad for AI agent tokens. Trading agent tokens involves significant risk, including potential loss of capital. Token prices are volatile and can fluctuate dramatically. Always do your own research before investing. This platform does not provide financial advice. Smart contracts are audited but not guaranteed. By using this platform, you acknowledge and accept these risks. Follow updates at <a href="https://x.com/yaroslavrasov" target="_blank" rel="noopener">x.com/yaroslavrasov</a>.
-  </div>
-</section>
-
 <!-- FOOTER -->
 <footer>
   <div class="footer-inner">
-    <div class="footer-top">
-      <div class="footer-col">
-        <a class="logo-wrap" href="#" style="margin-bottom:12px;gap:10px;">
-          <div class="logo-mark" style="width:30px;height:30px;">
-            <svg viewBox="0 0 24 24" fill="none" style="width:16px;height:16px;">
-              <path d="M5 9h11.5M14 6l3 3-3 3M19 15H7.5M10 12l-3 3 3 3" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <span class="logo-wordmark" style="font-size:15px;">AgentExchange</span>
-        </a>
-        <p class="footer-brand-desc">The premier launchpad for tokenized AI agents on Solana. Fair launches, zero presale, community-first.</p>
-      </div>
-      <div class="footer-col">
-        <h4>Platform</h4>
-        <ul>
-          <li><a href="#agents">Explore Agents</a></li>
-          <li><a href="#" onclick="openLaunchModal(); return false;">Launch Agent</a></li>
-          <li><a href="#how">How It Works</a></li>
-          <li><a href="https://kickstart.easya.io/" target="_blank" rel="noopener">EasyA Kickstart</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Community</h4>
-        <ul>
-          <li><a href="https://x.com/yaroslavrasov" target="_blank" rel="noopener">X / Builder</a></li>
-          <li><a href="#" onclick="showToast('Discord coming soon'); return false;">Discord</a></li>
-          <li><a href="#" onclick="showToast('Telegram coming soon'); return false;">Telegram</a></li>
-          <li><a href="#" onclick="showToast('Blog coming soon'); return false;">Blog</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Legal</h4>
-        <ul>
-          <li><a href="#" onclick="showToast('Terms coming soon'); return false;">Terms of Service</a></li>
-          <li><a href="#" onclick="showToast('Privacy coming soon'); return false;">Privacy Policy</a></li>
-          <li><a href="#" onclick="showToast('Cookies coming soon'); return false;">Cookie Policy</a></li>
-          <li><a href="#" onclick="showToast('Audit report coming soon'); return false;">Audit Report</a></li>
-        </ul>
-      </div>
-    </div>
     <div class="footer-bottom">
       <div class="footer-copy">
-        &copy; 2025 AgentExchange &middot; Built on <span class="green">Solana</span> &middot; <a href="https://x.com/yaroslavrasov" target="_blank" rel="noopener" style="color:var(--text-3);text-decoration:none;">Builder @yaroslavrasov</a>
+        &copy; 2026 AgentExchange &middot; Built on <span class="green">Solana</span> &middot; <a href="https://x.com/yaroslavrasov" target="_blank" rel="noopener" style="color:var(--text-3);text-decoration:none;">Builder @yaroslavrasov</a>
       </div>
       <div class="footer-social">
         <a href="https://x.com/yaroslavrasov" target="_blank" rel="noopener" class="social-btn" aria-label="X">𝕏</a>
