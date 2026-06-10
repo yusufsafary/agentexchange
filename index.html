@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AgentMarket — AI Agent Launchpad</title>
+<title>AgentExchange — AI Agent Launchpad on Solana</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg: #fafafa;
@@ -14,22 +14,22 @@
   --bg-3: #eeeeee;
   --surface: #ffffff;
   --surface-hover: #f8f8f8;
-  --border: rgba(0,0,0,0.06);
-  --border-strong: rgba(0,0,0,0.12);
-  --text-1: #111111;
-  --text-2: #666666;
-  --text-3: #999999;
-  --accent: #7c3aed;
-  --accent-bright: #8b5cf6;
-  --accent-dim: rgba(124,58,237,0.06);
-  --accent-light: rgba(124,58,237,0.1);
-  --green: #10b981;
-  --green-dim: rgba(16,185,129,0.08);
-  --gold: #f59e0b;
-  --gold-dim: rgba(245,158,11,0.08);
-  --red: #ef4444;
-  --red-dim: rgba(239,68,68,0.08);
-  --display: 'Space Grotesk', sans-serif;
+  --border: rgba(0,0,0,0.07);
+  --border-strong: rgba(0,0,0,0.13);
+  --text-1: #0e0e10;
+  --text-2: #60606a;
+  --text-3: #9898a3;
+  --accent: #6d28d9;
+  --accent-bright: #7c3aed;
+  --accent-dim: rgba(109,40,217,0.06);
+  --accent-light: rgba(109,40,217,0.12);
+  --green: #059669;
+  --green-dim: rgba(5,150,105,0.08);
+  --gold: #d97706;
+  --gold-dim: rgba(217,119,6,0.08);
+  --red: #dc2626;
+  --red-dim: rgba(220,38,38,0.07);
+  --display: 'Syne', sans-serif;
   --body: 'Inter', sans-serif;
   --mono: 'JetBrains Mono', monospace;
 }
@@ -47,54 +47,61 @@ body {
   overflow-x: hidden;
 }
 
-/* ── NAV ── */
+/* NAV */
 nav {
   position: sticky; top: 0; z-index: 100;
-  background: rgba(250,250,250,0.92);
-  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  background: rgba(250,250,250,0.94);
+  backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
   border-bottom: 1px solid var(--border);
 }
 .nav-inner {
   max-width: 1200px; margin: 0 auto;
   display: flex; align-items: center; justify-content: space-between;
-  height: 68px; padding: 0 24px; gap: 20px;
+  height: 64px; padding: 0 24px; gap: 20px;
 }
 .logo-wrap {
-  display: flex; align-items: center; gap: 12px; text-decoration: none; flex-shrink: 0;
+  display: flex; align-items: center; gap: 11px; text-decoration: none; flex-shrink: 0;
 }
 .logo-mark {
   width: 36px; height: 36px;
-  border: 2px solid var(--accent);
   border-radius: 10px;
   display: flex; align-items: center; justify-content: center;
-  background: var(--accent-dim);
+  background: linear-gradient(135deg, var(--accent) 0%, #4f46e5 100%);
   flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(109,40,217,0.3);
 }
 .logo-mark svg { width: 20px; height: 20px; }
 .logo-wordmark {
-  font-family: var(--display); font-size: 18px; font-weight: 700;
-  color: var(--text-1); letter-spacing: -0.5px;
+  font-family: var(--display); font-size: 17px; font-weight: 700;
+  color: var(--text-1); letter-spacing: -0.3px;
 }
-.logo-wordmark em { font-style: normal; color: var(--text-3); font-weight: 400; }
 .nav-pill {
   font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em;
   text-transform: uppercase; color: var(--green);
-  border: 1px solid rgba(16,185,129,0.3); border-radius: 20px;
+  border: 1px solid rgba(5,150,105,0.28); border-radius: 20px;
   padding: 3px 10px; background: var(--green-dim);
 }
 .nav-links {
-  display: flex; align-items: center; gap: 4px; list-style: none;
+  display: flex; align-items: center; gap: 2px; list-style: none;
 }
 .nav-links a {
-  display: block; padding: 8px 16px; font-size: 14px; font-weight: 500;
+  display: flex; align-items: center; gap: 6px;
+  padding: 7px 14px; font-size: 14px; font-weight: 500;
   color: var(--text-2); text-decoration: none; border-radius: 8px;
   transition: all 0.15s;
 }
 .nav-links a:hover { color: var(--text-1); background: var(--bg-2); }
+.builder-link { position: relative; }
+.builder-label {
+  font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--accent);
+  background: var(--accent-dim); border: 1px solid rgba(109,40,217,0.15);
+  border-radius: 4px; padding: 2px 5px;
+}
 .nav-right { display: flex; align-items: center; gap: 10px; }
 
 .btn-ghost {
-  padding: 9px 18px; border-radius: 8px; border: 1px solid var(--border-strong);
+  padding: 8px 16px; border-radius: 8px; border: 1px solid var(--border-strong);
   font-size: 14px; font-weight: 500; color: var(--text-2); background: none;
   cursor: pointer; text-decoration: none;
   display: inline-flex; align-items: center; gap: 6px;
@@ -102,75 +109,94 @@ nav {
 }
 .btn-ghost:hover { border-color: var(--text-3); color: var(--text-1); }
 .btn-accent {
-  padding: 9px 18px; border-radius: 8px;
+  padding: 8px 18px; border-radius: 8px;
   border: 1px solid var(--accent);
   font-size: 14px; font-weight: 600; color: #fff;
-  background: var(--accent);
+  background: linear-gradient(135deg, var(--accent) 0%, #4f46e5 100%);
   cursor: pointer; text-decoration: none;
   display: inline-flex; align-items: center; gap: 6px;
   font-family: var(--body); transition: all 0.2s;
+  box-shadow: 0 1px 4px rgba(109,40,217,0.2);
 }
-.btn-accent:hover { background: var(--accent-bright); transform: translateY(-1px); }
+.btn-accent:hover { opacity: 0.92; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(109,40,217,0.25); }
 
 .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
 .hamburger span { display: block; width: 20px; height: 2px; background: var(--text-2); margin: 5px 0; border-radius: 1px; }
 @media (max-width: 768px) { .nav-links, .nav-desktop { display: none; } .hamburger { display: block; } }
 
-/* ── HERO ── */
+/* HERO */
 .hero {
-  padding: 64px 24px;
+  padding: 72px 24px 64px;
   position: relative;
   border-bottom: 1px solid var(--border);
-  background: var(--surface);
+  background: #ffffff;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; top: -120px; right: -80px;
+  width: 560px; height: 560px;
+  background: radial-gradient(circle, rgba(109,40,217,0.07) 0%, transparent 65%);
+  pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute; bottom: -80px; left: -60px;
+  width: 360px; height: 360px;
+  background: radial-gradient(circle, rgba(5,150,105,0.06) 0%, transparent 65%);
+  pointer-events: none;
 }
 .hero-inner {
   max-width: 1200px; margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 48px;
+  gap: 56px;
   align-items: center;
+  position: relative; z-index: 1;
 }
 .hero-left { text-align: left; }
 .hero-eyebrow {
   display: inline-flex; align-items: center; gap: 8px;
-  font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em;
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em;
   text-transform: uppercase; color: var(--text-3);
-  margin-bottom: 24px; padding: 6px 14px;
+  margin-bottom: 22px; padding: 5px 13px;
   border: 1px solid var(--border); border-radius: 24px;
   background: var(--bg);
 }
-.hero-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
+.hero-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
 
 .hero h1 {
-  font-family: var(--display); font-size: clamp(32px, 4.5vw, 56px);
-  font-weight: 700; letter-spacing: -1.5px; line-height: 1.1;
-  margin-bottom: 20px; color: var(--text-1);
+  font-family: var(--display); font-size: clamp(34px, 4.5vw, 60px);
+  font-weight: 800; letter-spacing: -2px; line-height: 1.05;
+  margin-bottom: 18px; color: var(--text-1);
 }
-.hero h1 .h1-dim { color: var(--text-3); display: block; font-weight: 400; font-size: 0.5em; letter-spacing: 0; margin-bottom: 8px; }
+.hero h1 .h1-dim { color: var(--text-3); display: block; font-weight: 500; font-size: 0.48em; letter-spacing: -0.5px; margin-bottom: 6px; }
 .hero h1 .h1-main { display: block; }
 .hero h1 .h1-sol {
-  background: linear-gradient(110deg, #7c3aed 0%, #6d28d9 50%, #059669 100%);
+  background: linear-gradient(110deg, var(--accent) 0%, #4f46e5 45%, #059669 100%);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
 .hero-sub {
-  font-size: 16px; color: var(--text-2);
-  max-width: 440px; margin-bottom: 32px; line-height: 1.7;
+  font-size: 15.5px; color: var(--text-2);
+  max-width: 400px; margin-bottom: 32px; line-height: 1.65;
 }
 .hero-ctas {
-  display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 28px;
+  display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 32px;
 }
 .cta-primary {
-  padding: 14px 24px; border-radius: 10px;
+  padding: 13px 22px; border-radius: 10px;
   border: 1px solid var(--accent);
   font-size: 15px; font-weight: 600; color: #fff;
-  background: var(--accent);
+  background: linear-gradient(135deg, var(--accent) 0%, #4f46e5 100%);
   cursor: pointer; text-decoration: none;
   display: inline-flex; align-items: center; gap: 8px;
   font-family: var(--body); transition: all 0.2s;
+  box-shadow: 0 2px 10px rgba(109,40,217,0.22);
 }
-.cta-primary:hover { background: var(--accent-bright); transform: translateY(-1px); box-shadow: 0 4px 20px rgba(124,58,237,0.2); }
+.cta-primary:hover { opacity: 0.92; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(109,40,217,0.28); }
 .cta-secondary {
-  padding: 14px 24px; border-radius: 10px; border: 1px solid var(--border-strong);
+  padding: 13px 22px; border-radius: 10px; border: 1px solid var(--border-strong);
   font-size: 15px; font-weight: 500; color: var(--text-2); background: var(--bg);
   cursor: pointer; text-decoration: none;
   display: inline-flex; align-items: center; gap: 8px;
@@ -178,17 +204,26 @@ nav {
 }
 .cta-secondary:hover { border-color: var(--text-3); color: var(--text-1); }
 
-/* Hero Right - Stats Card */
-.hero-right {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+.hero-trust {
+  display: flex; align-items: center; gap: 6px;
+  font-family: var(--mono); font-size: 11px; color: var(--text-3);
 }
+.trust-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--border-strong); }
+
+/* Hero Right */
+.hero-right { display: flex; flex-direction: column; gap: 16px; }
 .hero-stats-card {
   background: var(--bg);
   border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 28px;
+  border-radius: 18px;
+  padding: 26px;
+  position: relative; overflow: hidden;
+}
+.hero-stats-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--accent), #4f46e5, var(--green));
+  border-radius: 18px 18px 0 0;
 }
 .hero-stats-header {
   font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em;
@@ -198,25 +233,22 @@ nav {
 }
 .hero-stats-header::before {
   content: '';
-  width: 8px; height: 8px; border-radius: 50%;
+  width: 7px; height: 7px; border-radius: 50%;
   background: var(--green);
+  animation: pulse 2s infinite;
 }
 .hero-stats-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0;
 }
 .hero-stat-item {
-  padding: 12px 0;
+  padding: 14px 12px;
   border-bottom: 1px solid var(--border);
 }
-.hero-stat-item:last-child,
-.hero-stat-item:nth-last-child(2) {
-  border-bottom: none;
-}
+.hero-stat-item:nth-child(odd) { border-right: 1px solid var(--border); }
+.hero-stat-item:last-child, .hero-stat-item:nth-last-child(2) { border-bottom: none; }
 .hero-stat-num {
-  font-family: var(--display); font-size: 28px; font-weight: 700;
-  color: var(--text-1); letter-spacing: -0.5px; display: block;
+  font-family: var(--display); font-size: 26px; font-weight: 700;
+  color: var(--text-1); letter-spacing: -0.5px; display: block; line-height: 1.2;
 }
 .hero-stat-num.green { color: var(--green); }
 .hero-stat-label {
@@ -224,52 +256,42 @@ nav {
   text-transform: uppercase; color: var(--text-3); margin-top: 4px; display: block;
 }
 
-/* EasyA Banner */
 .easya-banner {
-  background: linear-gradient(135deg, rgba(124,58,237,0.05), rgba(16,185,129,0.05));
+  background: linear-gradient(135deg, rgba(109,40,217,0.04), rgba(5,150,105,0.04));
   border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 16px 20px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  text-decoration: none;
-  transition: all 0.2s;
+  border-radius: 12px; padding: 14px 18px;
+  display: flex; align-items: center; gap: 12px;
+  text-decoration: none; transition: all 0.2s;
 }
 .easya-banner:hover {
-  border-color: var(--accent);
-  background: linear-gradient(135deg, rgba(124,58,237,0.08), rgba(16,185,129,0.08));
+  border-color: rgba(109,40,217,0.25);
+  background: linear-gradient(135deg, rgba(109,40,217,0.07), rgba(5,150,105,0.06));
 }
 .easya-icon {
-  width: 40px; height: 40px;
-  border-radius: 10px;
-  background: var(--accent);
+  width: 38px; height: 38px; border-radius: 9px;
+  background: linear-gradient(135deg, var(--accent), #4f46e5);
   display: flex; align-items: center; justify-content: center;
-  color: #fff; font-size: 18px; font-weight: 700;
+  color: #fff; font-size: 16px; font-weight: 800; font-family: var(--display);
   flex-shrink: 0;
 }
 .easya-text { flex: 1; }
-.easya-text strong { font-size: 14px; font-weight: 600; color: var(--text-1); display: block; }
+.easya-text strong { font-size: 13.5px; font-weight: 600; color: var(--text-1); display: block; }
 .easya-text span { font-size: 12px; color: var(--text-3); margin-top: 2px; display: block; }
-.easya-arrow { color: var(--accent); font-size: 18px; }
+.easya-arrow { color: var(--accent); font-size: 16px; font-weight: 600; }
 
 @media (max-width: 768px) {
   .hero-inner { grid-template-columns: 1fr; gap: 32px; }
   .hero-left { text-align: center; }
   .hero-sub { margin-left: auto; margin-right: auto; }
   .hero-ctas { justify-content: center; }
-  .hero-stats-row { grid-template-columns: 1fr 1fr; }
+  .hero-trust { justify-content: center; }
 }
 
-/* ── TICKER ── */
+/* TICKER */
 .ticker {
-  background: var(--bg-2);
-  border-bottom: 1px solid var(--border);
-  padding: 0;
-  overflow: hidden;
-  height: 40px;
-  display: flex; align-items: center;
-  position: relative;
+  background: var(--bg-2); border-bottom: 1px solid var(--border);
+  overflow: hidden; height: 38px;
+  display: flex; align-items: center; position: relative;
 }
 .ticker::before, .ticker::after {
   content: ''; position: absolute; top: 0; bottom: 0; width: 80px; z-index: 2;
@@ -282,38 +304,38 @@ nav {
 }
 @keyframes slide { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 .ticker-item {
-  padding: 0 24px; font-size: 12px; font-family: var(--mono);
+  padding: 0 22px; font-size: 11.5px; font-family: var(--mono);
   color: var(--text-3); white-space: nowrap;
   display: flex; align-items: center; gap: 8px; letter-spacing: 0.02em;
 }
 .ticker-item .t-name { color: var(--text-2); font-weight: 600; }
 .ticker-item .t-up { color: var(--green); font-weight: 600; }
 .ticker-item .t-down { color: var(--red); font-weight: 600; }
-.ticker-sep { color: var(--border-strong); padding: 0 4px; }
+.ticker-sep { color: var(--border-strong); padding: 0 4px; font-size: 10px; }
 
-/* ── SECTION ── */
+/* SECTION */
 section { padding: 80px 24px; }
 .inner { max-width: 1200px; margin: 0 auto; }
 .section-label {
-  font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em;
-  text-transform: uppercase; color: var(--text-3); margin-bottom: 12px;
+  font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 10px;
   display: flex; align-items: center; gap: 10px;
 }
-.section-label::before { content: ''; width: 20px; height: 1.5px; background: var(--accent); }
+.section-label::before { content: ''; width: 18px; height: 1.5px; background: var(--accent); border-radius: 1px; }
 .section-title {
   font-family: var(--display); font-size: clamp(28px, 4vw, 44px);
-  font-weight: 700; letter-spacing: -1px; line-height: 1.15;
-  margin-bottom: 14px; color: var(--text-1);
+  font-weight: 800; letter-spacing: -1.5px; line-height: 1.1;
+  margin-bottom: 12px; color: var(--text-1);
 }
-.section-title .dim { color: var(--text-3); font-weight: 400; }
-.section-sub { font-size: 16px; color: var(--text-2); line-height: 1.7; max-width: 480px; }
+.section-title .dim { color: var(--text-3); font-weight: 500; }
+.section-sub { font-size: 15px; color: var(--text-2); line-height: 1.65; max-width: 420px; }
 
-/* ── FILTERS ── */
+/* FILTERS */
 .filters-bar {
   display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 28px;
 }
 .filter-btn {
-  padding: 8px 16px; border-radius: 8px; border: 1px solid var(--border);
+  padding: 7px 15px; border-radius: 8px; border: 1px solid var(--border);
   font-size: 13px; font-weight: 500; color: var(--text-3); background: none;
   cursor: pointer; transition: all 0.15s; font-family: var(--body);
 }
@@ -324,8 +346,10 @@ section { padding: 80px 24px; }
 .search-box {
   display: flex; align-items: center; gap: 8px;
   border: 1px solid var(--border); border-radius: 8px;
-  padding: 8px 14px; background: var(--surface);
+  padding: 7px 13px; background: var(--surface);
+  transition: border-color 0.15s;
 }
+.search-box:focus-within { border-color: rgba(109,40,217,0.3); }
 .search-box input {
   border: none; outline: none; font-size: 13px;
   font-family: var(--body); color: var(--text-1);
@@ -333,362 +357,423 @@ section { padding: 80px 24px; }
 }
 .search-box input::placeholder { color: var(--text-3); }
 
-/* ── AGENT GRID ── */
+/* AGENT GRID */
 .agents-grid {
   display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
   gap: 16px;
 }
 .agent-card {
-  background: var(--surface); padding: 24px;
+  background: var(--surface); padding: 22px;
   border: 1px solid var(--border);
   border-radius: 14px;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.22s;
+  position: relative; overflow: hidden;
 }
+.agent-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2.5px;
+  border-radius: 14px 14px 0 0;
+  transition: opacity 0.2s;
+  opacity: 0.7;
+}
+.agent-card[data-status="live"]::before { background: var(--green); }
+.agent-card[data-status="trending"]::before { background: var(--red); }
+.agent-card[data-status="new"]::before { background: var(--accent); }
+.agent-card[data-status="soon"]::before { background: var(--gold); }
 .agent-card:hover {
-  border-color: var(--border-strong);
-  box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+  border-color: rgba(109,40,217,0.2);
+  box-shadow: 0 6px 28px rgba(0,0,0,0.07);
   transform: translateY(-2px);
 }
-.agent-card-header { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 16px; }
+.agent-card:hover::before { opacity: 1; }
+.agent-card-header { display: flex; align-items: flex-start; gap: 13px; margin-bottom: 14px; }
 .agent-avatar {
-  width: 48px; height: 48px; border-radius: 12px;
+  width: 46px; height: 46px; border-radius: 12px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 24px; flex-shrink: 0;
+  font-size: 22px; flex-shrink: 0;
   border: 1px solid var(--border); background: var(--bg);
 }
 .agent-info { flex: 1; min-width: 0; }
 .agent-name {
-  font-family: var(--display); font-size: 17px; font-weight: 600;
-  color: var(--text-1); letter-spacing: -0.3px; margin-bottom: 3px;
+  font-family: var(--display); font-size: 16px; font-weight: 700;
+  color: var(--text-1); letter-spacing: -0.3px; margin-bottom: 2px;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
-.agent-ticker { font-family: var(--mono); font-size: 12px; color: var(--accent); font-weight: 500; }
+.agent-ticker { font-family: var(--mono); font-size: 11.5px; color: var(--accent); font-weight: 600; }
 .agent-badge {
-  padding: 4px 10px; border-radius: 20px;
-  font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em;
-  text-transform: uppercase; font-weight: 600; flex-shrink: 0;
+  padding: 3px 9px; border-radius: 20px;
+  font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.1em;
+  text-transform: uppercase; font-weight: 700; flex-shrink: 0;
 }
-.badge-live { color: var(--green); background: var(--green-dim); border: 1px solid rgba(16,185,129,0.2); }
-.badge-soon { color: var(--gold); background: var(--gold-dim); border: 1px solid rgba(245,158,11,0.2); }
-.badge-new { color: var(--accent); background: var(--accent-dim); border: 1px solid rgba(124,58,237,0.2); }
-.badge-trending { color: var(--red); background: var(--red-dim); border: 1px solid rgba(239,68,68,0.2); }
+.badge-live { color: var(--green); background: var(--green-dim); border: 1px solid rgba(5,150,105,0.2); }
+.badge-soon { color: var(--gold); background: var(--gold-dim); border: 1px solid rgba(217,119,6,0.2); }
+.badge-new { color: var(--accent); background: var(--accent-dim); border: 1px solid rgba(109,40,217,0.18); }
+.badge-trending { color: var(--red); background: var(--red-dim); border: 1px solid rgba(220,38,38,0.18); }
 .agent-desc {
-  font-size: 14px; color: var(--text-2); line-height: 1.6; margin-bottom: 16px;
+  font-size: 13.5px; color: var(--text-2); line-height: 1.6; margin-bottom: 14px;
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
 }
-.agent-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 18px; }
+.agent-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
 .tag {
-  padding: 3px 10px; border-radius: 6px; font-family: var(--mono);
+  padding: 3px 9px; border-radius: 6px; font-family: var(--mono);
   font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase;
   background: var(--bg-2); color: var(--text-3); border: 1px solid var(--border);
 }
 .agent-stats {
-  display: flex;
-  border-top: 1px solid var(--border);
-  padding-top: 14px;
+  display: flex; border-top: 1px solid var(--border); padding-top: 13px;
 }
 .agent-stat { flex: 1; text-align: center; }
 .agent-stat:not(:last-child) { border-right: 1px solid var(--border); }
-.agent-stat-val { font-family: var(--mono); font-size: 13px; font-weight: 600; color: var(--text-1); }
+.agent-stat-val { font-family: var(--mono); font-size: 13px; font-weight: 700; color: var(--text-1); }
 .agent-stat-val.green { color: var(--green); }
 .agent-stat-val.red { color: var(--red); }
-.agent-stat-key { font-family: var(--mono); font-size: 10px; color: var(--text-3); margin-top: 3px; text-transform: uppercase; letter-spacing: 0.06em; }
+.agent-stat-key { font-family: var(--mono); font-size: 9.5px; color: var(--text-3); margin-top: 3px; text-transform: uppercase; letter-spacing: 0.07em; }
+.agents-empty { display: none; padding: 48px; text-align: center; color: var(--text-3); font-size: 14px; grid-column: 1 / -1; }
+.agents-empty.show { display: block; }
 
-/* ── HOW IT WORKS ── */
+/* HOW IT WORKS */
 .how-section { background: var(--bg-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-.steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0; margin-top: 48px; border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+.steps-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0; margin-top: 48px; border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
+}
 .step-card {
-  padding: 36px 32px; background: var(--surface);
+  padding: 32px 28px; background: var(--surface);
   border-right: 1px solid var(--border); position: relative; transition: background 0.15s;
 }
 .step-card:last-child { border-right: none; }
 .step-card:hover { background: var(--bg); }
 .step-number {
-  font-family: var(--display); font-size: 48px; font-weight: 700;
-  color: var(--border-strong); line-height: 1; margin-bottom: 20px; letter-spacing: -2px;
+  font-family: var(--display); font-size: 44px; font-weight: 800;
+  color: var(--border-strong); line-height: 1; margin-bottom: 18px; letter-spacing: -2px;
 }
-.step-title { font-family: var(--display); font-size: 18px; font-weight: 600; letter-spacing: -0.3px; margin-bottom: 10px; color: var(--text-1); }
-.step-desc { font-size: 14px; color: var(--text-2); line-height: 1.7; }
+.step-title { font-family: var(--display); font-size: 17px; font-weight: 700; letter-spacing: -0.3px; margin-bottom: 8px; color: var(--text-1); }
+.step-desc { font-size: 13.5px; color: var(--text-2); line-height: 1.65; }
 .step-num-label {
   font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em;
-  text-transform: uppercase; color: var(--accent); margin-bottom: 14px; display: block;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 12px; display: block;
 }
 
-/* ── FEATURES ── */
-.features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-top: 48px; }
-.feature-card { background: var(--surface); padding: 32px; border: 1px solid var(--border); border-radius: 14px; transition: all 0.2s; }
-.feature-card:hover { border-color: var(--border-strong); box-shadow: 0 4px 24px rgba(0,0,0,0.06); }
+/* FEATURES */
+.features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 48px; }
+.feature-card {
+  background: var(--surface); padding: 28px 26px;
+  border: 1px solid var(--border); border-radius: 14px; transition: all 0.2s;
+  position: relative; overflow: hidden;
+}
+.feature-card:hover { border-color: rgba(109,40,217,0.2); box-shadow: 0 4px 20px rgba(0,0,0,0.06); transform: translateY(-1px); }
 .feature-icon-wrap {
-  width: 44px; height: 44px; border-radius: 10px;
-  background: var(--accent-dim); border: 1px solid rgba(124,58,237,0.15);
+  width: 42px; height: 42px; border-radius: 10px;
+  background: var(--accent-dim); border: 1px solid rgba(109,40,217,0.12);
   display: flex; align-items: center; justify-content: center;
-  font-size: 20px; margin-bottom: 20px;
+  font-size: 18px; margin-bottom: 18px;
 }
-.feature-title { font-family: var(--display); font-size: 18px; font-weight: 600; letter-spacing: -0.3px; margin-bottom: 10px; color: var(--text-1); }
-.feature-desc { font-size: 14px; color: var(--text-2); line-height: 1.7; }
+.feature-title { font-family: var(--display); font-size: 17px; font-weight: 700; letter-spacing: -0.3px; margin-bottom: 8px; color: var(--text-1); }
+.feature-desc { font-size: 13.5px; color: var(--text-2); line-height: 1.65; }
 
-/* ── DISCLAIMER ── */
-.disclaimer-section { border-top: 1px solid var(--border); background: var(--bg); padding: 32px 24px; }
+/* DISCLAIMER */
+.disclaimer-section { border-top: 1px solid var(--border); background: var(--bg); padding: 28px 24px; }
 .disclaimer-box {
-  border: 1px solid var(--border); border-radius: 12px; padding: 24px 28px;
+  border: 1px solid var(--border); border-radius: 10px; padding: 20px 24px;
   font-family: var(--mono); font-size: 11px; color: var(--text-3);
   line-height: 1.8; letter-spacing: 0.01em; max-width: 1200px; margin: 0 auto;
 }
 .disclaimer-box strong { color: var(--text-2); }
 .disclaimer-box a { color: var(--accent); text-decoration: none; }
 
-/* ── FOOTER ── */
-footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 60px 24px 32px; }
+/* FOOTER */
+footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 56px 24px 28px; }
 .footer-inner { max-width: 1200px; margin: 0 auto; }
-.footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
-@media (max-width: 768px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; } }
-.footer-brand-desc { font-size: 14px; color: var(--text-3); line-height: 1.7; max-width: 280px; margin-top: 16px; }
-.footer-col h4 { font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-3); margin-bottom: 18px; }
-.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
-.footer-col a { font-size: 14px; color: var(--text-2); text-decoration: none; transition: color 0.15s; }
-.footer-col a:hover { color: var(--text-1); }
-
-.footer-bottom { border-top: 1px solid var(--border); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
-.footer-copy { font-family: var(--mono); font-size: 11px; color: var(--text-3); letter-spacing: 0.04em; }
+.footer-top {
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px;
+  margin-bottom: 40px; padding-bottom: 40px; border-bottom: 1px solid var(--border);
+}
+@media (max-width: 768px) { .footer-top { grid-template-columns: 1fr 1fr; } }
+.footer-brand-desc { font-size: 13.5px; color: var(--text-2); line-height: 1.7; max-width: 280px; margin-top: 10px; }
+footer h4 {
+  font-family: var(--display); font-size: 13px; font-weight: 700;
+  color: var(--text-1); letter-spacing: -0.2px; margin-bottom: 16px;
+}
+footer ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+footer ul li a {
+  font-size: 13.5px; color: var(--text-2); text-decoration: none; transition: color 0.15s;
+}
+footer ul li a:hover { color: var(--accent); }
+.footer-bottom {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 12px;
+}
+.footer-copy { font-family: var(--mono); font-size: 11px; color: var(--text-3); }
 .footer-copy .green { color: var(--green); }
 .footer-social { display: flex; gap: 8px; }
 .social-btn {
-  width: 36px; height: 36px; border-radius: 8px;
-  background: var(--surface); border: 1px solid var(--border);
+  width: 32px; height: 32px; border-radius: 8px;
+  background: var(--bg-3); border: 1px solid var(--border);
   display: flex; align-items: center; justify-content: center;
-  text-decoration: none; color: var(--text-3); font-size: 13px; font-weight: 600;
-  transition: all 0.15s;
+  font-size: 13px; color: var(--text-2); text-decoration: none;
+  transition: all 0.15s; font-family: var(--display); font-weight: 700;
 }
-.social-btn:hover { border-color: var(--border-strong); color: var(--text-1); }
+.social-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
 
-/* toast */
+/* TOAST */
 .toast {
   position: fixed; bottom: 24px; right: 24px; z-index: 9999;
-  background: var(--surface); border: 1px solid var(--border-strong);
-  border-radius: 12px; padding: 16px 20px;
+  background: #0e0e10; color: #fff;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px; padding: 13px 18px;
+  font-size: 13.5px; font-family: var(--body); font-weight: 500;
   display: flex; align-items: center; gap: 10px;
-  font-size: 14px; font-weight: 500; color: var(--text-1);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-  transform: translateY(100px); opacity: 0;
-  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform: translateY(80px); opacity: 0;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+  pointer-events: none;
 }
 .toast.show { transform: translateY(0); opacity: 1; }
+.toast-icon { font-size: 16px; }
 
-/* ── AUTH MODAL ── */
+/* AUTH / LOGIN MODAL */
 .auth-modal-overlay {
-  display: none; position: fixed; inset: 0; z-index: 9999;
-  background: rgba(0,0,0,0.4); backdrop-filter: blur(8px);
-  align-items: center; justify-content: center;
+  position: fixed; inset: 0; z-index: 9000;
+  background: rgba(10,8,18,0.75);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none; transition: all 0.25s;
+  padding: 20px;
 }
-.auth-modal-overlay.open { display: flex; }
+.auth-modal-overlay.open { opacity: 1; pointer-events: all; }
 .auth-modal {
-  background: var(--surface); border: 1px solid var(--border-strong);
-  border-radius: 16px; padding: 40px; width: 440px; max-width: 95vw;
-  position: relative; box-shadow: 0 24px 80px rgba(0,0,0,0.15);
+  background: #0d0b18;
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 22px;
+  padding: 40px 36px 36px;
+  width: 100%; max-width: 400px;
+  position: relative; overflow: hidden;
+  transform: scale(0.95) translateY(10px);
+  transition: all 0.28s cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+.auth-modal-overlay.open .auth-modal { transform: scale(1) translateY(0); }
+.auth-modal::before {
+  content: '';
+  position: absolute; top: -80px; left: 50%; transform: translateX(-50%);
+  width: 280px; height: 280px;
+  background: radial-gradient(circle, rgba(109,40,217,0.22) 0%, transparent 70%);
+  pointer-events: none;
+}
+.auth-modal::after {
+  content: '';
+  position: absolute; bottom: -60px; right: -40px;
+  width: 180px; height: 180px;
+  background: radial-gradient(circle, rgba(79,70,229,0.15) 0%, transparent 70%);
+  pointer-events: none;
 }
 .auth-close {
-  position: absolute; top: 16px; right: 16px; cursor: pointer;
-  color: var(--text-3); font-size: 20px; transition: color 0.15s;
-  background: none; border: none;
+  position: absolute; top: 16px; right: 16px;
+  background: rgba(255,255,255,0.08); border: none;
+  color: rgba(255,255,255,0.5); font-size: 14px;
+  cursor: pointer; border-radius: 8px;
+  width: 30px; height: 30px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s; font-family: var(--body); z-index: 1;
 }
-.auth-close:hover { color: var(--text-1); }
+.auth-close:hover { background: rgba(255,255,255,0.14); color: #fff; }
+.auth-logo-wrap {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 28px; position: relative; z-index: 1;
+}
+.auth-logo-mark {
+  width: 32px; height: 32px; border-radius: 9px;
+  background: linear-gradient(135deg, var(--accent) 0%, #4f46e5 100%);
+  display: flex; align-items: center; justify-content: center;
+}
+.auth-logo-mark svg { width: 17px; height: 17px; }
+.auth-logo-name { font-family: var(--display); font-size: 15px; font-weight: 700; color: rgba(255,255,255,0.9); }
 .auth-heading {
-  font-family: var(--display); font-size: 24px; font-weight: 700;
-  margin-bottom: 8px; letter-spacing: -0.5px;
+  font-family: var(--display); font-size: 24px; font-weight: 800;
+  color: #fff; letter-spacing: -0.8px; line-height: 1.15;
+  margin-bottom: 6px; position: relative; z-index: 1;
 }
-.auth-sub { font-size: 14px; color: var(--text-2); margin-bottom: 28px; }
-
-/* Social Login Buttons */
-.social-login-grid { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+.auth-sub {
+  font-size: 13.5px; color: rgba(255,255,255,0.4);
+  margin-bottom: 28px; line-height: 1.5; position: relative; z-index: 1;
+}
+.social-login-grid {
+  display: flex; flex-direction: column; gap: 10px;
+  margin-bottom: 22px; position: relative; z-index: 1;
+}
 .social-login-btn {
   display: flex; align-items: center; gap: 12px;
-  padding: 12px 16px; border-radius: 10px;
-  border: 1px solid var(--border); background: var(--bg);
-  cursor: pointer; transition: all 0.15s;
-  font-size: 14px; font-weight: 500; color: var(--text-1); font-family: var(--body);
+  padding: 12px 16px; border-radius: 11px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.85); font-size: 14px; font-weight: 500;
+  cursor: pointer; transition: all 0.15s; font-family: var(--body);
   text-align: left;
 }
-.social-login-btn:hover { border-color: var(--border-strong); background: var(--bg-2); }
+.social-login-btn:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); color: #fff; }
 .social-login-icon {
-  width: 28px; height: 28px; border-radius: 8px;
+  width: 32px; height: 32px; border-radius: 8px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 16px; flex-shrink: 0;
+  font-size: 14px; font-weight: 700; flex-shrink: 0;
 }
-.social-login-icon.x-icon { background: #000; color: #fff; }
-.social-login-icon.gmail-icon { background: #ea4335; color: #fff; }
-.social-login-icon.ai-icon { background: linear-gradient(135deg, #7c3aed, #10b981); color: #fff; }
-
-.auth-divider { text-align: center; color: var(--text-3); font-size: 13px; margin: 20px 0; position: relative; }
-.auth-divider::before {
-  content: ''; position: absolute; left: 0; top: 50%; right: 0; height: 1px; background: var(--border);
+.ai-icon { background: linear-gradient(135deg, var(--accent), #4f46e5); color: #fff; font-size: 16px; }
+.x-icon { background: #000; color: #fff; font-size: 15px; border: 1px solid rgba(255,255,255,0.15); }
+.gmail-icon { background: #fff; color: #ea4335; font-size: 15px; font-family: var(--display); font-weight: 800; }
+.auth-divider {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 16px;
+  position: relative; z-index: 1;
 }
-.auth-divider span { position: relative; background: var(--surface); padding: 0 14px; }
-
+.auth-divider::before, .auth-divider::after {
+  content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.08);
+}
+.auth-divider span { font-size: 12px; color: rgba(255,255,255,0.3); font-family: var(--mono); letter-spacing: 0.08em; }
 .auth-input {
-  width: 100%; padding: 12px 16px; background: var(--bg);
-  border: 1px solid var(--border); border-radius: 10px;
-  color: var(--text-1); font-size: 15px; font-family: var(--body);
-  outline: none; margin-bottom: 12px; transition: border-color 0.15s;
+  width: 100%; padding: 11px 14px; margin-bottom: 10px;
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 10px; color: #fff; font-size: 14px; font-family: var(--body);
+  outline: none; transition: border-color 0.15s; position: relative; z-index: 1; display: block;
 }
-.auth-input:focus { border-color: var(--accent); }
-.auth-input::placeholder { color: var(--text-3); }
+.auth-input::placeholder { color: rgba(255,255,255,0.25); }
+.auth-input:focus { border-color: rgba(109,40,217,0.5); background: rgba(255,255,255,0.07); }
 .auth-submit {
-  width: 100%; padding: 14px; border-radius: 10px; border: none;
-  font-size: 15px; font-weight: 600; font-family: var(--body);
-  color: #fff; background: var(--accent);
-  cursor: pointer; transition: all 0.2s; margin-top: 8px;
+  width: 100%; padding: 12px; margin-top: 4px;
+  background: linear-gradient(135deg, var(--accent) 0%, #4f46e5 100%);
+  border: none; border-radius: 10px; color: #fff;
+  font-size: 14px; font-weight: 600; font-family: var(--body);
+  cursor: pointer; transition: all 0.15s; position: relative; z-index: 1;
+  box-shadow: 0 2px 12px rgba(109,40,217,0.35);
 }
-.auth-submit:hover { background: var(--accent-bright); transform: translateY(-1px); }
+.auth-submit:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 4px 18px rgba(109,40,217,0.45); }
+.auth-footer-note {
+  text-align: center; margin-top: 16px;
+  font-size: 11.5px; color: rgba(255,255,255,0.25);
+  font-family: var(--mono); position: relative; z-index: 1;
+}
 
-/* ── AGENT DETAIL MODAL ── */
+/* AGENT MODAL */
 .agent-modal-overlay {
-  display: none; position: fixed; inset: 0; z-index: 9998;
-  background: rgba(0,0,0,0.4); backdrop-filter: blur(8px);
-  align-items: center; justify-content: center; padding: 24px;
-}
-.agent-modal-overlay.open { display: flex; }
-.agent-modal {
-  background: var(--surface); border: 1px solid var(--border-strong);
-  border-radius: 16px; width: 100%; max-width: 520px;
-  max-height: 90vh; overflow-y: auto;
-  position: relative; box-shadow: 0 24px 80px rgba(0,0,0,0.15);
-}
-.agent-modal-header {
-  padding: 32px 32px 24px; border-bottom: 1px solid var(--border);
-  display: flex; align-items: flex-start; gap: 18px;
-}
-.agent-modal-avatar {
-  width: 56px; height: 56px; border-radius: 14px;
+  position: fixed; inset: 0; z-index: 8000;
+  background: rgba(10,8,18,0.65);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
   display: flex; align-items: center; justify-content: center;
-  font-size: 28px; flex-shrink: 0;
-  border: 1px solid var(--border); background: var(--bg);
+  opacity: 0; pointer-events: none; transition: all 0.2s;
+  padding: 20px;
 }
-.agent-modal-meta { flex: 1; }
-.agent-modal-name { font-family: var(--display); font-size: 22px; font-weight: 700; color: var(--text-1); }
-.agent-modal-ticker { font-family: var(--mono); font-size: 14px; color: var(--accent); margin-top: 3px; font-weight: 500; }
-.agent-modal-body { padding: 28px 32px; }
-.agent-modal-desc { font-size: 15px; color: var(--text-2); line-height: 1.7; margin-bottom: 24px; }
-.agent-modal-stats {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 1px; background: var(--border);
-  border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
-  margin-bottom: 24px;
+.agent-modal-overlay.open { opacity: 1; pointer-events: all; }
+.agent-modal {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 20px; width: 100%; max-width: 480px;
+  transform: scale(0.95) translateY(10px); transition: all 0.25s cubic-bezier(0.34, 1.4, 0.64, 1);
+  overflow: hidden;
 }
-.agent-modal-stat { padding: 16px; background: var(--bg); text-align: center; }
-.agent-modal-stat strong { display: block; font-family: var(--display); font-size: 18px; font-weight: 700; color: var(--text-1); }
-.agent-modal-stat.green strong { color: var(--green); }
-.agent-modal-stat.red strong { color: var(--red); }
-.agent-modal-stat span { font-family: var(--mono); font-size: 10px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; }
-.agent-modal-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
-.agent-modal-actions { display: flex; gap: 12px; }
-.agent-modal-actions .btn-accent { flex: 1; justify-content: center; padding: 14px 24px; }
+.agent-modal-overlay.open .agent-modal { transform: scale(1) translateY(0); }
 .agent-modal-close {
   position: absolute; top: 16px; right: 16px;
-  background: none; border: none; color: var(--text-3);
-  font-size: 20px; cursor: pointer; transition: color 0.15s;
+  background: var(--bg-2); border: 1px solid var(--border);
+  color: var(--text-3); font-size: 14px; cursor: pointer;
+  border-radius: 8px; width: 30px; height: 30px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s; z-index: 1; font-family: var(--body);
 }
-.agent-modal-close:hover { color: var(--text-1); }
+.agent-modal-close:hover { background: var(--bg-3); color: var(--text-1); }
+.agent-modal-header {
+  display: flex; align-items: center; gap: 16px;
+  padding: 28px 28px 0; position: relative;
+}
+.agent-modal-avatar { font-size: 44px; }
+.agent-modal-name { font-family: var(--display); font-size: 22px; font-weight: 800; letter-spacing: -0.5px; }
+.agent-modal-ticker { font-family: var(--mono); font-size: 13px; color: var(--accent); font-weight: 600; margin-top: 3px; }
+.agent-modal-body { padding: 20px 28px 28px; }
+.agent-modal-desc { font-size: 14px; color: var(--text-2); line-height: 1.7; margin-bottom: 20px; }
+.agent-modal-stats {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 10px; margin-bottom: 18px;
+}
+.modal-stat {
+  background: var(--bg); border: 1px solid var(--border); border-radius: 10px;
+  padding: 12px 14px; text-align: center;
+}
+.modal-stat-val { font-family: var(--mono); font-size: 14px; font-weight: 700; color: var(--text-1); }
+.modal-stat-key { font-family: var(--mono); font-size: 9.5px; color: var(--text-3); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.07em; }
+.agent-modal-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 22px; }
+.agent-modal-actions { display: flex; gap: 10px; }
 
-/* ── LAUNCH MODAL ── */
+/* LAUNCH MODAL */
 .launch-modal-overlay {
-  display: none; position: fixed; inset: 0; z-index: 9997;
-  background: rgba(0,0,0,0.4); backdrop-filter: blur(8px);
-  align-items: center; justify-content: center; padding: 24px;
+  position: fixed; inset: 0; z-index: 8500;
+  background: rgba(10,8,18,0.7);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none; transition: all 0.22s;
+  padding: 20px;
 }
-.launch-modal-overlay.open { display: flex; }
+.launch-modal-overlay.open { opacity: 1; pointer-events: all; }
 .launch-modal {
-  background: var(--surface); border: 1px solid var(--border-strong);
-  border-radius: 16px; width: 100%; max-width: 480px;
-  max-height: 90vh; overflow-y: auto;
-  position: relative; box-shadow: 0 24px 80px rgba(0,0,0,0.15);
-  padding: 36px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 20px; padding: 36px; width: 100%; max-width: 440px;
+  position: relative;
+  transform: scale(0.95) translateY(10px); transition: all 0.25s cubic-bezier(0.34, 1.4, 0.64, 1);
 }
-.launch-modal h3 {
-  font-family: var(--display); font-size: 22px; font-weight: 700;
-  margin-bottom: 8px; letter-spacing: -0.3px;
-}
-.launch-modal p { font-size: 14px; color: var(--text-2); margin-bottom: 28px; }
+.launch-modal-overlay.open .launch-modal { transform: scale(1) translateY(0); }
+.launch-modal h3 { font-family: var(--display); font-size: 22px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 8px; }
+.launch-modal p { font-size: 13.5px; color: var(--text-2); margin-bottom: 24px; line-height: 1.6; }
 .launch-input {
-  width: 100%; padding: 12px 16px; background: var(--bg);
+  width: 100%; padding: 11px 14px; margin-bottom: 10px;
   border: 1px solid var(--border); border-radius: 10px;
-  color: var(--text-1); font-size: 15px; font-family: var(--body);
-  outline: none; margin-bottom: 14px; transition: border-color 0.15s;
+  font-size: 14px; font-family: var(--body); color: var(--text-1);
+  background: var(--bg); outline: none; transition: border-color 0.15s; display: block;
 }
-.launch-input:focus { border-color: var(--accent); }
+.launch-input:focus { border-color: rgba(109,40,217,0.4); }
 .launch-input::placeholder { color: var(--text-3); }
-.launch-modal .btn-accent { width: 100%; justify-content: center; padding: 14px; margin-top: 10px; }
 
 /* ACCOUNT DROPDOWN */
+.account-dropdown-wrap { position: relative; }
 .account-btn {
-  display: flex; align-items: center; gap: 10px;
-  padding: 8px 12px 8px 8px; border-radius: 10px;
-  border: 1px solid var(--border); background: var(--surface);
+  display: flex; align-items: center; gap: 8px;
+  padding: 6px 12px 6px 8px; border-radius: 10px;
+  border: 1px solid var(--border); background: none;
   cursor: pointer; transition: all 0.15s; font-family: var(--body);
 }
-.account-btn:hover { border-color: var(--border-strong); }
+.account-btn:hover { background: var(--bg-2); }
 .account-avatar {
   width: 28px; height: 28px; border-radius: 8px;
-  background: linear-gradient(135deg, var(--accent), var(--green));
+  background: linear-gradient(135deg, var(--accent), #4f46e5);
+  color: #fff; font-size: 13px; font-weight: 700;
   display: flex; align-items: center; justify-content: center;
-  font-size: 13px; font-weight: 700; color: white;
+  font-family: var(--display);
 }
-.account-info { display: flex; flex-direction: column; align-items: flex-start; }
-.account-name { font-size: 13px; font-weight: 600; color: var(--text-1); line-height: 1.2; }
-.account-role { font-size: 10px; font-family: var(--mono); color: var(--text-3); letter-spacing: 0.06em; text-transform: uppercase; }
-.account-dropdown-wrap { position: relative; }
+.account-name { font-size: 13px; font-weight: 600; color: var(--text-1); display: block; }
+.account-role { font-size: 10px; color: var(--text-3); font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.06em; }
 .account-dropdown {
-  display: none; position: absolute; right: 0; top: calc(100% + 10px);
-  background: var(--surface); border: 1px solid var(--border-strong);
-  border-radius: 12px; width: 220px; z-index: 999;
-  box-shadow: 0 16px 48px rgba(0,0,0,0.12); overflow: hidden; padding: 6px;
+  position: absolute; top: calc(100% + 8px); right: 0;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; width: 220px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.1); padding: 6px;
+  opacity: 0; pointer-events: none; transform: translateY(-4px);
+  transition: all 0.15s;
 }
-.account-dropdown.open { display: block; }
-.dropdown-header {
-  padding: 12px 14px 10px; border-bottom: 1px solid var(--border); margin-bottom: 6px;
-}
-.dropdown-addr { font-family: var(--mono); font-size: 11px; color: var(--text-3); }
-.dropdown-balance { font-size: 14px; font-weight: 600; color: var(--text-1); margin-top: 3px; }
+.account-dropdown.open { opacity: 1; pointer-events: all; transform: translateY(0); }
+.dropdown-header { padding: 10px 12px; border-bottom: 1px solid var(--border); margin-bottom: 4px; }
+.dropdown-addr { font-family: var(--mono); font-size: 11px; color: var(--text-3); margin-bottom: 3px; }
+.dropdown-balance { font-family: var(--mono); font-size: 13px; font-weight: 700; color: var(--green); }
 .dropdown-item {
-  display: flex; align-items: center; gap: 10px;
-  padding: 10px 14px; border-radius: 8px; cursor: pointer;
-  font-size: 14px; color: var(--text-2); transition: all 0.1s;
+  padding: 9px 12px; border-radius: 8px; font-size: 13.5px;
+  color: var(--text-1); cursor: pointer; transition: background 0.12s;
+  display: flex; align-items: center; gap: 8px;
 }
-.dropdown-item:hover { background: var(--bg); color: var(--text-1); }
-.dropdown-item.danger:hover { color: var(--red); }
+.dropdown-item:hover { background: var(--bg-2); }
+.dropdown-item.danger { color: var(--red); }
 
-/* No results state */
-.agents-empty {
-  display: none;
-  grid-column: 1 / -1;
-  text-align: center;
-  padding: 64px 24px;
-  color: var(--text-3);
-  font-family: var(--mono);
-  font-size: 13px;
-}
-
-@media (max-width: 640px) {
-  section { padding: 56px 16px; }
-  .hero { padding: 48px 16px; }
-  .hero-stats-row { grid-template-columns: 1fr 1fr; }
-  .agents-grid { grid-template-columns: 1fr; }
-  .steps-grid { grid-template-columns: 1fr; }
-  .step-card { border-right: none; border-bottom: 1px solid var(--border); }
-  .filters-bar { flex-direction: column; align-items: stretch; }
-  .filter-right { margin-left: 0; }
-  .footer-top { grid-template-columns: 1fr; }
-  .agent-modal-stats { grid-template-columns: repeat(2, 1fr); }
-  .agent-modal-body { padding: 20px; }
-  .agent-modal-header { padding: 20px 20px 16px; }
-}
+/* MINI CHART */
+.mini-chart { height: 40px; margin: 12px 0 4px; }
+.mini-chart svg { width: 100%; height: 100%; }
 </style>
 </head>
 <body>
 
 <!-- TOAST -->
 <div class="toast" id="toast">
-  <span class="toast-icon">✅</span>
+  <span class="toast-icon">✓</span>
   <span id="toastMsg">Connected successfully</span>
 </div>
 
@@ -696,11 +781,21 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
 <div class="auth-modal-overlay" id="authModal">
   <div class="auth-modal">
     <button class="auth-close" onclick="closeAuth()">✕</button>
-    <div class="auth-heading" id="authHeading">Welcome to AgentMarket</div>
-    <div class="auth-sub" id="authSub">Sign in to trade, launch, and manage AI agents</div>
+    <div class="auth-logo-wrap">
+      <div class="auth-logo-mark">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5 9h11.5M14 6l3 3-3 3M19 15H7.5M10 12l-3 3 3 3" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <span class="auth-logo-name">AgentExchange</span>
+    </div>
+    <div class="auth-heading" id="authHeading">Sign in</div>
+    <div class="auth-sub" id="authSub">Trade, launch, and manage AI agents on Solana.</div>
     <div class="social-login-grid">
       <button class="social-login-btn" onclick="connectWalletAuth('AI Agent')">
-        <div class="social-login-icon ai-icon">🤖</div>
+        <div class="social-login-icon ai-icon">
+          <svg viewBox="0 0 20 20" fill="none" width="17" height="17"><circle cx="10" cy="7" r="3.5" stroke="white" stroke-width="1.8"/><path d="M3 17c0-3.314 3.134-6 7-6s7 2.686 7 6" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </div>
         <span>Continue with AI Agent</span>
       </button>
       <button class="social-login-btn" onclick="connectWalletAuth('X')">
@@ -716,6 +811,7 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
     <input class="auth-input" type="email" id="authEmail" placeholder="Email address">
     <input class="auth-input" type="password" id="authPassword" placeholder="Password">
     <button class="auth-submit" id="authSubmitBtn" onclick="handleAuth()">Sign In</button>
+    <div class="auth-footer-note">By signing in you agree to our Terms of Service.</div>
   </div>
 </div>
 
@@ -735,8 +831,8 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
       <div class="agent-modal-stats" id="modalStats"></div>
       <div class="agent-modal-tags" id="modalTags"></div>
       <div class="agent-modal-actions">
-        <button class="btn-accent" onclick="tradeAgent()">⚡ Trade Now</button>
-        <button class="btn-ghost" onclick="shareAgent()">↗ Share</button>
+        <button class="btn-accent" onclick="tradeAgent()">Trade Now</button>
+        <button class="btn-ghost" onclick="shareAgent()">Share</button>
       </div>
     </div>
   </div>
@@ -745,21 +841,21 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
 <!-- LAUNCH MODAL -->
 <div class="launch-modal-overlay" id="launchModal">
   <div class="launch-modal">
-    <button class="auth-close" onclick="closeLaunchModal()" style="position:absolute;top:16px;right:16px;">✕</button>
+    <button class="auth-close" onclick="closeLaunchModal()" style="position:absolute;top:16px;right:16px;background:var(--bg-2);border:1px solid var(--border);color:var(--text-3);">✕</button>
     <h3>Launch Your Agent</h3>
     <p>Create a tokenized AI agent with fair launch mechanics. No presale, no insiders.</p>
     <input class="launch-input" type="text" id="launchName" placeholder="Agent Name">
     <input class="launch-input" type="text" id="launchTicker" placeholder="Token Ticker (e.g. $AGENT)">
     <input class="launch-input" type="text" id="launchDesc" placeholder="Short description">
     <input class="launch-input" type="text" id="launchTags" placeholder="Tags (comma separated)">
-    <button class="btn-accent" onclick="submitLaunch()">🚀 Launch Agent</button>
+    <button class="btn-accent" style="width:100%;justify-content:center;padding:12px;" onclick="submitLaunch()">Launch Agent</button>
   </div>
 </div>
 
 <!-- TICKER -->
 <div class="ticker" aria-hidden="true">
   <div class="ticker-track">
-    <div class="ticker-item"><span class="t-name">$ENTEX</span><span>—</span><span class="t-up">LAUNCHING SOON</span></div>
+    <div class="ticker-item"><span class="t-name">$ENTEX</span><span class="t-up">LAUNCHING SOON</span></div>
     <span class="ticker-sep">·</span>
     <div class="ticker-item"><span class="t-name">$TRADEX</span><span>$0.0042</span><span class="t-up">+18.4%</span></div>
     <span class="ticker-sep">·</span>
@@ -771,9 +867,9 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
     <span class="ticker-sep">·</span>
     <div class="ticker-item"><span class="t-name">$FLUX</span><span>$0.0055</span><span class="t-up">+9.3%</span></div>
     <span class="ticker-sep">·</span>
-    <div class="ticker-item"><span class="t-name">$SNTNL</span><span>—</span><span style="color:var(--gold);font-weight:600;">COMING SOON</span></div>
+    <div class="ticker-item"><span class="t-name">$SNTNL</span><span style="color:var(--gold);font-weight:600;">COMING SOON</span></div>
     <span class="ticker-sep">·</span>
-    <div class="ticker-item"><span class="t-name">$ENTEX</span><span>—</span><span class="t-up">LAUNCHING SOON</span></div>
+    <div class="ticker-item"><span class="t-name">$ENTEX</span><span class="t-up">LAUNCHING SOON</span></div>
     <span class="ticker-sep">·</span>
     <div class="ticker-item"><span class="t-name">$TRADEX</span><span>$0.0042</span><span class="t-up">+18.4%</span></div>
     <span class="ticker-sep">·</span>
@@ -785,7 +881,7 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
     <span class="ticker-sep">·</span>
     <div class="ticker-item"><span class="t-name">$FLUX</span><span>$0.0055</span><span class="t-up">+9.3%</span></div>
     <span class="ticker-sep">·</span>
-    <div class="ticker-item"><span class="t-name">$SNTNL</span><span>—</span><span style="color:var(--gold);font-weight:600;">COMING SOON</span></div>
+    <div class="ticker-item"><span class="t-name">$SNTNL</span><span style="color:var(--gold);font-weight:600;">COMING SOON</span></div>
   </div>
 </div>
 
@@ -794,24 +890,28 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
   <div class="nav-inner">
     <a class="logo-wrap" href="#">
       <div class="logo-mark">
-        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5 9h11.5M14 6l3 3-3 3M19 15H7.5M10 12l-3 3 3 3" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </div>
-      <span class="logo-wordmark">agentmarket</span>
+      <span class="logo-wordmark">AgentExchange</span>
       <span class="nav-pill">Beta</span>
     </a>
     <ul class="nav-links">
       <li><a href="#agents">Explore</a></li>
       <li><a href="#launch" onclick="openLaunchModal(); return false;">Launch</a></li>
       <li><a href="#how">How It Works</a></li>
-      <li><a href="https://x.com/agentmarket_ai" target="_blank" rel="noopener">𝕏</a></li>
+      <li>
+        <a href="https://x.com/yaroslavrasov" target="_blank" rel="noopener" class="builder-link">
+          <span>𝕏</span><span class="builder-label">Builder</span>
+        </a>
+      </li>
     </ul>
     <div class="nav-right nav-desktop" id="navRight">
       <button class="btn-ghost" onclick="openAuth()">Sign In</button>
       <button class="btn-accent" onclick="openLaunchModal()">Launch Agent</button>
     </div>
-    <button class="hamburger" aria-label="Menu">
+    <button class="hamburger" aria-label="Menu" onclick="openAuth()">
       <span></span><span></span><span></span>
     </button>
   </div>
@@ -829,15 +929,22 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
         <span class="h1-dim">The Future of</span>
         <span class="h1-main">AI Agents <span class="h1-sol">on Solana</span></span>
       </h1>
-      <p class="hero-sub">Launch, discover, and trade tokenized AI agents. Fair bonding curves, zero presale, community-first — at Solana speed.</p>
+      <p class="hero-sub">Launch, discover, and trade tokenized AI agents. Fair bonding curves, zero presale, community-first.</p>
       <div class="hero-ctas">
         <a href="#agents" class="cta-primary">Explore Agents</a>
-        <a href="https://kickstart.easya.io/" target="_blank" rel="noopener" class="cta-secondary">Launch on EasyA →</a>
+        <a href="https://kickstart.easya.io/" target="_blank" rel="noopener" class="cta-secondary">Launch on EasyA &rarr;</a>
+      </div>
+      <div class="hero-trust">
+        <span>Fair launch</span>
+        <span class="trust-dot"></span>
+        <span>No presale</span>
+        <span class="trust-dot"></span>
+        <span>Audited contracts</span>
       </div>
     </div>
     <div class="hero-right">
       <div class="hero-stats-card">
-        <div class="hero-stats-header">Platform Stats</div>
+        <div class="hero-stats-header">Live Platform Stats</div>
         <div class="hero-stats-row">
           <div class="hero-stat-item">
             <span class="hero-stat-num green">$2.4M</span>
@@ -863,7 +970,7 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
           <strong>Launch on EasyA Kickstart</strong>
           <span>Get your AI agent funded in seconds · Fair launch</span>
         </div>
-        <span class="easya-arrow">→</span>
+        <span class="easya-arrow">&rarr;</span>
       </a>
     </div>
   </div>
@@ -874,7 +981,7 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
   <div class="inner">
     <div class="section-label">Marketplace</div>
     <h2 class="section-title">Discover <span class="dim">AI Agents</span></h2>
-    <p class="section-sub">Browse live agents, track performance, and trade tokens. Every agent is an autonomous program with its own on-chain economy.</p>
+    <p class="section-sub">Browse live agents, track performance, and trade tokens. Every agent runs its own on-chain economy.</p>
 
     <div class="filters-bar">
       <button class="filter-btn active" onclick="filterAgents('all', this)">All</button>
@@ -889,7 +996,6 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
     </div>
 
     <div class="agents-grid" id="agentsGrid">
-      <!-- Agent 1 -->
       <div class="agent-card" data-status="live" data-tags="trading,defi" onclick="openAgentModal(0)">
         <div class="agent-card-header">
           <div class="agent-avatar">📈</div>
@@ -910,7 +1016,6 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
         </div>
       </div>
 
-      <!-- Agent 2 -->
       <div class="agent-card" data-status="live" data-tags="analytics,data" onclick="openAgentModal(1)">
         <div class="agent-card-header">
           <div class="agent-avatar">🔍</div>
@@ -931,7 +1036,6 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
         </div>
       </div>
 
-      <!-- Agent 3 -->
       <div class="agent-card" data-status="new" data-tags="nft,creative" onclick="openAgentModal(2)">
         <div class="agent-card-header">
           <div class="agent-avatar">🎨</div>
@@ -952,7 +1056,6 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
         </div>
       </div>
 
-      <!-- Agent 4 -->
       <div class="agent-card" data-status="live" data-tags="gaming,play" onclick="openAgentModal(3)">
         <div class="agent-card-header">
           <div class="agent-avatar">🎮</div>
@@ -973,7 +1076,6 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
         </div>
       </div>
 
-      <!-- Agent 5 — Trending -->
       <div class="agent-card" data-status="trending" data-tags="social,content" onclick="openAgentModal(4)">
         <div class="agent-card-header">
           <div class="agent-avatar">⚡</div>
@@ -994,7 +1096,6 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
         </div>
       </div>
 
-      <!-- Agent 6 -->
       <div class="agent-card" data-status="soon" data-tags="security,monitor" onclick="openAgentModal(5)">
         <div class="agent-card-header">
           <div class="agent-avatar">🛡️</div>
@@ -1009,13 +1110,12 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
           <span class="tag">Security</span><span class="tag">Monitor</span><span class="tag">Alert</span>
         </div>
         <div class="agent-stats">
-          <div class="agent-stat"><div class="agent-stat-val">—</div><div class="agent-stat-key">Price</div></div>
-          <div class="agent-stat"><div class="agent-stat-val">—</div><div class="agent-stat-key">24h</div></div>
+          <div class="agent-stat"><div class="agent-stat-val">TBA</div><div class="agent-stat-key">Price</div></div>
+          <div class="agent-stat"><div class="agent-stat-val">TBA</div><div class="agent-stat-key">24h</div></div>
           <div class="agent-stat"><div class="agent-stat-val">TBA</div><div class="agent-stat-key">MCap</div></div>
         </div>
       </div>
 
-      <!-- Agent 7 -->
       <div class="agent-card" data-status="live" data-tags="prediction,markets" onclick="openAgentModal(6)">
         <div class="agent-card-header">
           <div class="agent-avatar">🔮</div>
@@ -1036,7 +1136,6 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
         </div>
       </div>
 
-      <!-- Agent 8 -->
       <div class="agent-card" data-status="new" data-tags="yield,farming" onclick="openAgentModal(7)">
         <div class="agent-card-header">
           <div class="agent-avatar">🌾</div>
@@ -1057,7 +1156,6 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
         </div>
       </div>
 
-      <!-- Agent 9 -->
       <div class="agent-card" data-status="trending" data-tags="meme,community" onclick="openAgentModal(8)">
         <div class="agent-card-header">
           <div class="agent-avatar">🐸</div>
@@ -1078,7 +1176,6 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
         </div>
       </div>
 
-      <!-- Empty state -->
       <div class="agents-empty" id="agentsEmpty">No agents found matching your search.</div>
     </div>
   </div>
@@ -1089,7 +1186,7 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
   <div class="inner">
     <div class="section-label">Process</div>
     <h2 class="section-title">How It <span class="dim">Works</span></h2>
-    <p class="section-sub">Launch and trade AI agents in four simple steps. No coding required, no complex setup.</p>
+    <p class="section-sub">Four steps from idea to live tokenized agent. No coding required.</p>
     <div class="steps-grid">
       <div class="step-card">
         <span class="step-num-label">Step 01</span>
@@ -1106,7 +1203,7 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
       <div class="step-card">
         <span class="step-num-label">Step 03</span>
         <div class="step-number">03</div>
-        <h3 class="step-title">Trade & Earn</h3>
+        <h3 class="step-title">Trade &amp; Earn</h3>
         <p class="step-desc">Buy and sell agent tokens instantly. Earn fees from trading volume and agent performance.</p>
       </div>
       <div class="step-card">
@@ -1123,8 +1220,8 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
 <section>
   <div class="inner">
     <div class="section-label">Features</div>
-    <h2 class="section-title">Built for <span class="dim">Traders & Creators</span></h2>
-    <p class="section-sub">Everything you need to launch, trade, and manage AI agents on Solana — in one platform.</p>
+    <h2 class="section-title">Built for <span class="dim">Traders &amp; Creators</span></h2>
+    <p class="section-sub">Everything you need to launch, trade, and manage AI agents on Solana.</p>
     <div class="features-grid">
       <div class="feature-card">
         <div class="feature-icon-wrap">⚡</div>
@@ -1137,14 +1234,16 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
         <p class="feature-desc">Bonding curve ensures fair price discovery. No team allocations, no presale discounts, equal opportunity for all.</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon-wrap">🤖</div>
+        <div class="feature-icon-wrap">
+          <svg viewBox="0 0 20 20" fill="none" width="18" height="18"><circle cx="10" cy="7" r="3" stroke="var(--accent)" stroke-width="1.8"/><path d="M4 17c0-3 2.686-5 6-5s6 2 6 5" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </div>
         <h3 class="feature-title">AI Powered</h3>
         <p class="feature-desc">Every agent runs autonomous logic on-chain. Self-executing strategies, real-time adaptation, no human intervention.</p>
       </div>
       <div class="feature-card">
         <div class="feature-icon-wrap">📊</div>
         <h3 class="feature-title">Live Analytics</h3>
-        <p class="feature-desc">Track agent performance, holder growth, trading volume, and on-chain activity in real-time dashboards.</p>
+        <p class="feature-desc">Track agent performance, holder growth, trading volume, and on-chain activity in real-time.</p>
       </div>
       <div class="feature-card">
         <div class="feature-icon-wrap">🔗</div>
@@ -1163,7 +1262,7 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
 <!-- DISCLAIMER -->
 <section class="disclaimer-section">
   <div class="disclaimer-box">
-    <strong>Disclaimer:</strong> AgentMarket is a decentralized launchpad for AI agent tokens. Trading agent tokens involves significant risk, including potential loss of capital. Token prices are volatile and can fluctuate dramatically. Always do your own research (DYOR) before investing. This platform does not provide financial advice. Smart contracts are audited but not guaranteed. By using this platform, you acknowledge and accept these risks. Follow us on <a href="https://x.com/agentmarket_ai" target="_blank" rel="noopener">X @agentmarket_ai</a> for updates.
+    <strong>Disclaimer:</strong> AgentExchange is a decentralized launchpad for AI agent tokens. Trading agent tokens involves significant risk, including potential loss of capital. Token prices are volatile and can fluctuate dramatically. Always do your own research before investing. This platform does not provide financial advice. Smart contracts are audited but not guaranteed. By using this platform, you acknowledge and accept these risks. Follow updates at <a href="https://x.com/yaroslavrasov" target="_blank" rel="noopener">x.com/yaroslavrasov</a>.
   </div>
 </section>
 
@@ -1172,13 +1271,13 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
   <div class="footer-inner">
     <div class="footer-top">
       <div class="footer-col">
-        <a class="logo-wrap" href="#" style="margin-bottom:10px;">
-          <div class="logo-mark" style="width:28px;height:28px;">
-            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;">
-              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+        <a class="logo-wrap" href="#" style="margin-bottom:12px;gap:10px;">
+          <div class="logo-mark" style="width:30px;height:30px;">
+            <svg viewBox="0 0 24 24" fill="none" style="width:16px;height:16px;">
+              <path d="M5 9h11.5M14 6l3 3-3 3M19 15H7.5M10 12l-3 3 3 3" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </div>
-          <span class="logo-wordmark" style="font-size:16px;">agentmarket</span>
+          <span class="logo-wordmark" style="font-size:15px;">AgentExchange</span>
         </a>
         <p class="footer-brand-desc">The premier launchpad for tokenized AI agents on Solana. Fair launches, zero presale, community-first.</p>
       </div>
@@ -1194,7 +1293,7 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
       <div class="footer-col">
         <h4>Community</h4>
         <ul>
-          <li><a href="https://x.com/agentmarket_ai" target="_blank" rel="noopener">X / Twitter</a></li>
+          <li><a href="https://x.com/yaroslavrasov" target="_blank" rel="noopener">X / Builder</a></li>
           <li><a href="#" onclick="showToast('Discord coming soon'); return false;">Discord</a></li>
           <li><a href="#" onclick="showToast('Telegram coming soon'); return false;">Telegram</a></li>
           <li><a href="#" onclick="showToast('Blog coming soon'); return false;">Blog</a></li>
@@ -1212,10 +1311,10 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
     </div>
     <div class="footer-bottom">
       <div class="footer-copy">
-        © 2025 AgentMarket · Built on <span class="green">Solana</span>
+        &copy; 2025 AgentExchange &middot; Built on <span class="green">Solana</span> &middot; <a href="https://x.com/yaroslavrasov" target="_blank" rel="noopener" style="color:var(--text-3);text-decoration:none;">Builder @yaroslavrasov</a>
       </div>
       <div class="footer-social">
-        <a href="https://x.com/agentmarket_ai" target="_blank" rel="noopener" class="social-btn" aria-label="X">𝕏</a>
+        <a href="https://x.com/yaroslavrasov" target="_blank" rel="noopener" class="social-btn" aria-label="X">𝕏</a>
         <a href="#" onclick="showToast('Discord coming soon'); return false;" class="social-btn" aria-label="Discord">D</a>
         <a href="#" onclick="showToast('GitHub coming soon'); return false;" class="social-btn" aria-label="GitHub">G</a>
       </div>
@@ -1224,7 +1323,7 @@ footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 
 </footer>
 
 <script>
-// ── AUTH STATE ──
+// AUTH STATE
 let currentUser = null;
 
 function openAuth() {
@@ -1260,17 +1359,17 @@ function updateNavForUser() {
           <span class="account-name">${currentUser.name}</span>
           <span class="account-role">${currentUser.type}</span>
         </div>
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
       </button>
       <div class="account-dropdown" id="accountDropdown">
         <div class="dropdown-header">
           <div class="dropdown-addr">${currentUser.address}</div>
           <div class="dropdown-balance">${currentUser.balance}</div>
         </div>
-        <div class="dropdown-item" onclick="showToast('Profile page coming soon')">👤 Profile</div>
-        <div class="dropdown-item" onclick="showToast('Portfolio page coming soon')">📊 Portfolio</div>
-        <div class="dropdown-item" onclick="showToast('Settings page coming soon')">⚙️ Settings</div>
-        <div class="dropdown-item danger" onclick="logout()">🚪 Disconnect</div>
+        <div class="dropdown-item" onclick="showToast('Profile coming soon')">&#128100; Profile</div>
+        <div class="dropdown-item" onclick="showToast('Portfolio coming soon')">&#128202; Portfolio</div>
+        <div class="dropdown-item" onclick="showToast('Settings coming soon')">&#9881; Settings</div>
+        <div class="dropdown-item danger" onclick="logout()">&#128682; Disconnect</div>
       </div>
     </div>
   `;
@@ -1287,7 +1386,7 @@ function logout() {
   showToast('Disconnected successfully');
 }
 
-// ── TOAST ──
+// TOAST
 function showToast(msg) {
   const toast = document.getElementById('toast');
   document.getElementById('toastMsg').textContent = msg;
@@ -1295,40 +1394,36 @@ function showToast(msg) {
   setTimeout(() => toast.classList.remove('show'), 3000);
 }
 
-// ── AGENT DATA ──
+// AGENT DATA
 const agentsData = [
   { name: 'TradeX Alpha', ticker: '$TRADEX', avatar: '📈', desc: 'Autonomous trading agent that scans Solana DEXs for arbitrage opportunities and executes trades with sub-second latency. Built for speed, optimized for profit.', price: '$0.0042', change: '+18.4%', mcap: '$420K', vol: '$89K', holders: '1.2K', tags: ['Trading','DeFi','Arbitrage'] },
   { name: 'Scout Protocol', ticker: '$SCOUT', avatar: '🔍', desc: 'On-chain analytics agent that identifies emerging trends, whale movements, and alpha signals across Solana protocols. Your eyes on the blockchain.', price: '$0.0087', change: '+6.2%', mcap: '$780K', vol: '$45K', holders: '2.1K', tags: ['Analytics','Data','Alpha'] },
   { name: 'Nora Creative', ticker: '$NORA', avatar: '🎨', desc: 'Generative art agent that creates unique NFT collections on-demand. Each piece is algorithmically composed and minted on-chain. Art meets AI.', price: '$0.0031', change: '+22.1%', mcap: '$310K', vol: '$67K', holders: '890', tags: ['NFT','Creative','Generative'] },
   { name: 'Atlas Gaming', ticker: '$ATLAS', avatar: '🎮', desc: 'AI game master that creates dynamic on-chain gaming experiences. Procedurally generates quests, loot, and player challenges. Play forever.', price: '$0.0119', change: '+4.7%', mcap: '$1.2M', vol: '$156K', holders: '3.4K', tags: ['Gaming','Play','RPG'] },
   { name: 'Flux Social', ticker: '$FLUX', avatar: '⚡', desc: 'Autonomous social media agent that curates content, engages communities, and grows brands 24/7 across platforms. The ultimate community builder.', price: '$0.0055', change: '+9.3%', mcap: '$550K', vol: '$34K', holders: '1.5K', tags: ['Social','Content','Growth'] },
-  { name: 'Sentinel AI', ticker: '$SNTNL', avatar: '🛡️', desc: 'Security monitoring agent that watches for exploits, rug pulls, and suspicious transactions across Solana protocols. Your on-chain guardian.', price: '—', change: '—', mcap: 'TBA', vol: '—', holders: '—', tags: ['Security','Monitor','Alert'] },
-  { name: 'Oracle Prime', ticker: '$ORACLE', avatar: '🔮', desc: 'Prediction market agent that aggregates sentiment, on-chain data, and external signals to forecast token movements. See the future.', price: '$0.0072', change: '-2.1%', mcap: '$720K', vol: '$28K', holders: '1.8K', tags: ['Prediction','Markets','Forecast'] },
-  { name: 'Yield Farmer', ticker: '$YIELD', avatar: '🌾', desc: 'Automated yield farming agent that reallocates capital across Solana DeFi protocols to maximize APY and minimize risk. Set it and forget it.', price: '$0.0028', change: '+31.5%', mcap: '$280K', vol: '$92K', holders: '950', tags: ['Yield','Farming','DeFi'] },
-  { name: 'Meme Lord', ticker: '$MEME', avatar: '🐸', desc: 'Community-driven meme agent that generates viral content, runs polls, and rewards engagement with token drops. The culture is the utility.', price: '$0.0015', change: '+45.2%', mcap: '$150K', vol: '$78K', holders: '2.3K', tags: ['Meme','Community','Viral'] }
+  { name: 'Sentinel AI', ticker: '$SNTNL', avatar: '🛡️', desc: 'Security monitoring agent that watches for exploits, rug pulls, and suspicious transactions across Solana protocols. Your on-chain guardian.', price: 'TBA', change: 'TBA', mcap: 'TBA', vol: 'TBA', holders: 'TBA', tags: ['Security','Monitor','Alert'] },
+  { name: 'Oracle Prime', ticker: '$ORACLE', avatar: '🔮', desc: 'Prediction market agent that aggregates sentiment, on-chain data, and external signals to forecast token movements with high accuracy.', price: '$0.0072', change: '-2.1%', mcap: '$720K', vol: '$28K', holders: '1.8K', tags: ['Prediction','Markets','Forecast'] },
+  { name: 'Yield Farmer', ticker: '$YIELD', avatar: '🌾', desc: 'Automated yield farming agent that reallocates capital across Solana DeFi protocols to maximize APY and minimize risk exposure.', price: '$0.0028', change: '+31.5%', mcap: '$280K', vol: '$92K', holders: '670', tags: ['Yield','Farming','DeFi'] },
+  { name: 'Meme Lord', ticker: '$MEME', avatar: '🐸', desc: 'Community-driven meme agent that generates viral content, runs polls, and rewards engagement with token drops. King of the feed.', price: '$0.0015', change: '+45.2%', mcap: '$150K', vol: '$110K', holders: '4.2K', tags: ['Meme','Community','Viral'] }
 ];
 
-// ── AGENT MODAL ──
-function openAgentModal(index) {
-  const agent = agentsData[index];
-  document.getElementById('modalAvatar').textContent = agent.avatar;
-  document.getElementById('modalName').textContent = agent.name;
-  document.getElementById('modalTicker').textContent = agent.ticker;
-  document.getElementById('modalDesc').textContent = agent.desc;
-
-  const isPositive = agent.change.includes('+');
-  const isNegative = agent.change.includes('-');
-  const changeClass = isPositive ? 'green' : isNegative ? 'red' : '';
-
+let currentAgentIdx = 0;
+function openAgentModal(idx) {
+  currentAgentIdx = idx;
+  const a = agentsData[idx];
+  document.getElementById('modalAvatar').textContent = a.avatar;
+  document.getElementById('modalName').textContent = a.name;
+  document.getElementById('modalTicker').textContent = a.ticker;
+  document.getElementById('modalDesc').textContent = a.desc;
   document.getElementById('modalStats').innerHTML = `
-    <div class="agent-modal-stat ${changeClass}"><strong>${agent.price}</strong><span>Price</span></div>
-    <div class="agent-modal-stat ${changeClass}"><strong>${agent.change}</strong><span>24h Change</span></div>
-    <div class="agent-modal-stat"><strong>${agent.mcap}</strong><span>Market Cap</span></div>
-    <div class="agent-modal-stat"><strong>${agent.vol}</strong><span>Volume</span></div>
-    <div class="agent-modal-stat"><strong>${agent.holders}</strong><span>Holders</span></div>
-    <div class="agent-modal-stat"><strong>SOL</strong><span>Network</span></div>
+    <div class="modal-stat"><div class="modal-stat-val">${a.price}</div><div class="modal-stat-key">Price</div></div>
+    <div class="modal-stat"><div class="modal-stat-val">${a.change}</div><div class="modal-stat-key">24h</div></div>
+    <div class="modal-stat"><div class="modal-stat-val">${a.mcap}</div><div class="modal-stat-key">MCap</div></div>
+    <div class="modal-stat"><div class="modal-stat-val">${a.vol}</div><div class="modal-stat-key">Volume</div></div>
+    <div class="modal-stat"><div class="modal-stat-val">${a.holders}</div><div class="modal-stat-key">Holders</div></div>
+    <div class="modal-stat"><div class="modal-stat-val">${idx + 1}</div><div class="modal-stat-key">Rank</div></div>
   `;
-  document.getElementById('modalTags').innerHTML = agent.tags.map(t => `<span class="tag">${t}</span>`).join('');
+  document.getElementById('modalTags').innerHTML = a.tags.map(t => `<span class="tag">${t}</span>`).join('');
   document.getElementById('agentModal').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -1337,18 +1432,41 @@ function closeAgentModal() {
   document.body.style.overflow = '';
 }
 function tradeAgent() {
-  if (!currentUser) { showToast('Please connect wallet first'); openAuth(); return; }
-  showToast('Trading interface coming soon!');
+  closeAgentModal();
+  openAuth();
 }
 function shareAgent() {
+  const a = agentsData[currentAgentIdx];
   if (navigator.clipboard) {
-    navigator.clipboard.writeText(window.location.href).then(() => showToast('Link copied to clipboard!'));
-  } else {
-    showToast('Link copied to clipboard!');
+    navigator.clipboard.writeText(window.location.href + '?agent=' + a.ticker.replace('$',''));
   }
+  showToast('Link copied to clipboard');
 }
 
-// ── LAUNCH MODAL ──
+// FILTER & SEARCH
+function filterAgents(status, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.agent-card').forEach(card => {
+    card.style.display = (status === 'all' || card.dataset.status === status) ? '' : 'none';
+  });
+  checkEmpty();
+}
+function searchAgents(query) {
+  const q = query.toLowerCase().trim();
+  document.querySelectorAll('.agent-card').forEach(card => {
+    const text = card.textContent.toLowerCase();
+    card.style.display = (!q || text.includes(q)) ? '' : 'none';
+  });
+  checkEmpty();
+}
+function checkEmpty() {
+  const visible = [...document.querySelectorAll('.agent-card')].filter(c => c.style.display !== 'none' && c.id !== 'agentsEmpty');
+  const empty = document.getElementById('agentsEmpty');
+  empty.classList.toggle('show', visible.length === 0);
+}
+
+// LAUNCH MODAL
 function openLaunchModal() {
   document.getElementById('launchModal').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -1360,74 +1478,71 @@ function closeLaunchModal() {
 function submitLaunch() {
   const name = document.getElementById('launchName').value.trim();
   const ticker = document.getElementById('launchTicker').value.trim();
-  if (!name || !ticker) { showToast('Please fill in all required fields'); return; }
+  if (!name || !ticker) { showToast('Please fill in agent name and ticker'); return; }
   closeLaunchModal();
-  showToast(`🚀 ${name} submitted for launch review!`);
-  ['launchName','launchTicker','launchDesc','launchTags'].forEach(id => document.getElementById(id).value = '');
+  showToast(name + ' is being prepared for launch!');
 }
 
-// ── FILTERING ── (fixed: trending is now its own status, not a subset of live)
-let currentFilter = 'all';
-let currentSearch = '';
-
-function filterAgents(filter, btn) {
-  currentFilter = filter;
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  applyFilters();
-}
-
-function searchAgents(query) {
-  currentSearch = query.toLowerCase();
-  applyFilters();
-}
-
-function applyFilters() {
-  const cards = document.querySelectorAll('.agent-card');
-  let visibleCount = 0;
-  cards.forEach(card => {
-    const status = card.getAttribute('data-status');
-    const tags = card.getAttribute('data-tags') || '';
-    const name = card.querySelector('.agent-name').textContent.toLowerCase();
-    const ticker = card.querySelector('.agent-ticker').textContent.toLowerCase();
-
-    const matchesFilter = currentFilter === 'all' || status === currentFilter;
-    const matchesSearch = !currentSearch || name.includes(currentSearch) || ticker.includes(currentSearch) || tags.includes(currentSearch);
-
-    const show = matchesFilter && matchesSearch;
-    card.style.display = show ? '' : 'none';
-    if (show) visibleCount++;
-  });
-  document.getElementById('agentsEmpty').style.display = visibleCount === 0 ? 'block' : 'none';
-}
-
-// ── CLOSE MODALS ON BACKDROP CLICK ──
-document.getElementById('authModal').addEventListener('click', e => { if (e.target === document.getElementById('authModal')) closeAuth(); });
-document.getElementById('agentModal').addEventListener('click', e => { if (e.target === document.getElementById('agentModal')) closeAgentModal(); });
-document.getElementById('launchModal').addEventListener('click', e => { if (e.target === document.getElementById('launchModal')) closeLaunchModal(); });
-
-// ── CLOSE DROPDOWN ON CLICK OUTSIDE ──
-document.addEventListener('click', e => {
-  const dropdown = document.getElementById('accountDropdown');
-  if (dropdown && !e.target.closest('.account-dropdown-wrap')) dropdown.classList.remove('open');
+// CLOSE ON OVERLAY CLICK
+document.getElementById('authModal').addEventListener('click', function(e) {
+  if (e.target === this) closeAuth();
+});
+document.getElementById('agentModal').addEventListener('click', function(e) {
+  if (e.target === this) closeAgentModal();
+});
+document.getElementById('launchModal').addEventListener('click', function(e) {
+  if (e.target === this) closeLaunchModal();
 });
 
-// ── KEYBOARD SHORTCUTS ──
-document.addEventListener('keydown', e => {
+// CLOSE DROPDOWN ON OUTSIDE CLICK
+document.addEventListener('click', function(e) {
+  const wrap = document.querySelector('.account-dropdown-wrap');
+  if (wrap && !wrap.contains(e.target)) {
+    const dd = document.getElementById('accountDropdown');
+    if (dd) dd.classList.remove('open');
+  }
+});
+
+// ESC KEY
+document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') { closeAuth(); closeAgentModal(); closeLaunchModal(); }
 });
 
-// ── SMOOTH SCROLL ──
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function(e) {
-    const href = this.getAttribute('href');
-    if (href && href !== '#') {
-      e.preventDefault();
-      const target = document.querySelector(href);
-      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+// NUMBER COUNTER ANIMATION
+function animateCounters() {
+  document.querySelectorAll('.hero-stat-num').forEach(el => {
+    const text = el.textContent;
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(6px)';
+    setTimeout(() => {
+      el.style.transition = 'all 0.5s ease';
+      el.style.opacity = '1';
+      el.style.transform = 'translateY(0)';
+    }, 200 + Math.random() * 300);
+  });
+}
+
+// INTERSECTION OBSERVER FOR CARDS
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }, i * 60);
+      observer.unobserve(entry.target);
     }
   });
+}, { threshold: 0.08 });
+
+document.querySelectorAll('.agent-card, .feature-card, .step-card').forEach((el, i) => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(16px)';
+  el.style.transition = 'opacity 0.45s ease, transform 0.45s ease';
+  observer.observe(el);
 });
+
+window.addEventListener('load', animateCounters);
 </script>
 </body>
 </html>
