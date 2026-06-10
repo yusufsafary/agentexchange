@@ -6,7 +6,7 @@
 <title>AGX — AI Agent Launchpad on Solana</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg: #fafafa;
@@ -165,15 +165,38 @@ nav {
 @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
 
 .hero h1 {
-  font-family: var(--display); font-size: clamp(44px, 7vw, 96px);
-  font-weight: 700; letter-spacing: -1.5px; line-height: 0.97;
-  margin-bottom: 28px; color: #ffffff;
+  font-family: var(--display);
+  font-weight: 700; letter-spacing: -2px; line-height: 0.92;
+  margin-bottom: 32px; color: #ffffff;
 }
 .hero h1 .h1-dim { display: none; }
-.hero h1 .h1-main { display: block; }
+.hero h1 .h1-top {
+  display: block;
+  font-size: clamp(16px, 1.6vw, 22px);
+  font-weight: 300; font-style: italic;
+  letter-spacing: 0.25em; text-transform: uppercase;
+  color: rgba(255,255,255,0.4); margin-bottom: 14px;
+  font-family: var(--display);
+}
+.hero h1 .h1-main {
+  display: block;
+  font-size: clamp(58px, 9.5vw, 128px);
+  font-weight: 700; letter-spacing: -3px; line-height: 0.88;
+  color: #ffffff;
+}
 .hero h1 .h1-sol {
-  background: linear-gradient(110deg, #a8bf6a 0%, #cde88a 50%, #86c98e 100%);
+  display: block;
+  font-size: clamp(36px, 5.5vw, 72px);
+  font-weight: 300; letter-spacing: 0.06em;
+  background: linear-gradient(110deg, #b8d47a 0%, #e0f59a 45%, #8fdba0 100%);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  margin-top: 6px;
+}
+.hero-mark {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  font-family: var(--display); font-size: clamp(160px, 28vw, 380px);
+  font-weight: 700; letter-spacing: -0.05em; color: rgba(255,255,255,0.018);
+  pointer-events: none; z-index: 1; user-select: none; line-height: 1;
 }
 .hero-sub {
   font-size: 16px; color: rgba(255,255,255,0.6);
@@ -793,8 +816,11 @@ footer ul li a:hover { color: var(--accent); }
         <div class="hero-dot"></div>
         Live on Solana Mainnet · Beta
       </div>
+      <div class="hero-mark" aria-hidden="true">AGX</div>
       <h1>
-        <span class="h1-main">AI Agents <span class="h1-sol">on Solana</span></span>
+        <span class="h1-top">Next-generation marketplace</span>
+        <span class="h1-main">AI Agents</span>
+        <span class="h1-sol">on Solana.</span>
       </h1>
       <p class="hero-sub">Launch, discover, and trade tokenized AI agents. Fair bonding curves, zero presale, community-first.</p>
       <div class="hero-ctas">
@@ -821,185 +847,194 @@ footer ul li a:hover { color: var(--accent); }
         <input type="text" id="agentSearch" placeholder="Search agents..." oninput="searchAgents(this.value)">
       </div>
     </div>
-
     <div class="agents-grid" id="agentsGrid">
+
+      <!-- TradeX Alpha — emerald -->
       <div class="agent-card" data-status="live" data-tags="trading,defi" onclick="openAgentModal(0)">
-        <div class="agent-card-header">
-          <div class="agent-avatar">📈</div>
-          <div class="agent-info">
-            <div class="agent-name">TradeX Alpha</div>
-            <div class="agent-ticker">$TRADEX</div>
+        <div class="card-visual" style="background:linear-gradient(135deg,#071a10 0%,#0f3320 55%,#071a0f 100%)">
+          <svg class="card-bg-pattern" viewBox="0 0 300 130" fill="none" preserveAspectRatio="xMidYMid slice"><polyline points="0,100 40,60 80,80 130,20 180,50 220,10 280,40 300,30" stroke="#4ade80" stroke-width="1.5" fill="none"/><polyline points="0,120 40,90 80,110 130,55 180,75 220,35 280,65 300,50" stroke="#4ade80" stroke-width="0.6" fill="none"/><circle cx="130" cy="20" r="4" fill="#4ade80" opacity="0.8"/><circle cx="220" cy="10" r="3" fill="#4ade80" opacity="0.6"/></svg>
+          <div class="card-visual-overlay"></div>
+          <div class="card-visual-meta">
+            <div><div class="agent-name">TradeX Alpha</div><div class="agent-ticker">$TRADEX</div></div>
+            <span class="agent-badge badge-live">Live</span>
           </div>
-          <span class="agent-badge badge-live">Live</span>
         </div>
-        <p class="agent-desc">Autonomous trading agent that scans Solana DEXs for arbitrage opportunities and executes trades with sub-second latency.</p>
-        <div class="agent-tags">
-          <span class="tag">Trading</span><span class="tag">DeFi</span><span class="tag">Arbitrage</span>
-        </div>
-        <div class="agent-stats">
-          <div class="agent-stat"><div class="agent-stat-val">$0.0042</div><div class="agent-stat-key">Price</div></div>
-          <div class="agent-stat"><div class="agent-stat-val green">+18.4%</div><div class="agent-stat-key">24h</div></div>
-          <div class="agent-stat"><div class="agent-stat-val">$420K</div><div class="agent-stat-key">MCap</div></div>
+        <div class="card-body">
+          <p class="agent-desc">Autonomous trading agent scanning Solana DEXs for arbitrage with sub-second latency.</p>
+          <div class="agent-tags"><span class="tag">Trading</span><span class="tag">DeFi</span><span class="tag">Arb</span></div>
+          <div class="agent-stats">
+            <div class="agent-stat"><div class="agent-stat-val">$0.0042</div><div class="agent-stat-key">Price</div></div>
+            <div class="agent-stat"><div class="agent-stat-val green">+18.4%</div><div class="agent-stat-key">24h</div></div>
+            <div class="agent-stat"><div class="agent-stat-val">$420K</div><div class="agent-stat-key">MCap</div></div>
+          </div>
         </div>
       </div>
 
+      <!-- Scout Protocol — teal -->
       <div class="agent-card" data-status="live" data-tags="analytics,data" onclick="openAgentModal(1)">
-        <div class="agent-card-header">
-          <div class="agent-avatar">🔍</div>
-          <div class="agent-info">
-            <div class="agent-name">Scout Protocol</div>
-            <div class="agent-ticker">$SCOUT</div>
+        <div class="card-visual" style="background:linear-gradient(135deg,#071218 0%,#0a2535 55%,#071018 100%)">
+          <svg class="card-bg-pattern" viewBox="0 0 300 130" fill="none" preserveAspectRatio="xMidYMid slice"><circle cx="150" cy="65" r="45" stroke="#38bdf8" stroke-width="1"/><circle cx="150" cy="65" r="28" stroke="#38bdf8" stroke-width="0.6"/><line x1="150" y1="0" x2="150" y2="130" stroke="#38bdf8" stroke-width="0.5"/><line x1="0" y1="65" x2="300" y2="65" stroke="#38bdf8" stroke-width="0.5"/><circle cx="150" cy="65" r="5" fill="#38bdf8" opacity="0.8"/><circle cx="195" cy="65" r="2.5" fill="#38bdf8" opacity="0.6"/><circle cx="150" cy="20" r="2.5" fill="#38bdf8" opacity="0.6"/></svg>
+          <div class="card-visual-overlay"></div>
+          <div class="card-visual-meta">
+            <div><div class="agent-name">Scout Protocol</div><div class="agent-ticker">$SCOUT</div></div>
+            <span class="agent-badge badge-live">Live</span>
           </div>
-          <span class="agent-badge badge-live">Live</span>
         </div>
-        <p class="agent-desc">On-chain analytics agent that identifies emerging trends, whale movements, and alpha signals across Solana protocols.</p>
-        <div class="agent-tags">
-          <span class="tag">Analytics</span><span class="tag">Data</span><span class="tag">Alpha</span>
-        </div>
-        <div class="agent-stats">
-          <div class="agent-stat"><div class="agent-stat-val">$0.0087</div><div class="agent-stat-key">Price</div></div>
-          <div class="agent-stat"><div class="agent-stat-val green">+6.2%</div><div class="agent-stat-key">24h</div></div>
-          <div class="agent-stat"><div class="agent-stat-val">$780K</div><div class="agent-stat-key">MCap</div></div>
+        <div class="card-body">
+          <p class="agent-desc">On-chain analytics tracking whale movements and alpha signals across Solana protocols.</p>
+          <div class="agent-tags"><span class="tag">Analytics</span><span class="tag">Data</span><span class="tag">Alpha</span></div>
+          <div class="agent-stats">
+            <div class="agent-stat"><div class="agent-stat-val">$0.0087</div><div class="agent-stat-key">Price</div></div>
+            <div class="agent-stat"><div class="agent-stat-val green">+6.2%</div><div class="agent-stat-key">24h</div></div>
+            <div class="agent-stat"><div class="agent-stat-val">$780K</div><div class="agent-stat-key">MCap</div></div>
+          </div>
         </div>
       </div>
 
+      <!-- Nora Creative — violet -->
       <div class="agent-card" data-status="new" data-tags="nft,creative" onclick="openAgentModal(2)">
-        <div class="agent-card-header">
-          <div class="agent-avatar">🎨</div>
-          <div class="agent-info">
-            <div class="agent-name">Nora Creative</div>
-            <div class="agent-ticker">$NORA</div>
+        <div class="card-visual" style="background:linear-gradient(135deg,#130718 0%,#28104a 55%,#180830 100%)">
+          <svg class="card-bg-pattern" viewBox="0 0 300 130" fill="none" preserveAspectRatio="xMidYMid slice"><polygon points="150,10 240,65 210,115 90,115 60,65" stroke="#c084fc" stroke-width="1" fill="none"/><polygon points="150,30 215,65 195,100 105,100 85,65" stroke="#c084fc" stroke-width="0.6" fill="none"/><circle cx="150" cy="10" r="3" fill="#c084fc" opacity="0.8"/><circle cx="240" cy="65" r="2.5" fill="#c084fc" opacity="0.5"/></svg>
+          <div class="card-visual-overlay"></div>
+          <div class="card-visual-meta">
+            <div><div class="agent-name">Nora Creative</div><div class="agent-ticker">$NORA</div></div>
+            <span class="agent-badge badge-new">New</span>
           </div>
-          <span class="agent-badge badge-new">New</span>
         </div>
-        <p class="agent-desc">Generative art agent that creates unique NFT collections on-demand. Each piece is algorithmically composed and minted on-chain.</p>
-        <div class="agent-tags">
-          <span class="tag">NFT</span><span class="tag">Creative</span><span class="tag">Generative</span>
-        </div>
-        <div class="agent-stats">
-          <div class="agent-stat"><div class="agent-stat-val">$0.0031</div><div class="agent-stat-key">Price</div></div>
-          <div class="agent-stat"><div class="agent-stat-val green">+22.1%</div><div class="agent-stat-key">24h</div></div>
-          <div class="agent-stat"><div class="agent-stat-val">$310K</div><div class="agent-stat-key">MCap</div></div>
+        <div class="card-body">
+          <p class="agent-desc">Generative art agent minting unique NFT collections algorithmically on-chain.</p>
+          <div class="agent-tags"><span class="tag">NFT</span><span class="tag">Creative</span><span class="tag">Gen</span></div>
+          <div class="agent-stats">
+            <div class="agent-stat"><div class="agent-stat-val">$0.0031</div><div class="agent-stat-key">Price</div></div>
+            <div class="agent-stat"><div class="agent-stat-val green">+22.1%</div><div class="agent-stat-key">24h</div></div>
+            <div class="agent-stat"><div class="agent-stat-val">$310K</div><div class="agent-stat-key">MCap</div></div>
+          </div>
         </div>
       </div>
 
+      <!-- Atlas Gaming — amber -->
       <div class="agent-card" data-status="live" data-tags="gaming,play" onclick="openAgentModal(3)">
-        <div class="agent-card-header">
-          <div class="agent-avatar">🎮</div>
-          <div class="agent-info">
-            <div class="agent-name">Atlas Gaming</div>
-            <div class="agent-ticker">$ATLAS</div>
+        <div class="card-visual" style="background:linear-gradient(135deg,#150e00 0%,#3d2800 55%,#1a1000 100%)">
+          <svg class="card-bg-pattern" viewBox="0 0 300 130" fill="none" preserveAspectRatio="xMidYMid slice"><rect x="50" y="20" width="80" height="80" rx="4" stroke="#fbbf24" stroke-width="1" fill="none"/><rect x="170" y="30" width="80" height="80" rx="4" stroke="#fbbf24" stroke-width="0.6" fill="none" transform="rotate(15 210 70)"/><line x1="130" y1="60" x2="170" y2="60" stroke="#fbbf24" stroke-width="1"/><circle cx="90" cy="60" r="12" stroke="#fbbf24" stroke-width="0.8" fill="none"/><circle cx="90" cy="60" r="3" fill="#fbbf24" opacity="0.7"/></svg>
+          <div class="card-visual-overlay"></div>
+          <div class="card-visual-meta">
+            <div><div class="agent-name">Atlas Gaming</div><div class="agent-ticker">$ATLAS</div></div>
+            <span class="agent-badge badge-live">Live</span>
           </div>
-          <span class="agent-badge badge-live">Live</span>
         </div>
-        <p class="agent-desc">AI game master that creates dynamic on-chain gaming experiences. Procedurally generates quests, loot, and player challenges.</p>
-        <div class="agent-tags">
-          <span class="tag">Gaming</span><span class="tag">Play</span><span class="tag">RPG</span>
-        </div>
-        <div class="agent-stats">
-          <div class="agent-stat"><div class="agent-stat-val">$0.0119</div><div class="agent-stat-key">Price</div></div>
-          <div class="agent-stat"><div class="agent-stat-val green">+4.7%</div><div class="agent-stat-key">24h</div></div>
-          <div class="agent-stat"><div class="agent-stat-val">$1.2M</div><div class="agent-stat-key">MCap</div></div>
+        <div class="card-body">
+          <p class="agent-desc">AI game master creating dynamic on-chain experiences with procedural quests and loot.</p>
+          <div class="agent-tags"><span class="tag">Gaming</span><span class="tag">Play</span><span class="tag">RPG</span></div>
+          <div class="agent-stats">
+            <div class="agent-stat"><div class="agent-stat-val">$0.0119</div><div class="agent-stat-key">Price</div></div>
+            <div class="agent-stat"><div class="agent-stat-val green">+4.7%</div><div class="agent-stat-key">24h</div></div>
+            <div class="agent-stat"><div class="agent-stat-val">$1.2M</div><div class="agent-stat-key">MCap</div></div>
+          </div>
         </div>
       </div>
 
+      <!-- Flux Social — crimson -->
       <div class="agent-card" data-status="trending" data-tags="social,content" onclick="openAgentModal(4)">
-        <div class="agent-card-header">
-          <div class="agent-avatar">⚡</div>
-          <div class="agent-info">
-            <div class="agent-name">Flux Social</div>
-            <div class="agent-ticker">$FLUX</div>
+        <div class="card-visual" style="background:linear-gradient(135deg,#180505 0%,#3d0f0f 55%,#200808 100%)">
+          <svg class="card-bg-pattern" viewBox="0 0 300 130" fill="none" preserveAspectRatio="xMidYMid slice"><path d="M20,65 Q75,20 150,65 Q225,110 280,65" stroke="#f87171" stroke-width="1.5" fill="none"/><path d="M20,80 Q75,35 150,80 Q225,125 280,80" stroke="#f87171" stroke-width="0.5" fill="none"/><path d="M20,50 Q75,5 150,50 Q225,95 280,50" stroke="#f87171" stroke-width="0.5" fill="none"/><circle cx="150" cy="65" r="5" fill="#f87171" opacity="0.8"/></svg>
+          <div class="card-visual-overlay"></div>
+          <div class="card-visual-meta">
+            <div><div class="agent-name">Flux Social</div><div class="agent-ticker">$FLUX</div></div>
+            <span class="agent-badge badge-trending">Trending</span>
           </div>
-          <span class="agent-badge badge-trending">Trending</span>
         </div>
-        <p class="agent-desc">Autonomous social media agent that curates content, engages communities, and grows brands 24/7 across platforms.</p>
-        <div class="agent-tags">
-          <span class="tag">Social</span><span class="tag">Content</span><span class="tag">Growth</span>
-        </div>
-        <div class="agent-stats">
-          <div class="agent-stat"><div class="agent-stat-val">$0.0055</div><div class="agent-stat-key">Price</div></div>
-          <div class="agent-stat"><div class="agent-stat-val green">+9.3%</div><div class="agent-stat-key">24h</div></div>
-          <div class="agent-stat"><div class="agent-stat-val">$550K</div><div class="agent-stat-key">MCap</div></div>
+        <div class="card-body">
+          <p class="agent-desc">Autonomous social agent curating content and growing brands 24/7 across platforms.</p>
+          <div class="agent-tags"><span class="tag">Social</span><span class="tag">Content</span><span class="tag">Growth</span></div>
+          <div class="agent-stats">
+            <div class="agent-stat"><div class="agent-stat-val">$0.0055</div><div class="agent-stat-key">Price</div></div>
+            <div class="agent-stat"><div class="agent-stat-val green">+9.3%</div><div class="agent-stat-key">24h</div></div>
+            <div class="agent-stat"><div class="agent-stat-val">$550K</div><div class="agent-stat-key">MCap</div></div>
+          </div>
         </div>
       </div>
 
+      <!-- Sentinel AI — slate/gold -->
       <div class="agent-card" data-status="soon" data-tags="security,monitor" onclick="openAgentModal(5)">
-        <div class="agent-card-header">
-          <div class="agent-avatar">🛡️</div>
-          <div class="agent-info">
-            <div class="agent-name">Sentinel AI</div>
-            <div class="agent-ticker">$SNTNL</div>
+        <div class="card-visual" style="background:linear-gradient(135deg,#0e0f08 0%,#2a2d10 55%,#161808 100%)">
+          <svg class="card-bg-pattern" viewBox="0 0 300 130" fill="none" preserveAspectRatio="xMidYMid slice"><path d="M150,10 L250,50 L250,90 L150,120 L50,90 L50,50 Z" stroke="#fbbf24" stroke-width="1" fill="none"/><path d="M150,30 L220,58 L220,88 L150,105 L80,88 L80,58 Z" stroke="#fbbf24" stroke-width="0.6" fill="none"/><circle cx="150" cy="65" r="15" stroke="#fbbf24" stroke-width="0.8" fill="none"/><line x1="150" y1="50" x2="150" y2="65" stroke="#fbbf24" stroke-width="1.5"/><circle cx="150" cy="67" r="2" fill="#fbbf24"/></svg>
+          <div class="card-visual-overlay"></div>
+          <div class="card-visual-meta">
+            <div><div class="agent-name">Sentinel AI</div><div class="agent-ticker">$SNTNL</div></div>
+            <span class="agent-badge badge-soon">Soon</span>
           </div>
-          <span class="agent-badge badge-soon">Soon</span>
         </div>
-        <p class="agent-desc">Security monitoring agent that watches for exploits, rug pulls, and suspicious transactions across Solana protocols.</p>
-        <div class="agent-tags">
-          <span class="tag">Security</span><span class="tag">Monitor</span><span class="tag">Alert</span>
-        </div>
-        <div class="agent-stats">
-          <div class="agent-stat"><div class="agent-stat-val">TBA</div><div class="agent-stat-key">Price</div></div>
-          <div class="agent-stat"><div class="agent-stat-val">TBA</div><div class="agent-stat-key">24h</div></div>
-          <div class="agent-stat"><div class="agent-stat-val">TBA</div><div class="agent-stat-key">MCap</div></div>
+        <div class="card-body">
+          <p class="agent-desc">Security monitor detecting exploits, rug pulls, and suspicious activity across Solana.</p>
+          <div class="agent-tags"><span class="tag">Security</span><span class="tag">Monitor</span><span class="tag">Alert</span></div>
+          <div class="agent-stats">
+            <div class="agent-stat"><div class="agent-stat-val">TBA</div><div class="agent-stat-key">Price</div></div>
+            <div class="agent-stat"><div class="agent-stat-val">TBA</div><div class="agent-stat-key">24h</div></div>
+            <div class="agent-stat"><div class="agent-stat-val">TBA</div><div class="agent-stat-key">MCap</div></div>
+          </div>
         </div>
       </div>
 
+      <!-- Oracle Prime — deep indigo -->
       <div class="agent-card" data-status="live" data-tags="prediction,markets" onclick="openAgentModal(6)">
-        <div class="agent-card-header">
-          <div class="agent-avatar">🔮</div>
-          <div class="agent-info">
-            <div class="agent-name">Oracle Prime</div>
-            <div class="agent-ticker">$ORACLE</div>
+        <div class="card-visual" style="background:linear-gradient(135deg,#0a0518 0%,#1e0f45 55%,#100828 100%)">
+          <svg class="card-bg-pattern" viewBox="0 0 300 130" fill="none" preserveAspectRatio="xMidYMid slice"><circle cx="150" cy="65" r="55" stroke="#a78bfa" stroke-width="1" fill="none"/><path d="M95,65 Q150,5 205,65 Q150,125 95,65" stroke="#a78bfa" stroke-width="0.8" fill="none"/><circle cx="150" cy="10" r="3" fill="#a78bfa" opacity="0.7"/><circle cx="205" cy="65" r="3" fill="#a78bfa" opacity="0.7"/><circle cx="150" cy="120" r="3" fill="#a78bfa" opacity="0.5"/></svg>
+          <div class="card-visual-overlay"></div>
+          <div class="card-visual-meta">
+            <div><div class="agent-name">Oracle Prime</div><div class="agent-ticker">$ORACLE</div></div>
+            <span class="agent-badge badge-live">Live</span>
           </div>
-          <span class="agent-badge badge-live">Live</span>
         </div>
-        <p class="agent-desc">Prediction market agent that aggregates sentiment, on-chain data, and external signals to forecast token movements.</p>
-        <div class="agent-tags">
-          <span class="tag">Prediction</span><span class="tag">Markets</span><span class="tag">Forecast</span>
-        </div>
-        <div class="agent-stats">
-          <div class="agent-stat"><div class="agent-stat-val">$0.0072</div><div class="agent-stat-key">Price</div></div>
-          <div class="agent-stat"><div class="agent-stat-val red">-2.1%</div><div class="agent-stat-key">24h</div></div>
-          <div class="agent-stat"><div class="agent-stat-val">$720K</div><div class="agent-stat-key">MCap</div></div>
+        <div class="card-body">
+          <p class="agent-desc">Prediction market agent forecasting token movements from on-chain data and sentiment.</p>
+          <div class="agent-tags"><span class="tag">Prediction</span><span class="tag">Markets</span><span class="tag">Signals</span></div>
+          <div class="agent-stats">
+            <div class="agent-stat"><div class="agent-stat-val">$0.0072</div><div class="agent-stat-key">Price</div></div>
+            <div class="agent-stat"><div class="agent-stat-val red">-2.1%</div><div class="agent-stat-key">24h</div></div>
+            <div class="agent-stat"><div class="agent-stat-val">$720K</div><div class="agent-stat-key">MCap</div></div>
+          </div>
         </div>
       </div>
 
+      <!-- Yield Farmer — forest -->
       <div class="agent-card" data-status="new" data-tags="yield,farming" onclick="openAgentModal(7)">
-        <div class="agent-card-header">
-          <div class="agent-avatar">🌾</div>
-          <div class="agent-info">
-            <div class="agent-name">Yield Farmer</div>
-            <div class="agent-ticker">$YIELD</div>
+        <div class="card-visual" style="background:linear-gradient(135deg,#051205 0%,#0d3010 55%,#071a08 100%)">
+          <svg class="card-bg-pattern" viewBox="0 0 300 130" fill="none" preserveAspectRatio="xMidYMid slice"><path d="M30,110 C80,110 80,20 150,20 C220,20 220,110 270,110" stroke="#86efac" stroke-width="1.2" fill="none"/><path d="M30,110 C80,110 80,50 150,50 C220,50 220,110 270,110" stroke="#86efac" stroke-width="0.5" fill="none"/><line x1="150" y1="20" x2="150" y2="110" stroke="#86efac" stroke-width="0.7" stroke-dasharray="4 3"/><circle cx="150" cy="20" r="4" fill="#86efac" opacity="0.8"/></svg>
+          <div class="card-visual-overlay"></div>
+          <div class="card-visual-meta">
+            <div><div class="agent-name">Yield Farmer</div><div class="agent-ticker">$YIELD</div></div>
+            <span class="agent-badge badge-new">New</span>
           </div>
-          <span class="agent-badge badge-new">New</span>
         </div>
-        <p class="agent-desc">Automated yield farming agent that reallocates capital across Solana DeFi protocols to maximize APY and minimize risk.</p>
-        <div class="agent-tags">
-          <span class="tag">Yield</span><span class="tag">Farming</span><span class="tag">DeFi</span>
-        </div>
-        <div class="agent-stats">
-          <div class="agent-stat"><div class="agent-stat-val">$0.0028</div><div class="agent-stat-key">Price</div></div>
-          <div class="agent-stat"><div class="agent-stat-val green">+31.5%</div><div class="agent-stat-key">24h</div></div>
-          <div class="agent-stat"><div class="agent-stat-val">$280K</div><div class="agent-stat-key">MCap</div></div>
+        <div class="card-body">
+          <p class="agent-desc">Auto-reallocates capital across Solana DeFi protocols to maximize APY and minimize risk.</p>
+          <div class="agent-tags"><span class="tag">Yield</span><span class="tag">Farming</span><span class="tag">DeFi</span></div>
+          <div class="agent-stats">
+            <div class="agent-stat"><div class="agent-stat-val">$0.0028</div><div class="agent-stat-key">Price</div></div>
+            <div class="agent-stat"><div class="agent-stat-val green">+31.5%</div><div class="agent-stat-key">24h</div></div>
+            <div class="agent-stat"><div class="agent-stat-val">$280K</div><div class="agent-stat-key">MCap</div></div>
+          </div>
         </div>
       </div>
 
+      <!-- Meme Lord — hot magenta -->
       <div class="agent-card" data-status="trending" data-tags="meme,community" onclick="openAgentModal(8)">
-        <div class="agent-card-header">
-          <div class="agent-avatar">🐸</div>
-          <div class="agent-info">
-            <div class="agent-name">Meme Lord</div>
-            <div class="agent-ticker">$MEME</div>
+        <div class="card-visual" style="background:linear-gradient(135deg,#180512 0%,#3d0f2e 55%,#200820 100%)">
+          <svg class="card-bg-pattern" viewBox="0 0 300 130" fill="none" preserveAspectRatio="xMidYMid slice"><rect x="20" y="15" width="260" height="100" rx="8" stroke="#f472b6" stroke-width="0.8" fill="none"/><line x1="20" y1="45" x2="280" y2="45" stroke="#f472b6" stroke-width="0.5"/><circle cx="60" cy="30" r="6" stroke="#f472b6" stroke-width="0.8" fill="none"/><circle cx="85" cy="30" r="6" stroke="#f472b6" stroke-width="0.8" fill="none"/><circle cx="110" cy="30" r="6" stroke="#f472b6" stroke-width="0.8" fill="none"/><rect x="35" y="58" width="90" height="40" rx="4" stroke="#f472b6" stroke-width="0.7" fill="none"/><rect x="140" y="58" width="125" height="18" rx="3" stroke="#f472b6" stroke-width="0.5" fill="none"/><rect x="140" y="82" width="80" height="16" rx="3" stroke="#f472b6" stroke-width="0.5" fill="none"/></svg>
+          <div class="card-visual-overlay"></div>
+          <div class="card-visual-meta">
+            <div><div class="agent-name">Meme Lord</div><div class="agent-ticker">$MEME</div></div>
+            <span class="agent-badge badge-trending">Trending</span>
           </div>
-          <span class="agent-badge badge-trending">Trending</span>
         </div>
-        <p class="agent-desc">Community-driven meme agent that generates viral content, runs polls, and rewards engagement with token drops.</p>
-        <div class="agent-tags">
-          <span class="tag">Meme</span><span class="tag">Community</span><span class="tag">Viral</span>
-        </div>
-        <div class="agent-stats">
-          <div class="agent-stat"><div class="agent-stat-val">$0.0015</div><div class="agent-stat-key">Price</div></div>
-          <div class="agent-stat"><div class="agent-stat-val green">+45.2%</div><div class="agent-stat-key">24h</div></div>
-          <div class="agent-stat"><div class="agent-stat-val">$150K</div><div class="agent-stat-key">MCap</div></div>
+        <div class="card-body">
+          <p class="agent-desc">Community-driven meme agent generating viral content and rewarding engagement with token drops.</p>
+          <div class="agent-tags"><span class="tag">Meme</span><span class="tag">Community</span><span class="tag">Viral</span></div>
+          <div class="agent-stats">
+            <div class="agent-stat"><div class="agent-stat-val">$0.0015</div><div class="agent-stat-key">Price</div></div>
+            <div class="agent-stat"><div class="agent-stat-val green">+45.2%</div><div class="agent-stat-key">24h</div></div>
+            <div class="agent-stat"><div class="agent-stat-val">$150K</div><div class="agent-stat-key">MCap</div></div>
+          </div>
         </div>
       </div>
 
@@ -1246,16 +1281,17 @@ document.querySelectorAll('.agent-card, .feature-card, .step-card').forEach((el,
 
 window.addEventListener('load', animateCounters);
 
-// ── HERO CANVAS PARTICLE NETWORK ────────────────────────────────────────────
+// ── HERO CANVAS — SPECTACULAR PARTICLE NETWORK ─────────────────────────────
 (function() {
   const canvas = document.getElementById('heroCanvas');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
-  let W, H, nodes = [];
-  const NODE_COUNT = 72;
-  const MAX_DIST = 160;
-  const NODE_COLOR = 'rgba(168,191,106,';   // olive-sage
-  const LINE_COLOR  = 'rgba(168,191,106,';
+  let W, H, t = 0;
+  const NODES = [];
+  const NODE_N = 90;
+  const CONN_DIST = 175;
+  const PULSE_NODES = [];
+  let mouse = { x: -9999, y: -9999 };
 
   function resize() {
     W = canvas.width  = canvas.offsetWidth;
@@ -1264,48 +1300,142 @@ window.addEventListener('load', animateCounters);
   window.addEventListener('resize', resize);
   resize();
 
-  for (let i = 0; i < NODE_COUNT; i++) {
-    nodes.push({
-      x: Math.random() * W,
-      y: Math.random() * H,
-      vx: (Math.random() - 0.5) * 0.38,
-      vy: (Math.random() - 0.5) * 0.38,
-      r: Math.random() * 1.8 + 0.6
+  // Create nodes
+  for (let i = 0; i < NODE_N; i++) {
+    NODES.push({
+      x: Math.random() * W, y: Math.random() * H,
+      vx: (Math.random() - 0.5) * 0.45,
+      vy: (Math.random() - 0.5) * 0.45,
+      r: Math.random() * 1.8 + 0.5,
+      pulse: 0, pulseV: 0
     });
   }
 
+  // Mouse parallax
+  canvas.addEventListener('mousemove', e => {
+    const rect = canvas.getBoundingClientRect();
+    mouse.x = e.clientX - rect.left;
+    mouse.y = e.clientY - rect.top;
+  });
+  canvas.addEventListener('mouseleave', () => { mouse.x = -9999; mouse.y = -9999; });
+
+  // Random pulses
+  function triggerPulse() {
+    const n = NODES[Math.floor(Math.random() * NODES.length)];
+    n.pulse = 1; n.pulseV = 0.02 + Math.random() * 0.015;
+    setTimeout(triggerPulse, 400 + Math.random() * 1200);
+  }
+  triggerPulse();
+
+  // Flowing data packet
+  const PACKETS = [];
+  function spawnPacket() {
+    const a = NODES[Math.floor(Math.random() * NODES.length)];
+    const b = NODES[Math.floor(Math.random() * NODES.length)];
+    if (a !== b) PACKETS.push({ ax: a.x, ay: a.y, bx: b.x, by: b.y, p: 0, speed: 0.008 + Math.random() * 0.012 });
+    setTimeout(spawnPacket, 180 + Math.random() * 600);
+  }
+  spawnPacket();
+
+  // Aurora blobs (slow drifting glow orbs)
+  const ORBS = [
+    { x: 0.25, y: 0.3,  r: 0.28, c: 'rgba(107,140,50,', phase: 0,    speed: 0.0003 },
+    { x: 0.75, y: 0.65, r: 0.22, c: 'rgba(50,120,80,',  phase: 2.1,  speed: 0.00025 },
+    { x: 0.5,  y: 0.15, r: 0.18, c: 'rgba(80,160,100,', phase: 4.3,  speed: 0.0004 },
+  ];
+
   function draw() {
     ctx.clearRect(0, 0, W, H);
-    // Move nodes
-    nodes.forEach(n => {
+    t += 0.012;
+
+    // ── Aurora orbs ──────────────────────────────────────────────
+    ORBS.forEach(o => {
+      const cx = (o.x + 0.04 * Math.sin(t * o.speed * 1000 + o.phase)) * W;
+      const cy = (o.y + 0.03 * Math.cos(t * o.speed * 1000 + o.phase + 1)) * H;
+      const r  = o.r * Math.min(W, H);
+      const g  = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
+      g.addColorStop(0,   o.c + '0.12)');
+      g.addColorStop(0.5, o.c + '0.05)');
+      g.addColorStop(1,   o.c + '0)');
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.fillStyle = g;
+      ctx.fill();
+    });
+
+    // ── Move + mouse attraction ──────────────────────────────────
+    NODES.forEach(n => {
       n.x += n.vx; n.y += n.vy;
       if (n.x < 0) n.x = W; if (n.x > W) n.x = 0;
       if (n.y < 0) n.y = H; if (n.y > H) n.y = 0;
+      // Gentle mouse repulsion
+      const dx = n.x - mouse.x, dy = n.y - mouse.y;
+      const d  = Math.sqrt(dx*dx + dy*dy);
+      if (d < 120) { n.vx += dx / d * 0.03; n.vy += dy / d * 0.03; }
+      // Dampen
+      n.vx *= 0.998; n.vy *= 0.998;
+      // Pulse decay
+      if (n.pulse > 0) { n.pulse -= n.pulseV; if (n.pulse < 0) n.pulse = 0; }
     });
-    // Draw lines
-    for (let i = 0; i < nodes.length; i++) {
-      for (let j = i + 1; j < nodes.length; j++) {
-        const dx = nodes[i].x - nodes[j].x;
-        const dy = nodes[i].y - nodes[j].y;
-        const d = Math.sqrt(dx*dx + dy*dy);
-        if (d < MAX_DIST) {
-          const alpha = (1 - d / MAX_DIST) * 0.28;
+
+    // ── Connections ──────────────────────────────────────────────
+    for (let i = 0; i < NODES.length; i++) {
+      for (let j = i + 1; j < NODES.length; j++) {
+        const dx = NODES[i].x - NODES[j].x;
+        const dy = NODES[i].y - NODES[j].y;
+        const d  = Math.sqrt(dx*dx + dy*dy);
+        if (d < CONN_DIST) {
+          const a = (1 - d / CONN_DIST) * 0.32;
+          const grd = ctx.createLinearGradient(NODES[i].x, NODES[i].y, NODES[j].x, NODES[j].y);
+          grd.addColorStop(0, `rgba(180,210,100,${a})`);
+          grd.addColorStop(1, `rgba(100,180,120,${a})`);
           ctx.beginPath();
-          ctx.moveTo(nodes[i].x, nodes[i].y);
-          ctx.lineTo(nodes[j].x, nodes[j].y);
-          ctx.strokeStyle = LINE_COLOR + alpha + ')';
-          ctx.lineWidth = 0.8;
+          ctx.moveTo(NODES[i].x, NODES[i].y);
+          ctx.lineTo(NODES[j].x, NODES[j].y);
+          ctx.strokeStyle = grd;
+          ctx.lineWidth = 0.85;
           ctx.stroke();
         }
       }
     }
-    // Draw nodes
-    nodes.forEach(n => {
+
+    // ── Data packets ─────────────────────────────────────────────
+    for (let k = PACKETS.length - 1; k >= 0; k--) {
+      const pk = PACKETS[k];
+      pk.p += pk.speed;
+      if (pk.p >= 1) { PACKETS.splice(k, 1); continue; }
+      const px = pk.ax + (pk.bx - pk.ax) * pk.p;
+      const py = pk.ay + (pk.by - pk.ay) * pk.p;
       ctx.beginPath();
-      ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
-      ctx.fillStyle = NODE_COLOR + '0.7)';
+      ctx.arc(px, py, 2.2, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(220,255,160,0.9)';
+      ctx.fill();
+      // Glow
+      ctx.beginPath();
+      ctx.arc(px, py, 6, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(180,240,120,0.18)';
+      ctx.fill();
+    }
+
+    // ── Nodes ────────────────────────────────────────────────────
+    NODES.forEach(n => {
+      const base = n.r + n.pulse * 5;
+      if (n.pulse > 0.05) {
+        // Pulse ring
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, base + 10, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(200,240,130,${n.pulse * 0.25})`;
+        ctx.lineWidth = 0.8;
+        ctx.stroke();
+      }
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, base, 0, Math.PI * 2);
+      ctx.fillStyle = n.pulse > 0.1
+        ? `rgba(220,255,160,${0.5 + n.pulse * 0.5})`
+        : 'rgba(168,200,100,0.65)';
       ctx.fill();
     });
+
     requestAnimationFrame(draw);
   }
   draw();
