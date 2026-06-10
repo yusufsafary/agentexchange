@@ -279,78 +279,143 @@ section { padding: 80px 24px; }
 
 /* AGENT GRID */
 .agents-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-  gap: 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
 }
+/* Card shell — NO padding, NO overflow:hidden so body content never clips */
 .agent-card {
-  background: var(--surface); padding: 22px;
+  background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 14px;
+  border-radius: 16px;
   cursor: pointer;
-  transition: all 0.22s;
-  position: relative; overflow: hidden;
+  transition: transform 0.25s cubic-bezier(.22,.68,0,1.2), box-shadow 0.25s, border-color 0.2s;
+  display: flex;
+  flex-direction: column;
 }
-.agent-card::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0; height: 2.5px;
-  border-radius: 14px 14px 0 0;
-  transition: opacity 0.2s;
-  opacity: 0.7;
-}
-.agent-card[data-status="live"]::before { background: var(--green); }
-.agent-card[data-status="trending"]::before { background: var(--red); }
-.agent-card[data-status="new"]::before { background: var(--accent); }
-.agent-card[data-status="soon"]::before { background: var(--gold); }
 .agent-card:hover {
-  border-color: rgba(107,122,66,0.2);
-  box-shadow: 0 6px 28px rgba(0,0,0,0.07);
-  transform: translateY(-2px);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.11);
+  border-color: rgba(107,122,66,0.28);
 }
-.agent-card:hover::before { opacity: 1; }
-.agent-card-header { display: flex; align-items: flex-start; gap: 13px; margin-bottom: 14px; }
-.agent-avatar {
-  width: 46px; height: 46px; border-radius: 12px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; flex-shrink: 0;
-  border: 1px solid var(--border); background: var(--bg);
+/* Visual header — this alone clips its own overflow for the rounded top */
+.card-visual {
+  height: 140px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px 16px 0 0;
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-end;
+  padding: 14px 16px;
 }
-.agent-info { flex: 1; min-width: 0; }
+.card-visual svg.card-bg-pattern {
+  position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.25;
+}
+.card-visual-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 20%, rgba(0,0,0,0.65) 100%);
+}
+.card-visual-meta {
+  position: relative; z-index: 1;
+  display: flex; align-items: flex-end; justify-content: space-between;
+  width: 100%; gap: 8px;
+}
 .agent-name {
-  font-family: var(--display); font-size: 16px; font-weight: 700;
-  color: var(--text-1); letter-spacing: -0.3px; margin-bottom: 2px;
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  font-family: var(--display); font-size: 17px; font-weight: 700;
+  color: #fff; letter-spacing: -0.2px; line-height: 1.15;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.5);
 }
-.agent-ticker { font-family: var(--mono); font-size: 11.5px; color: var(--accent); font-weight: 600; }
+.agent-ticker {
+  font-family: var(--mono); font-size: 10.5px;
+  color: rgba(255,255,255,0.6); font-weight: 600; margin-top: 3px;
+}
 .agent-badge {
-  padding: 3px 9px; border-radius: 20px;
-  font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.1em;
+  padding: 4px 10px; border-radius: 20px;
+  font-family: var(--mono); font-size: 9px; letter-spacing: 0.12em;
   text-transform: uppercase; font-weight: 700; flex-shrink: 0;
+  backdrop-filter: blur(8px); align-self: flex-start;
 }
-.badge-live { color: var(--green); background: var(--green-dim); border: 1px solid rgba(5,150,105,0.2); }
-.badge-soon { color: var(--gold); background: var(--gold-dim); border: 1px solid rgba(217,119,6,0.2); }
-.badge-new { color: var(--accent); background: var(--accent-dim); border: 1px solid rgba(107,122,66,0.18); }
-.badge-trending { color: var(--red); background: var(--red-dim); border: 1px solid rgba(220,38,38,0.18); }
+.badge-live    { color: #4ade80; background: rgba(74,222,128,0.18); border: 1px solid rgba(74,222,128,0.35); }
+.badge-soon    { color: #fbbf24; background: rgba(251,191,36,0.18); border: 1px solid rgba(251,191,36,0.35); }
+.badge-new     { color: #a3e635; background: rgba(163,230,53,0.18); border: 1px solid rgba(163,230,53,0.35); }
+.badge-trending{ color: #f87171; background: rgba(248,113,113,0.18); border: 1px solid rgba(248,113,113,0.35); }
+/* Card body — its own padding, never clipped */
+.card-body {
+  padding: 16px 18px 18px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
 .agent-desc {
-  font-size: 13.5px; color: var(--text-2); line-height: 1.6; margin-bottom: 14px;
+  font-size: 13.5px; color: var(--text-2); line-height: 1.6;
+  margin-bottom: 13px;
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
 }
-.agent-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
+.agent-tags { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 14px; }
 .tag {
-  padding: 3px 9px; border-radius: 6px; font-family: var(--mono);
-  font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 3px 9px; border-radius: 5px; font-family: var(--mono);
+  font-size: 9.5px; letter-spacing: 0.06em; text-transform: uppercase;
   background: var(--bg-2); color: var(--text-3); border: 1px solid var(--border);
 }
+/* Stats always pinned at bottom */
 .agent-stats {
-  display: flex; border-top: 1px solid var(--border); padding-top: 13px;
+  display: flex;
+  border-top: 1px solid var(--border);
+  padding-top: 14px;
+  margin-top: auto;
 }
 .agent-stat { flex: 1; text-align: center; }
 .agent-stat:not(:last-child) { border-right: 1px solid var(--border); }
-.agent-stat-val { font-family: var(--mono); font-size: 13px; font-weight: 700; color: var(--text-1); }
+.agent-stat-val {
+  font-family: var(--mono); font-size: 13px; font-weight: 700; color: var(--text-1);
+}
 .agent-stat-val.green { color: var(--green); }
-.agent-stat-val.red { color: var(--red); }
-.agent-stat-key { font-family: var(--mono); font-size: 9.5px; color: var(--text-3); margin-top: 3px; text-transform: uppercase; letter-spacing: 0.07em; }
-.agents-empty { display: none; padding: 48px; text-align: center; color: var(--text-3); font-size: 14px; grid-column: 1 / -1; }
+.agent-stat-val.red   { color: var(--red); }
+.agent-stat-key {
+  font-family: var(--mono); font-size: 9px; color: var(--text-3);
+  margin-top: 3px; text-transform: uppercase; letter-spacing: 0.07em;
+}
+.agents-empty { display: none; padding: 48px; text-align: center; color: var(--text-3); font-size: 14px; grid-column: 1/-1; }
 .agents-empty.show { display: block; }
+
+/* ACTIVITY FEED */
+.activity-bar {
+  background: var(--bg-2);
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+  overflow: hidden;
+  position: relative;
+}
+.activity-bar::before,
+.activity-bar::after {
+  content: ''; position: absolute; top: 0; bottom: 0; width: 60px; z-index: 2; pointer-events: none;
+}
+.activity-bar::before { left: 0;  background: linear-gradient(to right,  var(--bg-2), transparent); }
+.activity-bar::after  { right: 0; background: linear-gradient(to left, var(--bg-2), transparent); }
+.activity-track {
+  display: flex; align-items: center; gap: 32px;
+  height: 40px;
+  white-space: nowrap;
+  animation: actscroll 38s linear infinite;
+}
+.activity-track:hover { animation-play-state: paused; }
+@keyframes actscroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.act-item {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: var(--mono); font-size: 11px; color: var(--text-3);
+  flex-shrink: 0;
+}
+.act-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+.act-dot.buy  { background: var(--green); box-shadow: 0 0 5px var(--green); }
+.act-dot.sell { background: var(--red);   box-shadow: 0 0 5px var(--red); }
+.act-ticker { color: var(--accent); font-weight: 700; }
+.act-type.buy  { color: var(--green); }
+.act-type.sell { color: var(--red); }
+.act-sep { color: var(--border-strong); margin: 0 4px; }
 
 /* HOW IT WORKS */
 .how-section { background: var(--bg-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
@@ -830,6 +895,38 @@ footer ul li a:hover { color: var(--accent); }
     </div>
   </div>
 </section>
+
+
+<!-- ACTIVITY FEED -->
+<div class="activity-bar" aria-hidden="true">
+  <div class="activity-track" id="activityTrack">
+    <span class="act-item"><span class="act-dot buy"></span><span>7xK…3p9</span><span class="act-type buy">bought</span><span class="act-ticker">$TRADEX</span><span>0.42 SOL</span><span class="act-sep">·</span><span>2s ago</span></span>
+    <span class="act-item"><span class="act-dot sell"></span><span>9mQ…7f2</span><span class="act-type sell">sold</span><span class="act-ticker">$ATLAS</span><span>1.1 SOL</span><span class="act-sep">·</span><span>5s ago</span></span>
+    <span class="act-item"><span class="act-dot buy"></span><span>3bR…1kL</span><span class="act-type buy">bought</span><span class="act-ticker">$NORA</span><span>0.19 SOL</span><span class="act-sep">·</span><span>8s ago</span></span>
+    <span class="act-item"><span class="act-dot buy"></span><span>2wP…8nX</span><span class="act-type buy">bought</span><span class="act-ticker">$MEME</span><span>0.88 SOL</span><span class="act-sep">·</span><span>11s ago</span></span>
+    <span class="act-item"><span class="act-dot sell"></span><span>5tZ…4jD</span><span class="act-type sell">sold</span><span class="act-ticker">$FLUX</span><span>0.33 SOL</span><span class="act-sep">·</span><span>14s ago</span></span>
+    <span class="act-item"><span class="act-dot buy"></span><span>8hV…2cA</span><span class="act-type buy">bought</span><span class="act-ticker">$SCOUT</span><span>2.05 SOL</span><span class="act-sep">·</span><span>17s ago</span></span>
+    <span class="act-item"><span class="act-dot buy"></span><span>1eN…6sY</span><span class="act-type buy">bought</span><span class="act-ticker">$YIELD</span><span>0.55 SOL</span><span class="act-sep">·</span><span>21s ago</span></span>
+    <span class="act-item"><span class="act-dot sell"></span><span>4rM…9gF</span><span class="act-type sell">sold</span><span class="act-ticker">$ORACLE</span><span>0.72 SOL</span><span class="act-sep">·</span><span>25s ago</span></span>
+    <span class="act-item"><span class="act-dot buy"></span><span>6cJ…5hW</span><span class="act-type buy">bought</span><span class="act-ticker">$ATLAS</span><span>3.20 SOL</span><span class="act-sep">·</span><span>29s ago</span></span>
+    <span class="act-item"><span class="act-dot buy"></span><span>0xB…3kR</span><span class="act-type buy">bought</span><span class="act-ticker">$TRADEX</span><span>0.91 SOL</span><span class="act-sep">·</span><span>33s ago</span></span>
+    <span class="act-item"><span class="act-dot sell"></span><span>7yL…2mN</span><span class="act-type sell">sold</span><span class="act-ticker">$MEME</span><span>1.44 SOL</span><span class="act-sep">·</span><span>38s ago</span></span>
+    <span class="act-item"><span class="act-dot buy"></span><span>3pQ…7tS</span><span class="act-type buy">bought</span><span class="act-ticker">$FLUX</span><span>0.27 SOL</span><span class="act-sep">·</span><span>42s ago</span></span>
+    <!-- duplicate for seamless loop -->
+    <span class="act-item"><span class="act-dot buy"></span><span>7xK…3p9</span><span class="act-type buy">bought</span><span class="act-ticker">$TRADEX</span><span>0.42 SOL</span><span class="act-sep">·</span><span>2s ago</span></span>
+    <span class="act-item"><span class="act-dot sell"></span><span>9mQ…7f2</span><span class="act-type sell">sold</span><span class="act-ticker">$ATLAS</span><span>1.1 SOL</span><span class="act-sep">·</span><span>5s ago</span></span>
+    <span class="act-item"><span class="act-dot buy"></span><span>3bR…1kL</span><span class="act-type buy">bought</span><span class="act-ticker">$NORA</span><span>0.19 SOL</span><span class="act-sep">·</span><span>8s ago</span></span>
+    <span class="act-item"><span class="act-dot buy"></span><span>2wP…8nX</span><span class="act-type buy">bought</span><span class="act-ticker">$MEME</span><span>0.88 SOL</span><span class="act-sep">·</span><span>11s ago</span></span>
+    <span class="act-item"><span class="act-dot sell"></span><span>5tZ…4jD</span><span class="act-type sell">sold</span><span class="act-ticker">$FLUX</span><span>0.33 SOL</span><span class="act-sep">·</span><span>14s ago</span></span>
+    <span class="act-item"><span class="act-dot buy"></span><span>8hV…2cA</span><span class="act-type buy">bought</span><span class="act-ticker">$SCOUT</span><span>2.05 SOL</span><span class="act-sep">·</span><span>17s ago</span></span>
+    <span class="act-item"><span class="act-dot buy"></span><span>1eN…6sY</span><span class="act-type buy">bought</span><span class="act-ticker">$YIELD</span><span>0.55 SOL</span><span class="act-sep">·</span><span>21s ago</span></span>
+    <span class="act-item"><span class="act-dot sell"></span><span>4rM…9gF</span><span class="act-type sell">sold</span><span class="act-ticker">$ORACLE</span><span>0.72 SOL</span><span class="act-sep">·</span><span>25s ago</span></span>
+    <span class="act-item"><span class="act-dot buy"></span><span>6cJ…5hW</span><span class="act-type buy">bought</span><span class="act-ticker">$ATLAS</span><span>3.20 SOL</span><span class="act-sep">·</span><span>29s ago</span></span>
+    <span class="act-item"><span class="act-dot buy"></span><span>0xB…3kR</span><span class="act-type buy">bought</span><span class="act-ticker">$TRADEX</span><span>0.91 SOL</span><span class="act-sep">·</span><span>33s ago</span></span>
+    <span class="act-item"><span class="act-dot sell"></span><span>7yL…2mN</span><span class="act-type sell">sold</span><span class="act-ticker">$MEME</span><span>1.44 SOL</span><span class="act-sep">·</span><span>38s ago</span></span>
+    <span class="act-item"><span class="act-dot buy"></span><span>3pQ…7tS</span><span class="act-type buy">bought</span><span class="act-ticker">$FLUX</span><span>0.27 SOL</span><span class="act-sep">·</span><span>42s ago</span></span>
+  </div>
+</div>
 
 <!-- AGENTS SECTION -->
 <section id="agents" style="padding-top: 56px;">
@@ -1439,6 +1536,35 @@ window.addEventListener('load', animateCounters);
     requestAnimationFrame(draw);
   }
   draw();
+})();
+
+
+// ── ACTIVITY FEED live timestamps ────────────────────────────────────────────
+(function() {
+  const tickers = ['$TRADEX','$ATLAS','$NORA','$SCOUT','$FLUX','$MEME','$YIELD','$ORACLE'];
+  const types   = ['bought','bought','bought','sold'];
+  const addrs   = ['7xK…3p9','9mQ…7f2','3bR…1kL','2wP…8nX','5tZ…4jD','8hV…2cA','0xB…3kR','6cJ…5hW'];
+  const amounts = ['0.19','0.33','0.55','0.72','0.88','0.91','1.10','1.44','2.05','3.20'];
+  const track   = document.getElementById('activityTrack');
+  if (!track) return;
+  let counter = 0;
+  setInterval(() => {
+    counter++;
+    const type   = types[Math.floor(Math.random() * types.length)];
+    const ticker = tickers[Math.floor(Math.random() * tickers.length)];
+    const addr   = addrs[Math.floor(Math.random() * addrs.length)];
+    const amt    = amounts[Math.floor(Math.random() * amounts.length)];
+    const cls    = type === 'bought' ? 'buy' : 'sell';
+    const el = document.createElement('span');
+    el.className = 'act-item';
+    el.style.opacity = '0';
+    el.style.transition = 'opacity 0.5s';
+    el.innerHTML = `<span class="act-dot ${cls}"></span><span>${addr}</span><span class="act-type ${cls}">${type}</span><span class="act-ticker">${ticker}</span><span>${amt} SOL</span><span class="act-sep">·</span><span>just now</span>`;
+    track.appendChild(el);
+    requestAnimationFrame(() => { el.style.opacity = '1'; });
+    // Keep track length reasonable
+    if (track.children.length > 30) track.removeChild(track.children[0]);
+  }, 2800 + Math.random() * 1200);
 })();
 
 </script>
