@@ -616,18 +616,18 @@ footer ul li a:hover { color: var(--accent); }
 /* AUTH / LOGIN MODAL */
 .auth-modal-overlay {
   position: fixed; inset: 0; z-index: 9000;
-  background: rgba(10,8,18,0.75);
-  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  background: rgba(10,8,18,0.78);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
   display: flex; align-items: center; justify-content: center;
   opacity: 0; pointer-events: none; transition: all 0.25s;
   padding: 20px;
 }
 .auth-modal-overlay.open { opacity: 1; pointer-events: all; }
 .auth-modal {
-  background: #0d0b18;
+  background: #0e0d14;
   border: 1px solid rgba(255,255,255,0.09);
   border-radius: 22px;
-  padding: 40px 36px 36px;
+  padding: 36px 32px 32px;
   width: 100%; max-width: 400px;
   position: relative; overflow: hidden;
   transform: scale(0.95) translateY(10px);
@@ -637,100 +637,199 @@ footer ul li a:hover { color: var(--accent); }
 .auth-modal::before {
   content: '';
   position: absolute; top: -80px; left: 50%; transform: translateX(-50%);
-  width: 280px; height: 280px;
-  background: radial-gradient(circle, rgba(107,122,66,0.22) 0%, transparent 70%);
-  pointer-events: none;
-}
-.auth-modal::after {
-  content: '';
-  position: absolute; bottom: -60px; right: -40px;
-  width: 180px; height: 180px;
-  background: radial-gradient(circle, rgba(140,158,88,0.15) 0%, transparent 70%);
+  width: 260px; height: 260px;
+  background: radial-gradient(circle, rgba(107,122,66,0.2) 0%, transparent 70%);
   pointer-events: none;
 }
 .auth-close {
-  position: absolute; top: 16px; right: 16px;
-  background: rgba(255,255,255,0.08); border: none;
-  color: rgba(255,255,255,0.5); font-size: 14px;
+  position: absolute; top: 14px; right: 14px;
+  background: rgba(255,255,255,0.07); border: none;
+  color: rgba(255,255,255,0.4); font-size: 14px;
   cursor: pointer; border-radius: 8px;
   width: 30px; height: 30px;
   display: flex; align-items: center; justify-content: center;
   transition: all 0.15s; font-family: var(--body); z-index: 1;
 }
-.auth-close:hover { background: rgba(255,255,255,0.14); color: #fff; }
+.auth-close:hover { background: rgba(255,255,255,0.13); color: #fff; }
 .auth-logo-wrap {
   display: flex; align-items: center; gap: 10px;
-  margin-bottom: 28px; position: relative; z-index: 1;
+  margin-bottom: 24px; position: relative; z-index: 1;
 }
 .auth-logo-mark {
-  width: 32px; height: 32px; border-radius: 8px;
+  width: 30px; height: 30px; border-radius: 7px;
   background: var(--accent);
   border: 1.5px solid rgba(107,122,66,0.5);
   display: flex; align-items: center; justify-content: center;
 }
-.auth-logo-mark svg { width: 17px; height: 17px; }
-.auth-logo-name { font-family: var(--display); font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.9); letter-spacing: 0.14em; text-transform: uppercase; }
+.auth-logo-mark svg { width: 16px; height: 16px; }
+.auth-logo-name { font-family: var(--display); font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.85); letter-spacing: 0.14em; text-transform: uppercase; }
+/* AUTH TABS */
+.auth-tabs {
+  display: flex; gap: 0; margin-bottom: 28px;
+  background: rgba(255,255,255,0.05); border-radius: 10px; padding: 4px;
+  position: relative; z-index: 1;
+}
+.auth-tab {
+  flex: 1; padding: 8px; border-radius: 7px; border: none;
+  font-size: 13.5px; font-weight: 600; font-family: var(--body);
+  cursor: pointer; color: rgba(255,255,255,0.4);
+  background: transparent; transition: all 0.18s;
+}
+.auth-tab.active { background: rgba(107,122,66,0.22); color: #fff; border: 1px solid rgba(107,122,66,0.3); }
+.auth-tab:hover:not(.active) { color: rgba(255,255,255,0.7); }
+.auth-panel { display: none; } .auth-panel.active { display: block; }
 .auth-heading {
-  font-family: var(--display); font-size: 24px; font-weight: 800;
-  color: #fff; letter-spacing: -0.8px; line-height: 1.15;
+  font-family: var(--display); font-size: 22px; font-weight: 800;
+  color: #fff; letter-spacing: -0.6px; line-height: 1.2;
   margin-bottom: 6px; position: relative; z-index: 1;
 }
 .auth-sub {
-  font-size: 13.5px; color: rgba(255,255,255,0.4);
-  margin-bottom: 28px; line-height: 1.5; position: relative; z-index: 1;
+  font-size: 13px; color: rgba(255,255,255,0.38);
+  margin-bottom: 22px; line-height: 1.5; position: relative; z-index: 1;
 }
-.social-login-grid {
-  display: flex; flex-direction: column; gap: 10px;
-  margin-bottom: 22px; position: relative; z-index: 1;
-}
-.social-login-btn {
-  display: flex; align-items: center; gap: 12px;
-  padding: 12px 16px; border-radius: 11px;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.1);
-  color: rgba(255,255,255,0.85); font-size: 14px; font-weight: 500;
-  cursor: pointer; transition: all 0.15s; font-family: var(--body);
-  text-align: left;
-}
-.social-login-btn:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); color: #fff; }
-.social-login-icon {
-  width: 32px; height: 32px; border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 14px; font-weight: 700; flex-shrink: 0;
-}
-.ai-icon { background: linear-gradient(135deg, var(--accent), #8c9e58); color: #fff; font-size: 16px; }
-.x-icon { background: #000; color: #fff; font-size: 15px; border: 1px solid rgba(255,255,255,0.15); }
-.gmail-icon { background: #fff; color: #ea4335; font-size: 15px; font-family: var(--display); font-weight: 800; }
-.auth-divider {
-  display: flex; align-items: center; gap: 12px; margin-bottom: 16px;
-  position: relative; z-index: 1;
-}
-.auth-divider::before, .auth-divider::after {
-  content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.08);
-}
-.auth-divider span { font-size: 12px; color: rgba(255,255,255,0.3); font-family: var(--mono); letter-spacing: 0.08em; }
 .auth-input {
   width: 100%; padding: 11px 14px; margin-bottom: 10px;
   background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.09);
   border-radius: 10px; color: #fff; font-size: 14px; font-family: var(--body);
   outline: none; transition: border-color 0.15s; position: relative; z-index: 1; display: block;
 }
-.auth-input::placeholder { color: rgba(255,255,255,0.25); }
+.auth-input::placeholder { color: rgba(255,255,255,0.22); }
 .auth-input:focus { border-color: rgba(107,122,66,0.5); background: rgba(255,255,255,0.07); }
 .auth-submit {
-  width: 100%; padding: 12px; margin-top: 4px;
+  width: 100%; padding: 12px; margin-top: 6px;
   background: linear-gradient(135deg, var(--accent) 0%, #8c9e58 100%);
   border: none; border-radius: 10px; color: #fff;
   font-size: 14px; font-weight: 600; font-family: var(--body);
   cursor: pointer; transition: all 0.15s; position: relative; z-index: 1;
-  box-shadow: 0 2px 12px rgba(107,122,66,0.35);
+  box-shadow: 0 2px 12px rgba(107,122,66,0.3);
 }
-.auth-submit:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 4px 18px rgba(107,122,66,0.45); }
+.auth-submit:hover { opacity: 0.92; transform: translateY(-1px); box-shadow: 0 4px 18px rgba(107,122,66,0.4); }
 .auth-footer-note {
-  text-align: center; margin-top: 16px;
-  font-size: 11.5px; color: rgba(255,255,255,0.25);
+  text-align: center; margin-top: 14px;
+  font-size: 11px; color: rgba(255,255,255,0.2);
   font-family: var(--mono); position: relative; z-index: 1;
 }
+
+/* DASHBOARD */
+.dashboard-overlay {
+  position: fixed; inset: 0; z-index: 10000;
+  background: var(--bg);
+  display: none; flex-direction: column;
+  overflow-y: auto;
+}
+.dashboard-overlay.open { display: flex; }
+.dash-nav {
+  position: sticky; top: 0; z-index: 10;
+  background: rgba(250,250,250,0.95);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px; height: 60px;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-shrink: 0;
+}
+.dash-nav-left { display: flex; align-items: center; gap: 14px; }
+.dash-back-btn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 12px; border-radius: 8px; border: 1px solid var(--border);
+  background: none; cursor: pointer; font-size: 13px; font-weight: 500;
+  color: var(--text-2); font-family: var(--body); transition: all 0.15s;
+}
+.dash-back-btn:hover { background: var(--bg-2); color: var(--text-1); }
+.dash-nav-title { font-family: var(--display); font-size: 15px; font-weight: 700; color: var(--text-1); letter-spacing: -0.2px; }
+.dash-nav-user { display: flex; align-items: center; gap: 10px; }
+.dash-user-chip {
+  display: flex; align-items: center; gap: 8px;
+  padding: 5px 12px 5px 7px; border-radius: 24px;
+  background: var(--bg-2); border: 1px solid var(--border);
+}
+.dash-avatar {
+  width: 26px; height: 26px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), #8c9e58);
+  color: #fff; font-size: 12px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--display);
+}
+.dash-username { font-size: 13px; font-weight: 600; color: var(--text-1); }
+.dash-logout-btn {
+  padding: 6px 12px; border-radius: 8px; border: 1px solid var(--border);
+  background: none; cursor: pointer; font-size: 12px; font-weight: 500;
+  color: var(--text-3); font-family: var(--mono); text-transform: uppercase;
+  letter-spacing: 0.06em; transition: all 0.15s;
+}
+.dash-logout-btn:hover { border-color: var(--red); color: var(--red); }
+/* Dashboard body */
+.dash-body { padding: 32px 24px; max-width: 1100px; margin: 0 auto; width: 100%; flex: 1; }
+.dash-welcome { margin-bottom: 28px; }
+.dash-welcome h2 {
+  font-family: var(--display); font-size: clamp(22px, 3vw, 30px);
+  font-weight: 800; letter-spacing: -0.5px; color: var(--text-1); margin-bottom: 4px;
+}
+.dash-welcome p { font-size: 13.5px; color: var(--text-2); }
+/* Stats row */
+.dash-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 32px; }
+@media (max-width: 768px) { .dash-stats { grid-template-columns: repeat(2, 1fr); } }
+.dash-stat-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 14px; padding: 20px 20px 18px;
+}
+.dash-stat-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-3); margin-bottom: 8px; }
+.dash-stat-value { font-family: var(--display); font-size: 26px; font-weight: 800; letter-spacing: -0.5px; color: var(--text-1); margin-bottom: 4px; }
+.dash-stat-value.green { color: var(--green); }
+.dash-stat-value.red { color: var(--red); }
+.dash-stat-sub { font-family: var(--mono); font-size: 11px; color: var(--text-3); }
+/* Dash grid */
+.dash-grid { display: grid; grid-template-columns: 1fr 380px; gap: 20px; }
+@media (max-width: 900px) { .dash-grid { grid-template-columns: 1fr; } }
+.dash-section { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+.dash-section-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 22px; border-bottom: 1px solid var(--border);
+}
+.dash-section-title { font-family: var(--display); font-size: 15px; font-weight: 700; letter-spacing: -0.2px; color: var(--text-1); }
+.dash-section-link { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); text-decoration: none; cursor: pointer; }
+/* Agent rows */
+.dash-agent-row {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 22px; border-bottom: 1px solid var(--border);
+  transition: background 0.12s; cursor: pointer;
+}
+.dash-agent-row:last-child { border-bottom: none; }
+.dash-agent-row:hover { background: var(--bg); }
+.dash-agent-visual {
+  width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; font-size: 20px;
+}
+.dash-agent-info { flex: 1; min-width: 0; }
+.dash-agent-name { font-size: 14px; font-weight: 700; color: var(--text-1); letter-spacing: -0.2px; }
+.dash-agent-ticker { font-family: var(--mono); font-size: 11px; color: var(--text-3); margin-top: 2px; }
+.dash-agent-price { text-align: right; flex-shrink: 0; }
+.dash-agent-val { font-family: var(--mono); font-size: 14px; font-weight: 700; color: var(--text-1); }
+.dash-agent-chg { font-family: var(--mono); font-size: 11px; margin-top: 2px; }
+.dash-agent-chg.up { color: var(--green); } .dash-agent-chg.dn { color: var(--red); }
+/* Activity rows */
+.dash-tx-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 13px 22px; border-bottom: 1px solid var(--border);
+}
+.dash-tx-row:last-child { border-bottom: none; }
+.dash-tx-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.dash-tx-dot.buy { background: var(--green); }
+.dash-tx-dot.sell { background: var(--red); }
+.dash-tx-info { flex: 1; }
+.dash-tx-label { font-size: 13px; font-weight: 600; color: var(--text-1); }
+.dash-tx-time { font-family: var(--mono); font-size: 11px; color: var(--text-3); margin-top: 2px; }
+.dash-tx-amount { font-family: var(--mono); font-size: 13px; font-weight: 700; color: var(--text-1); }
+/* Quick actions */
+.dash-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
+.dash-action-btn {
+  flex: 1; min-width: 120px; padding: 12px 16px; border-radius: 10px;
+  border: 1px solid var(--border); background: var(--surface);
+  font-size: 13.5px; font-weight: 600; font-family: var(--body);
+  color: var(--text-1); cursor: pointer; transition: all 0.15s; text-align: center;
+}
+.dash-action-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
+.dash-action-btn.primary { background: linear-gradient(135deg, var(--accent), #8c9e58); color: #fff; border-color: var(--accent); }
+.dash-action-btn.primary:hover { opacity: 0.9; transform: translateY(-1px); }
 
 /* AGENT MODAL */
 .agent-modal-overlay {
@@ -871,29 +970,190 @@ footer ul li a:hover { color: var(--accent); }
       </div>
       <span class="auth-logo-name">AGX</span>
     </div>
-    <div class="auth-heading" id="authHeading">Sign in</div>
-    <div class="auth-sub" id="authSub">Trade, launch, and manage AI agents on Solana.</div>
-    <div class="social-login-grid">
-      <button class="social-login-btn" onclick="connectWalletAuth('AI Agent')">
-        <div class="social-login-icon ai-icon">
-          <svg viewBox="0 0 20 20" fill="none" width="17" height="17"><circle cx="10" cy="7" r="3.5" stroke="white" stroke-width="1.8"/><path d="M3 17c0-3.314 3.134-6 7-6s7 2.686 7 6" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg>
-        </div>
-        <span>Continue with AI Agent</span>
-      </button>
-      <button class="social-login-btn" onclick="connectWalletAuth('X')">
-        <div class="social-login-icon x-icon">𝕏</div>
-        <span>Continue with X</span>
-      </button>
-      <button class="social-login-btn" onclick="connectWalletAuth('Gmail')">
-        <div class="social-login-icon gmail-icon">G</div>
-        <span>Continue with Gmail</span>
-      </button>
+    <!-- tabs -->
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="tabSignIn" onclick="switchAuthTab('signin')">Sign In</button>
+      <button class="auth-tab" id="tabCreate" onclick="switchAuthTab('create')">Create Account</button>
     </div>
-    <div class="auth-divider"><span>or use email</span></div>
-    <input class="auth-input" type="email" id="authEmail" placeholder="Email address">
-    <input class="auth-input" type="password" id="authPassword" placeholder="Password">
-    <button class="auth-submit" id="authSubmitBtn" onclick="handleAuth()">Sign In</button>
-    <div class="auth-footer-note">By signing in you agree to our Terms of Service.</div>
+    <!-- sign in panel -->
+    <div class="auth-panel active" id="panelSignIn">
+      <div class="auth-heading">Welcome back</div>
+      <div class="auth-sub">Enter your name and email to continue.</div>
+      <input class="auth-input" type="text" id="siName" placeholder="Your name" autocomplete="name">
+      <input class="auth-input" type="email" id="siEmail" placeholder="Email address" autocomplete="email">
+      <button class="auth-submit" onclick="handleSignIn()">Sign In</button>
+    </div>
+    <!-- create account panel -->
+    <div class="auth-panel" id="panelCreate">
+      <div class="auth-heading">Create account</div>
+      <div class="auth-sub">Join AGX and start trading tokenized AI agents.</div>
+      <input class="auth-input" type="text" id="caName" placeholder="Your name" autocomplete="name">
+      <input class="auth-input" type="email" id="caEmail" placeholder="Email address" autocomplete="email">
+      <button class="auth-submit" onclick="handleCreateAccount()">Create Account</button>
+    </div>
+    <div class="auth-footer-note">By continuing you agree to our Terms of Service.</div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="dashboard-overlay" id="dashboard">
+  <nav class="dash-nav">
+    <div class="dash-nav-left">
+      <button class="dash-back-btn" onclick="closeDashboard()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="m15 18-6-6 6-6"/></svg>
+        Marketplace
+      </button>
+      <span class="dash-nav-title">Dashboard</span>
+    </div>
+    <div class="dash-nav-user">
+      <div class="dash-user-chip">
+        <div class="dash-avatar" id="dashAvatar">Y</div>
+        <span class="dash-username" id="dashUsername">User</span>
+      </div>
+      <button class="dash-logout-btn" onclick="logout()">Log out</button>
+    </div>
+  </nav>
+  <div class="dash-body">
+    <div class="dash-welcome">
+      <h2>Good morning, <span id="dashGreetName">User</span> 👋</h2>
+      <p>Here's your agent portfolio at a glance.</p>
+    </div>
+    <!-- Stats -->
+    <div class="dash-stats">
+      <div class="dash-stat-card">
+        <div class="dash-stat-label">SOL Balance</div>
+        <div class="dash-stat-value">12.45</div>
+        <div class="dash-stat-sub">≈ $1,840 USD</div>
+      </div>
+      <div class="dash-stat-card">
+        <div class="dash-stat-label">Portfolio Value</div>
+        <div class="dash-stat-value">$4,230</div>
+        <div class="dash-stat-sub">Across 3 agents</div>
+      </div>
+      <div class="dash-stat-card">
+        <div class="dash-stat-label">Today's P&amp;L</div>
+        <div class="dash-stat-value green">+$312</div>
+        <div class="dash-stat-sub">+7.97% today</div>
+      </div>
+      <div class="dash-stat-card">
+        <div class="dash-stat-label">Agents Owned</div>
+        <div class="dash-stat-value">3</div>
+        <div class="dash-stat-sub">2 gaining today</div>
+      </div>
+    </div>
+    <!-- Grid -->
+    <div class="dash-grid">
+      <!-- Left: My Agents + Quick Actions -->
+      <div style="display:flex;flex-direction:column;gap:20px;">
+        <div class="dash-section">
+          <div class="dash-section-head">
+            <span class="dash-section-title">My Agents</span>
+            <span class="dash-section-link" onclick="showToast('Coming soon')">View all</span>
+          </div>
+          <div class="dash-agent-row">
+            <div class="dash-agent-visual" style="background:rgba(107,122,66,0.12);">📈</div>
+            <div class="dash-agent-info">
+              <div class="dash-agent-name">TradeX Alpha</div>
+              <div class="dash-agent-ticker">$TRADEX · 1,200 tokens</div>
+            </div>
+            <div class="dash-agent-price">
+              <div class="dash-agent-val">$0.0042</div>
+              <div class="dash-agent-chg up">+18.4%</div>
+            </div>
+          </div>
+          <div class="dash-agent-row">
+            <div class="dash-agent-visual" style="background:rgba(59,130,246,0.1);">🔍</div>
+            <div class="dash-agent-info">
+              <div class="dash-agent-name">Scout Protocol</div>
+              <div class="dash-agent-ticker">$SCOUT · 850 tokens</div>
+            </div>
+            <div class="dash-agent-price">
+              <div class="dash-agent-val">$0.0087</div>
+              <div class="dash-agent-chg up">+6.2%</div>
+            </div>
+          </div>
+          <div class="dash-agent-row">
+            <div class="dash-agent-visual" style="background:rgba(236,72,153,0.1);">🎨</div>
+            <div class="dash-agent-info">
+              <div class="dash-agent-name">Nora Creative</div>
+              <div class="dash-agent-ticker">$NORA · 500 tokens</div>
+            </div>
+            <div class="dash-agent-price">
+              <div class="dash-agent-val">$0.0031</div>
+              <div class="dash-agent-chg dn">-2.1%</div>
+            </div>
+          </div>
+        </div>
+        <!-- Quick actions -->
+        <div class="dash-section">
+          <div class="dash-section-head">
+            <span class="dash-section-title">Quick Actions</span>
+          </div>
+          <div style="padding:18px 22px;">
+            <div class="dash-actions">
+              <button class="dash-action-btn primary" onclick="showToast('Opening agent explorer...')">Explore Agents</button>
+              <button class="dash-action-btn" onclick="openLaunchModal();closeDashboard()">Launch Agent</button>
+              <button class="dash-action-btn" onclick="showToast('Coming soon')">Transfer SOL</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Right: Recent Activity -->
+      <div class="dash-section">
+        <div class="dash-section-head">
+          <span class="dash-section-title">Recent Activity</span>
+          <span class="dash-section-link" onclick="showToast('Coming soon')">All</span>
+        </div>
+        <div class="dash-tx-row">
+          <div class="dash-tx-dot buy"></div>
+          <div class="dash-tx-info">
+            <div class="dash-tx-label">Bought $TRADEX</div>
+            <div class="dash-tx-time">2 hours ago</div>
+          </div>
+          <div class="dash-tx-amount">+1,200 tokens</div>
+        </div>
+        <div class="dash-tx-row">
+          <div class="dash-tx-dot buy"></div>
+          <div class="dash-tx-info">
+            <div class="dash-tx-label">Bought $SCOUT</div>
+            <div class="dash-tx-time">Yesterday, 18:42</div>
+          </div>
+          <div class="dash-tx-amount">+850 tokens</div>
+        </div>
+        <div class="dash-tx-row">
+          <div class="dash-tx-dot sell"></div>
+          <div class="dash-tx-info">
+            <div class="dash-tx-label">Sold $ATLAS</div>
+            <div class="dash-tx-time">2 days ago</div>
+          </div>
+          <div class="dash-tx-amount">-300 tokens</div>
+        </div>
+        <div class="dash-tx-row">
+          <div class="dash-tx-dot buy"></div>
+          <div class="dash-tx-info">
+            <div class="dash-tx-label">Bought $NORA</div>
+            <div class="dash-tx-time">3 days ago</div>
+          </div>
+          <div class="dash-tx-amount">+500 tokens</div>
+        </div>
+        <div class="dash-tx-row">
+          <div class="dash-tx-dot sell"></div>
+          <div class="dash-tx-info">
+            <div class="dash-tx-label">Sold $FLUX</div>
+            <div class="dash-tx-time">4 days ago</div>
+          </div>
+          <div class="dash-tx-amount">-600 tokens</div>
+        </div>
+        <div class="dash-tx-row">
+          <div class="dash-tx-dot buy"></div>
+          <div class="dash-tx-info">
+            <div class="dash-tx-label">Joined AGX</div>
+            <div class="dash-tx-time">5 days ago</div>
+          </div>
+          <div class="dash-tx-amount">Welcome!</div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -1276,6 +1536,7 @@ footer ul li a:hover { color: var(--accent); }
 // AUTH STATE
 let currentUser = null;
 
+/* ── Auth modal open/close ── */
 function openAuth() {
   document.getElementById('authModal').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -1284,56 +1545,97 @@ function closeAuth() {
   document.getElementById('authModal').classList.remove('open');
   document.body.style.overflow = '';
 }
-function handleAuth() {
-  const email = document.getElementById('authEmail').value;
-  const password = document.getElementById('authPassword').value;
-  if (!email || !password) { showToast('Please fill in all fields'); return; }
-  currentUser = { name: email.split('@')[0], email, type: 'user', address: '7xKX...3p9K', balance: '12.45 SOL' };
+
+/* ── Tab switching ── */
+function switchAuthTab(tab) {
+  const isSignIn = tab === 'signin';
+  document.getElementById('tabSignIn').classList.toggle('active', isSignIn);
+  document.getElementById('tabCreate').classList.toggle('active', !isSignIn);
+  document.getElementById('panelSignIn').classList.toggle('active', isSignIn);
+  document.getElementById('panelCreate').classList.toggle('active', !isSignIn);
+}
+
+/* ── Sign In handler ── */
+function handleSignIn() {
+  const name  = document.getElementById('siName').value.trim();
+  const email = document.getElementById('siEmail').value.trim();
+  if (!name || !email) { showToast('Please fill in your name and email'); return; }
+  loginUser(name, email, 'Welcome back, ' + name + '!');
+}
+
+/* ── Create Account handler ── */
+function handleCreateAccount() {
+  const name  = document.getElementById('caName').value.trim();
+  const email = document.getElementById('caEmail').value.trim();
+  if (!name || !email) { showToast('Please fill in your name and email'); return; }
+  loginUser(name, email, 'Account created! Welcome to AGX.');
+}
+
+/* ── Shared login logic ── */
+function loginUser(name, email, toastMsg) {
+  currentUser = { name, email, initial: name.charAt(0).toUpperCase() };
   closeAuth();
   updateNavForUser();
-  showToast('Welcome back!');
+  openDashboard();
+  showToast(toastMsg);
 }
-function connectWalletAuth(provider) {
-  currentUser = { name: provider + ' User', email: '', type: 'user', address: '7xKX...3p9K', balance: '24.89 SOL' };
-  closeAuth();
-  updateNavForUser();
-  showToast(provider + ' connected successfully');
-}
+
+/* ── Nav update ── */
 function updateNavForUser() {
   if (!currentUser) return;
   document.getElementById('navRight').innerHTML = `
+    <button class="btn-ghost" onclick="openDashboard()">Dashboard</button>
     <div class="account-dropdown-wrap">
       <button class="account-btn" onclick="toggleDropdown()">
-        <div class="account-avatar">${currentUser.name.charAt(0).toUpperCase()}</div>
+        <div class="account-avatar">${currentUser.initial}</div>
         <div class="account-info">
           <span class="account-name">${currentUser.name}</span>
-          <span class="account-role">${currentUser.type}</span>
+          <span class="account-role">Member</span>
         </div>
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
       </button>
       <div class="account-dropdown" id="accountDropdown">
         <div class="dropdown-header">
-          <div class="dropdown-addr">${currentUser.address}</div>
-          <div class="dropdown-balance">${currentUser.balance}</div>
+          <div class="dropdown-addr">${currentUser.email}</div>
+          <div class="dropdown-balance">12.45 SOL</div>
         </div>
-        <div class="dropdown-item" onclick="showToast('Profile coming soon')">&#128100; Profile</div>
-        <div class="dropdown-item" onclick="showToast('Portfolio coming soon')">&#128202; Portfolio</div>
+        <div class="dropdown-item" onclick="openDashboard()">&#128202; Dashboard</div>
         <div class="dropdown-item" onclick="showToast('Settings coming soon')">&#9881; Settings</div>
-        <div class="dropdown-item danger" onclick="logout()">&#128682; Disconnect</div>
+        <div class="dropdown-item danger" onclick="logout()">&#128682; Log out</div>
       </div>
     </div>
   `;
 }
+
 function toggleDropdown() {
   document.getElementById('accountDropdown').classList.toggle('open');
 }
+
+/* ── Dashboard ── */
+function openDashboard() {
+  if (!currentUser) { openAuth(); return; }
+  const hour = new Date().getHours();
+  const greet = hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening';
+  document.getElementById('dashAvatar').textContent = currentUser.initial;
+  document.getElementById('dashUsername').textContent = currentUser.name;
+  document.getElementById('dashGreetName').textContent = currentUser.name;
+  document.querySelector('.dash-welcome h2').innerHTML = `${greet}, <span id="dashGreetName">${currentUser.name}</span> 👋`;
+  document.getElementById('dashboard').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeDashboard() {
+  document.getElementById('dashboard').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
 function logout() {
   currentUser = null;
+  closeDashboard();
   document.getElementById('navRight').innerHTML = `
     <button class="btn-ghost" onclick="openAuth()">Sign In</button>
     <button class="btn-accent" onclick="openLaunchModal()">Launch Agent</button>
   `;
-  showToast('Disconnected successfully');
+  showToast('Logged out successfully');
 }
 
 // TOAST
